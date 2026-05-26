@@ -1,0 +1,18 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+ENV/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Output and temp files
+test_dummy.jpg
+hybrid_test_*.json
+cnn_scores_output.csv
+dataset/
