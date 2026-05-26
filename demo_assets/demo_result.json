@@ -1,0 +1,32 @@
+{
+  "input_image": "datatest/demo_mild_blast.jpg",
+  "environment": {
+    "temperature_C": 28.0,
+    "humidity_percent": 85.0
+  },
+  "cnn_outputs": {
+    "prediction": "Mild Blast",
+    "confidence": 0.645057,
+    "all_scores": {
+      "Healthy": 0.021942,
+      "Mild Bacterial blight": 0.008707,
+      "Mild Blast": 0.645057,
+      "Mild Brownspot": 0.018838,
+      "Mild Tungro": 0.031171,
+      "Severe Bacterial blight": 0.016748,
+      "Severe Blast": 0.202918,
+      "Severe Brownspot": 0.027062,
+      "Severe Tungro": 0.027558
+    }
+  },
+  "fuzzy_outputs": {
+    "predicted_disease": "Blast",
+    "visual_severity_level": "Mild (Nhẹ)",
+    "diagnostic_confidence_percent": 76.97,
+    "uncertainty_level": "Medium (Trung bình)",
+    "environmental_risk_level": "High (Cao)",
+    "final_alert_level": "Attention (Chú ý)",
+    "explanation": "=== BÁO CÁO GIẢI THÍCH CHẨN ĐOÁN (XAI REPORT) ===\n1. Phân tích Hình ảnh (CNN):\n   - Mô hình CNN chẩn đoán lá lúa nhiễm bệnh: Đạo ôn lá (Rice Blast)\n   - Phân loại chi tiết của CNN: Mild Blast (Độ tự tin: 64.51%)\n   - Khoảng cách phân biệt (Margin) so với lớp thứ 2: 0.4421\n   - Đánh giá độ bất định chẩn đoán: Medium (Trung bình)\n   - Độ tin cậy chẩn đoán tổng hợp của hệ thống: 76.97%\n\n2. Phân tích Tác động Môi trường (Fuzzy Logic):\n   - Thông số môi trường ghi nhận: Nhiệt độ = 28.0°C, Độ ẩm = 85.0%\n   - Đánh giá nguy cơ bùng phát do thời tiết: High (Cao)\n\n3. Mức độ Cảnh báo Tổng hợp: Attention (Chú ý)\n   - Đánh giá mức độ tổn thương trên bề mặt lá (Visual Severity): Mild (Nhẹ)\n\n4. Các Luật Mờ được kích hoạt (Fuzzy Rules Fired):\n   1. [Luật Mức độ bệnh] 0.580228 (Trọng số kích hoạt: 20.00)\n   2. [Luật Mức độ bệnh] 0.2747149999999999 (Trọng số kích hoạt: 20.00)\n   3. [Luật Thời tiết] 0.8571428571428571 (Trọng số kích hoạt: 85.00)\n   4. [Luật Cảnh báo] 1.0 (Trọng số kích hoạt: 40.00)",
+    "recommendation": "Đã phát hiện bệnh hại: Đạo ôn lá (Rice Blast) ở mức độ nghiêm trọng trực quan: Mild (Nhẹ).\nℹ️ CHÚ Ý THEO DÕI: Vết bệnh nhẹ nhưng môi trường ẩm ướt hoặc có nguy cơ nhẹ.\nHành động khuyến nghị:\n  1. Theo dõi sát sao các ruộng lân cận trong vòng 2-3 ngày tới.\n  2. Chỉ nên bón phân kali để tăng cường sức đề kháng cho cây, chưa cần phun thuốc hóa học diện rộng.\n  * Đặc thù Bệnh Đạo Ôn: Sử dụng các hoạt chất như Tricyclazole, Fenoxanil hoặc Isoprothiolane. Tránh bón thêm phân đạm."
+  }
+}
