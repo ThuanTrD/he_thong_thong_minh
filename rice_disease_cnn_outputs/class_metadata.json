@@ -1,0 +1,41 @@
+{
+  "backbone": "efficientnet_b0",
+  "num_classes": 9,
+  "classes": [
+    "Healthy",
+    "Mild Bacterial blight",
+    "Mild Blast",
+    "Mild Brownspot",
+    "Mild Tungro",
+    "Severe Bacterial blight",
+    "Severe Blast",
+    "Severe Brownspot",
+    "Severe Tungro"
+  ],
+  "class_to_idx": {
+    "Healthy": 0,
+    "Mild Bacterial blight": 1,
+    "Mild Blast": 2,
+    "Mild Brownspot": 3,
+    "Mild Tungro": 4,
+    "Severe Bacterial blight": 5,
+    "Severe Blast": 6,
+    "Severe Brownspot": 7,
+    "Severe Tungro": 8
+  },
+  "img_size": 224,
+  "best_val_acc": 0.920354,
+  "train_date": "2026-05-25 09:15:58",
+  "fuzzy_input_columns": [
+    "score_Healthy",
+    "score_Mild Bacterial blight",
+    "score_Mild Blast",
+    "score_Mild Brownspot",
+    "score_Mild Tungro",
+    "score_Severe Bacterial blight",
+    "score_Severe Blast",
+    "score_Severe Brownspot",
+    "score_Severe Tungro"
+  ],
+  "note": "Cột 'score_*' là softmax probability [0,1], tổng = 1. Dùng làm input cho Fuzzy Reasoning Layer (Bước 3). Label smoothing=0.1 đã được áp dụng khi train → scores calibrated tốt hơn."
+}

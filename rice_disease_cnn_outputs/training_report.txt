@@ -1,0 +1,36 @@
+============================================================
+  TRAINING REPORT — CNN RICE DISEASE
+============================================================
+Backbone     : efficientnet_b0
+Classes      : ['Healthy', 'Mild Bacterial blight', 'Mild Blast', 'Mild Brownspot', 'Mild Tungro', 'Severe Bacterial blight', 'Severe Blast', 'Severe Brownspot', 'Severe Tungro']
+Num classes  : 9
+Best val acc : 0.9204
+Train date   : 2026-05-25 09:15:58
+
+Confusion Matrix:
+[[51  0  0  0  0  0  0  0  0]
+ [ 0 57  0  0  0  6  0  0  0]
+ [ 0  0 61  0  1  0  5  0  0]
+ [ 0  0  0 62  0  0  0  3  0]
+ [ 0  0  0  0 59  0  0  0  0]
+ [ 0  3  0  0  0 64  1  0  0]
+ [ 0  0  4  0  0  0 62  0  0]
+ [ 0  0  0 20  0  0  0 37  0]
+ [ 0  0  0  0  2  0  0  0 67]]
+
+Classification Report:
+                         precision    recall  f1-score   support
+
+                Healthy     1.0000    1.0000    1.0000        51
+  Mild Bacterial blight     0.9500    0.9048    0.9268        63
+             Mild Blast     0.9385    0.9104    0.9242        67
+         Mild Brownspot     0.7561    0.9538    0.8435        65
+            Mild Tungro     0.9516    1.0000    0.9752        59
+Severe Bacterial blight     0.9143    0.9412    0.9275        68
+           Severe Blast     0.9118    0.9394    0.9254        66
+       Severe Brownspot     0.9250    0.6491    0.7629        57
+          Severe Tungro     1.0000    0.9710    0.9853        69
+
+               accuracy                         0.9204       565
+              macro avg     0.9275    0.9189    0.9190       565
+           weighted avg     0.9258    0.9204    0.9191       565
