@@ -189,9 +189,7 @@ fuzzy_input = get_fuzzy_input(result)
 ==================================================
   CNN INFERENCE RESULT
 ==================================================
-  Image     : D:\rice_fuzzy\rice_data\Leaf Disease Dataset\validation\Mild 
-  
-  Blast\BLAST9_087.jpg
+  Image     :  D:\rice_fuzzy\rice_data\Leaf Disease Dataset\validation\Mild Blast\BLAST9_087.jpg
   
   Prediction: Mild Blast (0.9747)
 
