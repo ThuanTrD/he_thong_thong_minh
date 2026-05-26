@@ -97,6 +97,7 @@ Output:
     BrownSpot_Mild            0.0821  ██
     BrownSpot_Moderate        0.1156  ███
     BrownSpot_Severe          0.7523  ██████████████████████
+    
     Healthy                   0.0500  █
 ==================================================
 
