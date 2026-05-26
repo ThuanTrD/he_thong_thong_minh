@@ -72,7 +72,7 @@ python train_cnn.py \
 | Phase | Epochs | Backbone | Head |
 |-------|--------|----------|------|
 | Warmup | 1–5 | ❄️ Frozen | ✅ Train (LR × 5) |
-| Fine-tune | 6–30 | ✅ Unfreeze | ✅ Train (LR normal) |
+| Fine-tune | 6–10 | ✅ Unfreeze | ✅ Train (LR normal) |
 
 ---
 
