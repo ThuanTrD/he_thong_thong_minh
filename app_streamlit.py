@@ -44,7 +44,7 @@ def get_env_badge(level: str):
     else:
         return f'<span class="badge badge-success">{level}</span>'
 
-# Custom CSS
+# Custom CSS for single page viewport layout
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
@@ -59,40 +59,40 @@ st.markdown("""
     }
     
     .main-title {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
         font-weight: 700;
         background: linear-gradient(135deg, #4ade80 0%, #10b981 50%, #064e3b 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-align: center;
-        margin-bottom: 0.3rem;
-        padding-top: 0.5rem;
+        margin-top: -2rem;
+        margin-bottom: 0.1rem;
         filter: drop-shadow(0px 4px 8px rgba(16, 185, 129, 0.15));
     }
     
     .subtitle {
-        font-size: 1.05rem;
+        font-size: 0.85rem;
         color: #94a3b8;
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 0.8rem;
     }
     
     .section-header {
-        font-size: 1.3rem;
+        font-size: 1.05rem;
         font-weight: 600;
         color: #a7f3d0;
         border-bottom: 2px solid rgba(16, 185, 129, 0.2);
-        padding-bottom: 0.4rem;
-        margin-bottom: 1rem;
+        padding-bottom: 0.2rem;
+        margin-bottom: 0.6rem;
     }
     
     /* Custom Badge classes */
     .badge {
         display: inline-block;
-        padding: 0.3rem 0.8rem;
-        border-radius: 8px;
+        padding: 0.2rem 0.6rem;
+        border-radius: 6px;
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         text-align: center;
         border: 1px solid transparent;
     }
@@ -120,6 +120,16 @@ st.markdown("""
         color: #93c5fd;
         border-color: rgba(59, 130, 246, 0.3);
     }
+    
+    /* Adjust padding to fit in viewport */
+    div.stSlider {
+        margin-top: -10px !important;
+        margin-bottom: -10px !important;
+    }
+    
+    div.stFileUploader {
+        margin-bottom: -15px !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -137,210 +147,175 @@ def get_cached_model(ckpt_path, device_str):
     transform = get_inference_transform(img_size)
     return model, classes, transform
 
-# Layout
-col1, col2 = st.columns([1, 1.2], gap="large")
+# Layout: 3 Columns
+col1, col2, col3 = st.columns([1, 1.1, 1.1], gap="medium")
 
 with col1:
-    st.markdown("<div class='section-header'>📤 TẢI ẢNH & THAM SỐ MÔI TRƯỜNG</div>", unsafe_allow_html=True)
-    
-    uploaded_file = st.file_uploader("Tải lên ảnh lá lúa bị bệnh (.jpg, .jpeg, .png)", type=["jpg", "jpeg", "png"])
+    st.markdown("<div class='section-header'>📤 INPUT & THỜI TIẾT</div>", unsafe_allow_html=True)
+    uploaded_file = st.file_uploader("Tải ảnh lá lúa (.jpg, .png)", type=["jpg", "jpeg", "png"])
     
     if uploaded_file is not None:
-        # Display image
+        # Display image with constrained height
         image = Image.open(uploaded_file)
-        st.image(image, caption="Ảnh lá lúa đầu vào", use_container_width=True)
+        image_thumb = image.copy()
+        image_thumb.thumbnail((300, 160))
+        st.image(image_thumb, caption="Ảnh đầu vào (bản xem trước)", use_container_width=False)
         
-        # Save to temp location for inference
+        # Save original to temp location for inference
         temp_dir = os.path.join(project_root, "demo_assets")
         os.makedirs(temp_dir, exist_ok=True)
         temp_image_path = os.path.join(temp_dir, "temp_upload.jpg")
         with open(temp_image_path, "wb") as f:
             f.write(uploaded_file.getbuffer())
     else:
-        st.info("💡 Vui lòng tải lên một ảnh lá lúa bị bệnh để bắt đầu chẩn đoán.")
+        st.info("💡 Vui lòng tải lên một ảnh lá lúa bị bệnh.")
         
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown("**Yếu tố môi trường thời tiết (Tùy chọn):**")
-    temp = st.slider("Nhiệt độ môi trường (°C)", min_value=15.0, max_value=45.0, value=28.0, step=0.5)
-    humidity = st.slider("Độ ẩm không khí (%)", min_value=30.0, max_value=100.0, value=85.0, step=1.0)
+    st.markdown("<div style='margin-top:10px;'></div>", unsafe_allow_html=True)
+    temp = st.slider("Nhiệt độ (°C)", min_value=15.0, max_value=45.0, value=28.0, step=0.5)
+    humidity = st.slider("Độ ẩm (%)", min_value=30.0, max_value=100.0, value=85.0, step=1.0)
 
 with col2:
+    st.markdown("<div class='section-header'>🎯 PHÂN TÍCH CNN</div>", unsafe_allow_html=True)
     if uploaded_file is not None and os.path.exists(CKPT_PATH):
-        with st.spinner("Đang chạy phân tích CNN và suy diễn mờ XAI..."):
-            try:
-                device_str = "cuda" if torch.cuda.is_available() else "cpu"
-                model, classes, transform = get_cached_model(CKPT_PATH, device_str)
-                
-                # CNN prediction
-                cnn_result = predict_single(temp_image_path, model, classes, transform, torch.device(device_str))
-                
-                # Execute Fuzzy Logic Engine
-                inp = FuzzyInput(
-                    cnn_scores=cnn_result["scores"],
-                    top_class=cnn_result["pred_class"],
-                    top_confidence=cnn_result["pred_confidence"],
-                    temperature=temp,
-                    humidity=humidity
-                )
-                
-                engine = FuzzyEngine()
-                out: FuzzyOutput = engine.run(inp)
-                
-                # Mapping classes to Vietnamese names for display
-                class_mapping = {
-                    "Healthy": "Khỏe mạnh",
-                    "Mild Bacterial blight": "Bạc lá nhẹ (Bacterial blight)",
-                    "Mild Blast": "Đạo ôn nhẹ (Blast)",
-                    "Mild Brownspot": "Đốm nâu nhẹ (Brownspot)",
-                    "Mild Tungro": "Tungro nhẹ",
-                    "Severe Bacterial blight": "Bạc lá nặng (Bacterial blight)",
-                    "Severe Blast": "Đạo ôn nặng (Blast)",
-                    "Severe Brownspot": "Đốm nâu nặng (Brownspot)",
-                    "Severe Tungro": "Tungro nặng"
-                }
-                pred_class_vi = class_mapping.get(cnn_result["pred_class"], cnn_result["pred_class"])
-                
-                # Display CNN results
-                st.markdown("<div class='section-header'>🎯 KẾT QUẢ PHÂN TÍCH CNN</div>", unsafe_allow_html=True)
-                
-                c_col1, c_col2 = st.columns(2)
-                with c_col1:
-                    st.markdown(f"""
-                    <div style="background: rgba(30, 41, 59, 0.45); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; height: 130px;">
-                        <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Lớp bệnh nhận diện</div>
-                        <div style="font-size: 1.25rem; font-weight: 700; color: #34d399; margin-top: 0.2rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{pred_class_vi}</div>
-                        <div style="font-size: 0.85rem; color: #94a3b8; margin-top: 0.5rem;">CNN Code: <code>{cnn_result['pred_class']}</code></div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                with c_col2:
-                    st.markdown(f"""
-                    <div style="background: rgba(30, 41, 59, 0.45); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; height: 130px;">
-                        <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Độ tự tin dự đoán</div>
-                        <div style="font-size: 2.2rem; font-weight: 700; color: #60a5fa; margin-top: 0.1rem;">{cnn_result['pred_confidence']*100:.2f}%</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                
-                st.markdown("<p style='font-size: 0.95rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.5rem;'>Phân phối xác suất (Softmax Scores):</p>", unsafe_allow_html=True)
-                scores_df = pd.DataFrame({
-                    "Độ tự tin": list(cnn_result["scores"].values())
-                }, index=[class_mapping.get(c, c) for c in cnn_result["scores"].keys()])
-                st.bar_chart(scores_df, height=200)
-                
-                # Display Fuzzy Logic results
-                st.markdown("<div class='section-header'>🧠 KẾT QUẢ SUY DIỄN MỜ (FUZZY LOGIC)</div>", unsafe_allow_html=True)
-                
-                f_col1, f_col2 = st.columns(2)
-                with f_col1:
-                    alert_badge = get_alert_badge(out.final_alert_level)
-                    st.markdown(f"""
-                    <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 0.8rem; margin-bottom: 0.8rem;">
-                        <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Mức cảnh báo (Alert)</div>
-                        <div style="margin-top: 0.4rem;">{alert_badge}</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                    
-                    st.markdown(f"""
-                    <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 0.8rem; margin-bottom: 0.8rem;">
-                        <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Nghiêm trọng trực quan</div>
-                        <div style="font-size: 1.15rem; font-weight: 600; color: #f43f5e; margin-top: 0.2rem;">{out.visual_severity_level}</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                    
-                    st.markdown(f"""
-                    <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 0.8rem; margin-bottom: 0.8rem;">
-                        <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Nhóm bệnh mờ</div>
-                        <div style="font-size: 1.15rem; font-weight: 600; color: #fbbf24; margin-top: 0.2rem;">{out.predicted_disease}</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                    
-                with f_col2:
-                    st.markdown(f"""
-                    <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 0.8rem; margin-bottom: 0.8rem;">
-                        <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Độ tin cậy hệ thống</div>
-                        <div style="font-size: 1.4rem; font-weight: 700; color: #10b981; margin-top: 0.1rem;">{out.diagnostic_confidence:.2f}%</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                    
-                    st.markdown(f"""
-                    <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 0.8rem; margin-bottom: 0.8rem;">
-                        <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Độ bất định chẩn đoán</div>
-                        <div style="font-size: 1.15rem; font-weight: 600; color: #a8a29e; margin-top: 0.2rem;">{out.uncertainty_level}</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                    
-                    env_badge = get_env_badge(out.environmental_risk_level)
-                    st.markdown(f"""
-                    <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 0.8rem; margin-bottom: 0.8rem;">
-                        <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Nguy cơ do thời tiết</div>
-                        <div style="margin-top: 0.4rem;">{env_badge}</div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                    
-            except Exception as e:
-                st.error(f"❌ Có lỗi xảy ra khi suy diễn mờ: {e}")
-                
-    elif uploaded_file is not None and not os.path.exists(CKPT_PATH):
-        st.error(f"❌ Không tìm thấy tệp trọng số CNN tại đường dẫn: `{CKPT_PATH}`. Vui lòng đặt đúng tệp trọng số.")
+        try:
+            device_str = "cuda" if torch.cuda.is_available() else "cpu"
+            model, classes, transform = get_cached_model(CKPT_PATH, device_str)
+            
+            # CNN prediction
+            cnn_result = predict_single(temp_image_path, model, classes, transform, torch.device(device_str))
+            
+            # Execute Fuzzy Logic Engine (shared across cols)
+            inp = FuzzyInput(
+                cnn_scores=cnn_result["scores"],
+                top_class=cnn_result["pred_class"],
+                top_confidence=cnn_result["pred_confidence"],
+                temperature=temp,
+                humidity=humidity
+            )
+            
+            engine = FuzzyEngine()
+            out = engine.run(inp)
+            
+            class_mapping = {
+                "Healthy": "Khỏe mạnh",
+                "Mild Bacterial blight": "Bạc lá nhẹ (Bacterial blight)",
+                "Mild Blast": "Đạo ôn nhẹ (Blast)",
+                "Mild Brownspot": "Đốm nâu nhẹ (Brownspot)",
+                "Mild Tungro": "Tungro nhẹ",
+                "Severe Bacterial blight": "Bạc lá nặng (Bacterial blight)",
+                "Severe Blast": "Đạo ôn nặng (Blast)",
+                "Severe Brownspot": "Đốm nâu nặng (Brownspot)",
+                "Severe Tungro": "Tungro nặng"
+            }
+            pred_class_vi = class_mapping.get(cnn_result["pred_class"], cnn_result["pred_class"])
+            
+            st.markdown(f"""
+            <div style="background: rgba(30, 41, 59, 0.45); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 0.75rem; margin-bottom: 0.5rem;">
+                <div style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Lớp bệnh nhận diện (CNN)</div>
+                <div style="font-size: 1.15rem; font-weight: 700; color: #34d399; margin-top: 0.1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{pred_class_vi}</div>
+                <div style="font-size: 0.75rem; color: #cbd5e1; margin-top: 0.2rem;">Độ tự tin: <strong style="color:#60a5fa;">{cnn_result['pred_confidence']*100:.2f}%</strong></div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            st.markdown("<p style='font-size: 0.8rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.2rem;'>Phân phối xác suất (Softmax Scores):</p>", unsafe_allow_html=True)
+            scores_df = pd.DataFrame({
+                "Độ tự tin": list(cnn_result["scores"].values())
+            }, index=[class_mapping.get(c, c) for c in cnn_result["scores"].keys()])
+            st.bar_chart(scores_df, height=130)
+            
+        except Exception as e:
+            st.error(f"❌ Lỗi CNN: {e}")
     else:
-        st.markdown("<div style='text-align: center; color: #64748b; padding: 6rem 0;'>Vui lòng tải ảnh lá lúa lên ở cột bên trái để hiển thị kết quả chẩn đoán.</div>", unsafe_allow_html=True)
+        st.markdown("<div style='text-align: center; color: #64748b; padding-top: 4rem; font-size: 0.9rem;'>Chờ tải ảnh để chạy phân tích...</div>", unsafe_allow_html=True)
 
-# Bottom Full-width XAI Report
+with col3:
+    st.markdown("<div class='section-header'>🧠 SUY DIỄN MỜ</div>", unsafe_allow_html=True)
+    if uploaded_file is not None and 'out' in locals():
+        alert_badge = get_alert_badge(out.final_alert_level)
+        env_badge = get_env_badge(out.environmental_risk_level)
+        
+        st.markdown(f"""
+        <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 0.55rem 0.8rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase;">Mức cảnh báo</div>
+            <div>{alert_badge}</div>
+        </div>
+        
+        <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 0.55rem 0.8rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase;">Nguy cơ thời tiết</div>
+            <div>{env_badge}</div>
+        </div>
+
+        <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 0.55rem 0.8rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase;">Nghiêm trọng trực quan</div>
+            <div style="font-size: 0.95rem; font-weight: 600; color: #f43f5e;">{out.visual_severity_level}</div>
+        </div>
+
+        <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 0.55rem 0.8rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase;">Độ tin cậy hệ thống</div>
+            <div style="font-size: 1.1rem; font-weight: 700; color: #10b981;">{out.diagnostic_confidence:.2f}%</div>
+        </div>
+
+        <div style="background: rgba(30, 41, 59, 0.3); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 0.55rem 0.8rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 0.8rem; color: #94a3b8; text-transform: uppercase;">Độ bất định chẩn đoán</div>
+            <div style="font-size: 0.95rem; font-weight: 600; color: #cbd5e1;">{out.uncertainty_level}</div>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("<div style='text-align: center; color: #64748b; padding-top: 4rem; font-size: 0.9rem;'>Chờ chẩn đoán...</div>", unsafe_allow_html=True)
+
+# Bottom Section: Tabs for details to fit in viewport
 if uploaded_file is not None and 'out' in locals():
-    st.markdown("<br><hr>", unsafe_allow_html=True)
-    st.markdown("<div style='font-size: 1.5rem; font-weight: 700; color: #34d399; margin-top: 1rem; margin-bottom: 1.5rem; text-shadow: 0 0 10px rgba(52, 211, 153, 0.2);'>📊 BÁO CÁO GIẢI THÍCH CHI TIẾT (XAI REPORT) & KHUYẾN NGHỊ HÀNH ĐỘNG</div>", unsafe_allow_html=True)
+    st.markdown("<div style='margin: 0.3rem 0;'><hr style='margin: 0.3rem 0; opacity: 0.3;'></div>", unsafe_allow_html=True)
     
-    xai_col1, xai_col2 = st.columns(2, gap="large")
+    tab1, tab2, tab3 = st.tabs(["🔍 GIẢI THÍCH SUY DIỄN MỜ (XAI)", "🌾 KHUYẾN NGHỊ HÀNH ĐỘNG", "💾 XUẤT BÁO CÁO (JSON)"])
     
-    with xai_col1:
-        st.markdown("### 🔍 Giải thích Suy diễn Mờ (Fuzzy Explanation)")
+    with tab1:
         formatted_explanation = out.explanation.replace('\n', '<br>').replace('  ', '&nbsp;&nbsp;')
         st.markdown(f"""
-        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 12px; padding: 1.5rem; color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; min-height: 250px;">
+        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 8px; padding: 0.8rem; color: #e2e8f0; font-size: 0.88rem; line-height: 1.5; max-height: 160px; overflow-y: auto;">
             {formatted_explanation}
         </div>
         """, unsafe_allow_html=True)
         
-    with xai_col2:
-        st.markdown("### 🌾 Khuyến nghị Hành động Nông nghiệp")
+    with tab2:
         formatted_recommendation = out.recommendation.replace('\n', '<br>').replace('  ', '&nbsp;&nbsp;')
         st.markdown(f"""
-        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 12px; padding: 1.5rem; color: #e2e8f0; font-size: 0.95rem; line-height: 1.6; min-height: 250px;">
+        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(16, 185, 129, 0.15); border-radius: 8px; padding: 0.8rem; color: #e2e8f0; font-size: 0.88rem; line-height: 1.5; max-height: 160px; overflow-y: auto;">
             {formatted_recommendation}
         </div>
         """, unsafe_allow_html=True)
-
-    # Export Section
-    st.markdown("<br><hr>", unsafe_allow_html=True)
-    st.markdown("### 💾 Xuất Dữ Liệu Kết Quả")
-    
-    export_dict = {
-        "input_image": uploaded_file.name,
-        "environment": {
-            "temperature_C": temp,
-            "humidity_percent": humidity
-        },
-        "cnn_outputs": {
-            "prediction": cnn_result["pred_class"],
-            "confidence": cnn_result["pred_confidence"],
-            "all_scores": cnn_result["scores"]
-        },
-        "fuzzy_outputs": {
-            "predicted_disease": out.predicted_disease,
-            "visual_severity_level": out.visual_severity_level,
-            "diagnostic_confidence_percent": out.diagnostic_confidence,
-            "uncertainty_level": out.uncertainty_level,
-            "environmental_risk_level": out.environmental_risk_level,
-            "final_alert_level": out.final_alert_level,
-            "explanation": out.explanation,
-            "recommendation": out.recommendation
+        
+    with tab3:
+        st.markdown("<p style='font-size: 0.85rem; margin-bottom: 0.4rem;'>Tải xuống báo cáo tích hợp chứa đầy đủ dữ liệu ảnh đầu vào, kết quả phân loại CNN và các tập mờ giải thích XAI:</p>", unsafe_allow_html=True)
+        
+        export_dict = {
+            "input_image": uploaded_file.name,
+            "environment": {
+                "temperature_C": temp,
+                "humidity_percent": humidity
+            },
+            "cnn_outputs": {
+                "prediction": cnn_result["pred_class"],
+                "confidence": cnn_result["pred_confidence"],
+                "all_scores": cnn_result["scores"]
+            },
+            "fuzzy_outputs": {
+                "predicted_disease": out.predicted_disease,
+                "visual_severity_level": out.visual_severity_level,
+                "diagnostic_confidence_percent": out.diagnostic_confidence,
+                "uncertainty_level": out.uncertainty_level,
+                "environmental_risk_level": out.environmental_risk_level,
+                "final_alert_level": out.final_alert_level,
+                "explanation": out.explanation,
+                "recommendation": out.recommendation
+            }
         }
-    }
-    
-    json_bytes = json.dumps(export_dict, ensure_ascii=False, indent=2).encode('utf-8')
-    
-    st.download_button(
-        label="📥 Tải xuống báo cáo tích hợp (JSON)",
-        data=json_bytes,
-        file_name=f"rice_diagnosis_{Path(uploaded_file.name).stem}.json",
-        mime="application/json"
-    )
+        
+        json_bytes = json.dumps(export_dict, ensure_ascii=False, indent=2).encode('utf-8')
+        
+        st.download_button(
+            label="📥 Tải xuống báo cáo kết quả (JSON)",
+            data=json_bytes,
+            file_name=f"rice_diagnosis_{Path(uploaded_file.name).stem}.json",
+            mime="application/json"
+        )

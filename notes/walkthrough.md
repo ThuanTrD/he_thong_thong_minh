@@ -73,3 +73,20 @@ Hành động khuyến nghị:
 
 ---
 Toàn bộ mã nguồn và tệp tích hợp đã được commit và push lên remote branch `khanhtrang` một cách an toàn và sạch sẽ.
+
+## Ứng Dụng Streamlit Web Demo ([`app_streamlit.py`](file:///t:/BeWaters2/1.%20248.218.749-32CNTT32/5.%20Hoc%20ky%20III/16.%20HTTM/2.BaitapNhom/code/app_streamlit.py))
+
+Tôi đã xây dựng thêm giao diện ứng dụng web trực quan bằng **Streamlit** giúp việc trình diễn và kiểm thử luồng suy diễn trở nên sinh động:
+- **Cột bên trái:** Upload ảnh lá lúa (`.jpg`, `.jpeg`, `.png`) và tùy chỉnh các yếu tố thời tiết (nhiệt độ từ 15-45°C, độ ẩm từ 30-100%).
+- **Cột bên phải:**
+  - Hiển thị kết quả dự đoán lớp bệnh của mô hình CNN (`best_model.pt`) và độ tin cậy.
+  - Vẽ biểu đồ xác suất phân phối Softmax cho tất cả các lớp bệnh hại.
+  - Hiển thị kết quả từ bộ suy diễn mờ bao gồm: Mức cảnh báo tổng hợp (Alert), Nghiêm trọng bề mặt (Severity), Nhóm bệnh mờ, Độ tin cậy hệ thống, Độ bất định chẩn đoán và Nguy cơ thời tiết.
+- **Phía dưới:** Trình bày chi tiết báo cáo giải thích XAI bằng tiếng Việt cùng khuyến nghị hành động nông nghiệp tương ứng.
+- **Tính năng xuất dữ liệu:** Hỗ trợ xuất và tải xuống kết quả tích hợp dưới dạng tệp JSON.
+
+### Cách chạy ứng dụng:
+```powershell
+.\venv\Scripts\streamlit run app_streamlit.py
+```
+Ứng dụng chạy trên máy khách qua cổng mặc định `http://localhost:8501`.
