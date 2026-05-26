@@ -56,7 +56,7 @@ def parse_risk_level(level: str):
     else:
         return "info"
 
-# Custom CSS for single page viewport layout & high-tech dark theme
+# Custom CSS for single page viewport layout & high-tech dark theme overrides
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
@@ -65,30 +65,67 @@ st.markdown("""
         font-family: 'Outfit', sans-serif;
     }
     
-    .stApp {
-        background: radial-gradient(circle at 50% 50%, #060b14 0%, #021a15 100%);
-        color: #f1f5f9;
+    /* 1. Global App View Background Override */
+    [data-testid="stAppViewContainer"] {
+        background: radial-gradient(circle at 50% 50%, #070b19 0%, #021a14 100%) !important;
+        color: #f1f5f9 !important;
     }
     
+    /* Remove white/gray header area of Streamlit */
+    header[data-testid="stHeader"] {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+    
+    /* Optimize main block padding */
+    [data-testid="stMainBlockContainer"] {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+    
+    /* 2. Left Sidebar Styling Overrides */
+    section[data-testid="stSidebar"] {
+        background: radial-gradient(circle at 50% 50%, #060b13 0%, #021410 100%) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+        width: 260px !important;
+    }
+    
+    section[data-testid="stSidebar"] .stMarkdown p, 
+    section[data-testid="stSidebar"] li, 
+    section[data-testid="stSidebar"] span, 
+    section[data-testid="stSidebar"] label {
+        color: #cbd5e1 !important;
+    }
+    
+    section[data-testid="stSidebar"] h1, 
+    section[data-testid="stSidebar"] h2, 
+    section[data-testid="stSidebar"] h3, 
+    section[data-testid="stSidebar"] h4 {
+        color: #34d399 !important;
+    }
+    
+    /* 3. Typography & Titles */
     .main-title {
-        font-size: 1.8rem;
+        font-size: 2rem;
         font-weight: 700;
         background: linear-gradient(135deg, #34d399 0%, #22d3ee 50%, #0d9488 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-align: center;
-        margin-top: -2.2rem;
-        margin-bottom: 0.1rem;
-        filter: drop-shadow(0px 4px 8px rgba(34, 211, 238, 0.15));
+        margin-top: -1rem;
+        margin-bottom: 0.2rem;
+        filter: drop-shadow(0px 0px 12px rgba(34, 211, 238, 0.25));
+        letter-spacing: 0.02em;
     }
     
     .subtitle {
-        font-size: 0.82rem;
-        color: #94a3b8;
+        font-size: 0.9rem;
+        color: #cbd5e1;
         text-align: center;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.8rem;
         text-transform: uppercase;
         letter-spacing: 0.08em;
+        font-weight: 500;
     }
     
     .section-header {
@@ -102,7 +139,7 @@ st.markdown("""
         letter-spacing: 0.05em;
     }
     
-    /* Custom Badge classes */
+    /* 4. Badges */
     .badge {
         display: inline-block;
         padding: 0.25rem 0.6rem;
@@ -149,6 +186,45 @@ st.markdown("""
         background: #10b981;
         box-shadow: 0 0 6px #10b981;
         margin-right: 8px;
+    }
+    
+    /* 5. Custom styled Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+        background-color: transparent;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .stTabs [data-baseweb="tab"] {
+        background-color: rgba(30, 41, 59, 0.2) !important;
+        border: 1px solid rgba(255, 255, 255, 0.03) !important;
+        border-bottom: none !important;
+        border-radius: 6px 6px 0 0 !important;
+        color: #94a3b8 !important;
+        padding: 0.35rem 0.9rem !important;
+        font-size: 0.85rem !important;
+    }
+    .stTabs [aria-selected="true"] {
+        background-color: rgba(34, 211, 238, 0.06) !important;
+        border-color: rgba(34, 211, 238, 0.25) !important;
+        color: #22d3ee !important;
+        font-weight: 600 !important;
+    }
+    
+    /* 6. Custom scrollbar for reports */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.01);
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(34, 211, 238, 0.15);
+        border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(34, 211, 238, 0.3);
     }
     
     /* Adjust padding to fit in viewport */
@@ -219,7 +295,7 @@ with st.sidebar:
     st.markdown("<hr style='margin: 0.6rem 0; opacity: 0.15;'>", unsafe_allow_html=True)
     st.markdown("<p style='font-size: 0.85rem; font-weight: 600; color: #a7f3d0; margin-bottom: 0.4rem;'>📖 Quick Operations</p>", unsafe_allow_html=True)
     st.markdown("""
-    <div style="font-size: 0.75rem; color: #94a3b8; line-height: 1.4;">
+    <div style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.4;">
     1. <b>Upload image:</b> Add a leaf file (.jpg, .png).<br>
     2. <b>Weather controls:</b> Drag temperature & humidity.<br>
     3. <b>Diagnosis:</b> View deep learning CNN output integrated with environmental rules.<br>
@@ -335,17 +411,7 @@ with col2:
                     glow_style = "box-shadow: 0 0 4px rgba(34, 211, 238, 0.15);"
                     text_style = "color: #cbd5e1;"
                     
-                bars_html += f"""
-                <div style="margin-bottom: 0.4rem;">
-                    <div style="display: flex; justify-content: space-between; font-size: 0.74rem; margin-bottom: 2px;">
-                        <span style="{text_style}">{cls_vi}</span>
-                        <span style="font-family: monospace; color: #94a3b8;">{percent:.2f}%</span>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.03); height: 6px; border-radius: 3px; overflow: hidden;">
-                        <div style="background: {bar_color}; width: {percent}%; height: 100%; border-radius: 3px; {glow_style}"></div>
-                    </div>
-                </div>
-                """
+                bars_html += f'<div style="margin-bottom: 0.4rem;"><div style="display: flex; justify-content: space-between; font-size: 0.74rem; margin-bottom: 2px;"><span style="{text_style}">{cls_vi}</span><span style="font-family: monospace; color: #94a3b8;">{percent:.2f}%</span></div><div style="background: rgba(255,255,255,0.03); height: 6px; border-radius: 3px; overflow: hidden;"><div style="background: {bar_color}; width: {percent}%; height: 100%; border-radius: 3px; {glow_style}"></div></div></div>'
             st.markdown(bars_html, unsafe_allow_html=True)
             
         except Exception as e:
@@ -460,12 +526,16 @@ if uploaded_file is not None and 'out' in locals():
             
             rules_html = '<div style="max-height: 140px; overflow-y: auto; padding-right: 0.2rem;">'
             for r in rules_fired:
-                rules_html += f"""
-                <div style="background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 6px; padding: 0.35rem 0.5rem; font-size: 0.76rem; color: #fef08a; display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.3rem;">
-                    <span style="background: #f59e0b; color: #020617; border-radius: 50%; width: 14px; height: 14px; display: inline-flex; justify-content: center; align-items: center; font-weight: bold; font-size: 0.65rem;">⚡</span>
-                    <span>{r}</span>
-                </div>
-                """
+                rules_html += (
+                    '<div style="background: rgba(245, 158, 11, 0.06); border: 1px solid rgba(245, 158, 11, 0.22); '
+                    'border-radius: 6px; padding: 0.35rem 0.5rem; font-size: 0.76rem; color: #fef08a; display: flex; '
+                    'align-items: center; gap: 0.4rem; margin-bottom: 0.3rem;">'
+                    '<span style="background: #f59e0b; color: #020617; border-radius: 50%; width: 14px; height: 14px; '
+                    'display: inline-flex; justify-content: center; align-items: center; font-weight: bold; '
+                    'font-size: 0.65rem;">⚡</span>'
+                    f'<span>{r}</span>'
+                    '</div>'
+                )
             rules_html += '</div>'
             st.markdown(rules_html, unsafe_allow_html=True)
             
@@ -495,18 +565,18 @@ if uploaded_file is not None and 'out' in locals():
             if not l_strip:
                 continue
             if l_strip.startswith(('1.', '2.', '3.', '4.', '5.')):
-                rec_html += f"""
-                <div style="display: flex; gap: 0.5rem; align-items: flex-start; margin-bottom: 0.25rem;">
-                    <span style="color: #22d3ee; font-weight: bold; font-size: 0.8rem;">✔</span>
-                    <span style="color: #cbd5e1; font-size: 0.8rem;">{l_strip[2:].strip()}</span>
-                </div>
-                """
+                rec_html += (
+                    '<div style="display: flex; gap: 0.5rem; align-items: flex-start; margin-bottom: 0.25rem;">'
+                    '<span style="color: #22d3ee; font-weight: bold; font-size: 0.8rem;">✔</span>'
+                    f'<span style="color: #cbd5e1; font-size: 0.8rem;">{l_strip[2:].strip()}</span>'
+                    '</div>'
+                )
             elif l_strip.startswith('*'):
-                rec_html += f"""
-                <div style="background: rgba(251, 191, 36, 0.04); border-left: 2px solid #fbbf24; padding: 0.35rem 0.5rem; margin-top: 0.4rem; border-radius: 0 4px 4px 0; font-size: 0.78rem; color: #fde047; line-height:1.4;">
-                    💡 <b>Biện pháp đặc thù:</b> {l_strip[1:].strip()}
-                </div>
-                """
+                rec_html += (
+                    '<div style="background: rgba(251, 191, 36, 0.04); border-left: 2px solid #fbbf24; '
+                    'padding: 0.35rem 0.5rem; margin-top: 0.4rem; border-radius: 0 4px 4px 0; font-size: 0.78rem; '
+                    f'color: #fde047; line-height:1.4;">💡 <b>Biện pháp đặc thù:</b> {l_strip[1:].strip()}</div>'
+                )
             else:
                 rec_html += f"<p style='color: #e2e8f0; font-size: 0.82rem; margin-bottom: 0.3rem;'>{l_strip}</p>"
                 
