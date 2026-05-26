@@ -1,1 +1,0 @@
-# he_thong_thong_minh
