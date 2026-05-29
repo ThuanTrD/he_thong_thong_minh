@@ -304,7 +304,7 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 # Title & Subtitle
-st.markdown("<h1 class='main-title'>🌾 INTELLIGENT RICE DIAGNOSTIC CONTROL CENTRE</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-title'>🌾 BÁO CÁO MÔN HỌC HỆ THỐNG THÔNG MINH - NHÓM 14</h1>", unsafe_allow_html=True)
 st.markdown("<p class='subtitle'>CNN + Fuzzy Expert System + Explainable AI (XAI) for Smart Agriculture</p>", unsafe_allow_html=True)
 
 # Mini Pipeline Diagram
