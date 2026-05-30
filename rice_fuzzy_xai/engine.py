@@ -102,6 +102,39 @@ class FuzzyEngine:
         else:
             final_alert_level = "Red Alert (Báo động đỏ)"
 
+        # [TÍN HIỆU CHUYÊN GIA] Expert-Assisted Confidence Fusion
+        expert_signal = 0.0
+        if inp.snail_density is not None and inp.snail_density > 0:
+            expert_signal = min(inp.snail_density / 10.0, 1.0)
+            
+        inference_mode = "AI_CONFIDENT"
+        fused_confidence = max_score
+        
+        if expert_signal > 0:
+            if max_score > 0.80 and "Low" in uncertainty_level and expert_signal < 0.8:
+                # CNN nhận diện rất rõ, tín hiệu thực địa chưa đủ mạnh để thay đổi hoàn toàn
+                inference_mode = "AI_CONFIDENT"
+                fused_confidence = max_score
+            elif expert_signal >= 0.5 and ("High" in uncertainty_level or max_score <= 0.65):
+                # OOD hoặc độ bất định cao, kết hợp tín hiệu thực địa mạnh -> Hỗ trợ chuyên gia
+                inference_mode = "EXPERT_GUIDED_MODE"
+                predicted_disease = "Golden Apple Snail"
+                # Fusion: tín hiệu thực địa đóng vai trò chủ đạo
+                fused_confidence = min(0.60 + expert_signal * 0.39, 0.99)
+                
+                if inp.snail_density > 3:
+                    final_alert_level = "Red Alert (Báo động đỏ)"
+                    visual_severity_level = "Severe (Nghiêm trọng)"
+                else:
+                    final_alert_level = "Attention (Chú ý)"
+                    visual_severity_level = "Moderate (Trung bình)"
+            else:
+                # Trạng thái trung gian: Hybrid Warning (kết hợp cả 2 tín hiệu)
+                inference_mode = "HYBRID_WARNING"
+                fused_confidence = 0.7 * max_score + 0.3 * expert_signal
+                if "Normal" in final_alert_level:
+                    final_alert_level = "Attention (Chú ý)"
+
         # 5. Sinh giải thích (XAI) và khuyến nghị nông nghiệp
         explanation, recommendation = generate_explanation(
             predicted_disease=predicted_disease,
@@ -118,7 +151,10 @@ class FuzzyEngine:
             has_env=has_env,
             vsi_rules=vsi_rules,
             eri_rules=eri_rules,
-            alert_rules=alert_rules
+            alert_rules=alert_rules,
+            snail_density=inp.snail_density if inp.snail_density is not None else 0.0,
+            inference_mode=inference_mode,
+            fused_confidence=fused_confidence
         )
 
         return FuzzyOutput(
@@ -128,6 +164,8 @@ class FuzzyEngine:
             uncertainty_level=uncertainty_level,
             environmental_risk_level=environmental_risk_level,
             final_alert_level=final_alert_level,
+            inference_mode=inference_mode,
+            fused_confidence=fused_confidence,
             explanation=explanation,
             recommendation=recommendation
         )

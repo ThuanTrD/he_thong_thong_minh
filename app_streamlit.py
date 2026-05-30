@@ -328,9 +328,21 @@ col1, col2, col3 = st.columns([1, 1.1, 1.1], gap="medium")
 
 with col1:
     st.markdown("<div class='section-header'>📤 INPUT & ENVIRONMENT</div>", unsafe_allow_html=True)
+    
+    # Initialize session state for file tracking and snail slider
+    if 'last_uploaded_filename' not in st.session_state:
+        st.session_state.last_uploaded_filename = None
+    if 'snail_density_val' not in st.session_state:
+        st.session_state.snail_density_val = 0.0
+        
     uploaded_file = st.file_uploader("Tải ảnh lá lúa (.jpg, .png)", type=["jpg", "jpeg", "png"])
     
     if uploaded_file is not None:
+        # Check if this is a new image to reset the override states
+        if st.session_state.last_uploaded_filename != uploaded_file.name:
+            st.session_state.last_uploaded_filename = uploaded_file.name
+            st.session_state.snail_density_val = 0.0 # Reset snail slider
+            
         # Display image with constrained height
         image = Image.open(uploaded_file)
         image_thumb = image.copy()
@@ -349,6 +361,9 @@ with col1:
     st.markdown("<div style='margin-top:6px;'></div>", unsafe_allow_html=True)
     temp = st.slider("Nhiệt độ thời tiết (°C)", min_value=15.0, max_value=45.0, value=28.0, step=0.5)
     humidity = st.slider("Độ ẩm không khí (%)", min_value=30.0, max_value=100.0, value=85.0, step=1.0)
+    
+    st.markdown("<div style='margin-top:10px; margin-bottom:5px; font-size: 0.8rem; color: #f59e0b; font-weight: bold;'>🧑‍🌾 NHẬP LIỆU TỪ NÔNG DÂN (Manual Input)</div>", unsafe_allow_html=True)
+    snail_density = st.slider("Mật độ Ốc bươu quan sát được (con/m²)", min_value=0.0, max_value=10.0, step=0.5, key="snail_density_val", help="Kéo thanh trượt này nếu nông dân trực tiếp quan sát thấy ốc tại ruộng. Logic mờ sẽ ghi đè mạng CNN.")
 
 with col2:
     st.markdown("<div class='section-header'>🎯 DEEP LEARNING CNN</div>", unsafe_allow_html=True)
@@ -357,20 +372,62 @@ with col2:
             device_str = "cuda" if torch.cuda.is_available() else "cpu"
             model, classes, transform = get_cached_model(CKPT_PATH, device_str)
             
-            # CNN prediction
-            cnn_result = predict_single(temp_image_path, model, classes, transform, torch.device(device_str))
+            import requests
             
-            # Execute Fuzzy Logic Engine
-            inp = FuzzyInput(
-                cnn_scores=cnn_result["scores"],
-                top_class=cnn_result["pred_class"],
-                top_confidence=cnn_result["pred_confidence"],
-                temperature=temp,
-                humidity=humidity
-            )
-            
-            engine = FuzzyEngine()
-            out = engine.run(inp)
+            # Gọi API Backend thay vì chạy model cục bộ để tận dụng OOD Detection
+            api_url = "http://localhost:8000/predict"
+            with open(temp_image_path, "rb") as f:
+                resp = requests.post(api_url, files={"file": f})
+                
+            if resp.status_code == 200:
+                api_data = resp.json()
+                status = api_data["status"]
+                is_ood = api_data["is_ood"]
+                
+                # Xử lý hiển thị dựa trên trạng thái (KNOWN, UNCERTAIN, OOD)
+                if status == "KNOWN":
+                    pred_class_val = api_data["predicted_class"]
+                    pred_conf_val = api_data["confidence"]
+                    title_label = "Lớp bệnh nhận dạng (Top Class)"
+                elif status == "UNCERTAIN":
+                    pred_class_val = f"Nhóm bệnh: {api_data.get('top_group')}"
+                    pred_conf_val = api_data.get("group_confidence", 0.0)
+                    title_label = "Nhóm bệnh nghi ngờ (Group Confidence)"
+                else:
+                    pred_class_val = "Out-of-Distribution/Unknown"
+                    pred_conf_val = api_data["debug_info"]["max_softmax_probability"]
+                    title_label = "Lớp bệnh nhận dạng (Top Class)"
+                    
+                # Tái tạo cnn_result từ API response
+                cnn_result = {
+                    "scores": api_data["debug_info"]["cnn_scores"],
+                    "pred_class": pred_class_val,
+                    "pred_confidence": pred_conf_val
+                }
+                
+                if status != "KNOWN":
+                    # Hiển thị cảnh báo OOD trực tiếp trên UI
+                    st.error(f"🚨 {api_data['message']}")
+                    if snail_density == 0:
+                        st.info(f"💡 Khuyến nghị: {api_data['recommendation']}")
+
+
+                if status == "KNOWN" or snail_density > 0:
+                    # Chỉ chạy Fuzzy Logic Engine nếu ảnh là KNOWN HOẶC người dùng kích hoạt Ngoại lệ ốc bươu vàng
+                    inp = FuzzyInput(
+                        cnn_scores=cnn_result["scores"],
+                        top_class=cnn_result["pred_class"],
+                        top_confidence=cnn_result["pred_confidence"],
+                        temperature=temp,
+                        humidity=humidity,
+                        snail_density=snail_density
+                    )
+                    
+                    engine = FuzzyEngine()
+                    out = engine.run(inp)
+            else:
+                st.error("❌ Không kết nối được tới API Backend. Vui lòng kiểm tra server uvicorn.")
+                cnn_result = {"scores": {}, "pred_class": "Error", "pred_confidence": 0}
             
             class_mapping = {
                 "Healthy": "Khỏe mạnh",
@@ -384,13 +441,31 @@ with col2:
                 "Severe Tungro": "Tungro nặng"
             }
             pred_class_vi = class_mapping.get(cnn_result["pred_class"], cnn_result["pred_class"])
+            if 'out' in locals():
+                if out.inference_mode == "EXPERT_GUIDED_MODE":
+                    pred_class_vi = "Dấu hiệu nghi ngờ Ốc bươu vàng (Expert-Guided)"
+                    title_label = "SUY LUẬN HỖ TRỢ CHUYÊN GIA (EXPERT-GUIDED)"
+                    cnn_result['pred_confidence'] = out.fused_confidence
+                    st.warning("⚠️ Hệ thống chuyển sang chế độ suy luận có hỗ trợ tín hiệu thực địa do dữ liệu hình ảnh có độ bất định cao.")
+                    
+                elif out.inference_mode == "HYBRID_WARNING":
+                    title_label = "CHẨN ĐOÁN CẢNH BÁO LAI (HYBRID INFERENCE)"
+                    cnn_result['pred_confidence'] = out.fused_confidence
+                    st.warning("⚠️ Hệ thống ghi nhận tín hiệu ngoại lệ từ thực địa. Kích hoạt Cảnh báo Lai (Hybrid Warning).")
+                    
+                elif out.inference_mode == "AI_CONFIDENT" and snail_density > 0:
+                    st.info("ℹ️ Tín hiệu ngoại lệ từ thực địa chưa đủ mạnh để thay đổi chẩn đoán chính của mô hình AI.")
+                
+                if snail_density > 0:
+                    quick_rec = "\\n".join([line for line in out.recommendation.split('\\n') if "Hành động" in line or "1." in line or "CẢNH BÁO" in line][:2])
+                    st.info(f"💡 Ý kiến chuyên gia nhanh:\\n{quick_rec}\\n\\n(Xem chi tiết tại Tab 'Khuyến nghị chuyên gia' bên dưới)")
             
             # Highlight top prediction beautifully
             st.markdown(f"""
             <div style="background: rgba(30, 41, 59, 0.4); backdrop-filter: blur(12px); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 12px; padding: 0.65rem 0.8rem; margin-bottom: 0.4rem; box-shadow: 0 0 10px rgba(16, 185, 129, 0.05);">
-                <div style="font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">Lớp bệnh nhận dạng (Top Class)</div>
+                <div style="font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;">{title_label}</div>
                 <div style="font-size: 1.1rem; font-weight: 700; color: #10b981; margin-top: 0.1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{pred_class_vi}</div>
-                <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 0.15rem;">Độ tự tin mạng nơ-ron: <strong style="color:#22d3ee;">{cnn_result['pred_confidence']*100:.2f}%</strong></div>
+                <div style="font-size: 0.72rem; color: #94a3b8; margin-top: 0.15rem;">Độ tự tin tổng hợp (Fused Confidence): <strong style="color:#22d3ee;">{cnn_result['pred_confidence']*100:.2f}%</strong></div>
             </div>
             """, unsafe_allow_html=True)
             
@@ -473,7 +548,7 @@ with col3:
 
         <div style="background: rgba(30, 41, 59, 0.35); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 0.45rem 0.75rem; margin-bottom: 0.35rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                <span style="font-size: 0.74rem; color: #94a3b8; text-transform: uppercase;">🌡️ Nghiêm trọng trực quan</span>
+                <span style="font-size: 0.74rem; color: #94a3b8; text-transform: uppercase;">🌡️ Chỉ số tổn thương trực quan (VSI)</span>
                 <span style="font-size: 0.82rem; font-weight: 600; color: #f43f5e;">{out.visual_severity_level}</span>
             </div>
             <div style="background: rgba(255,255,255,0.03); height: 5px; border-radius: 2px; overflow: hidden;">
@@ -483,11 +558,22 @@ with col3:
 
         <div style="background: rgba(30, 41, 59, 0.35); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 10px; padding: 0.45rem 0.75rem; margin-bottom: 0.35rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-                <span style="font-size: 0.74rem; color: #94a3b8; text-transform: uppercase;">🛡️ Độ tin cậy hệ thống</span>
+                <span style="font-size: 0.74rem; color: #94a3b8; text-transform: uppercase;">🛡️ Độ chắc chắn chẩn đoán</span>
                 <span style="font-size: 0.82rem; font-weight: 700; color: #10b981;">{out.diagnostic_confidence:.2f}%</span>
             </div>
             <div style="background: rgba(255,255,255,0.03); height: 5px; border-radius: 2px; overflow: hidden;">
                 <div style="background: {conf_color}; width: {conf_val}%; height: 100%; border-radius: 2px; {conf_shadow}"></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    elif uploaded_file is not None and 'status' in locals() and status != "KNOWN" and snail_density == 0:
+        st.markdown(f"""
+        <div style='text-align: center; padding-top: 2.5rem;'>
+            <div style='font-size: 3.5rem; margin-bottom: 0.5rem;'>🛡️</div>
+            <div style='color: #f43f5e; font-weight: bold; font-size: 1.1rem; margin-bottom: 0.5rem;'>Hệ mờ tạm ngưng (OOD Safeguard)</div>
+            <div style='color: #94a3b8; font-size: 0.85rem; padding: 0 1.5rem; line-height: 1.5;'>
+                Hệ thống chuyên gia đã bị chặn để đảm bảo an toàn do CNN không nhận diện được ảnh này.<br><br>
+                <span style='color: #f59e0b; font-weight: 600;'>Nếu đây là Ốc Bươu Vàng, vui lòng sử dụng Thanh trượt Ngoại lệ (bên trái) để ép hệ thống xử lý bằng tay!</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -542,7 +628,7 @@ if uploaded_file is not None and 'out' in locals():
     with tab2:
         # Header with Alert Icon based on severity
         alert_val = out.final_alert_level.lower()
-        if "danger" in alert_val or "severe" in alert_val or "nguy hiểm" in alert_val:
+        if "danger" in alert_val or "severe" in alert_val or "nguy hiểm" in alert_val or "red alert" in alert_val or "báo động đỏ" in alert_val:
             rec_icon = "🚨"
             rec_title = "CẢNH BÁO: RỦI RO BÙNG PHÁT CAO"
             border_color = "rgba(239, 68, 68, 0.2)"

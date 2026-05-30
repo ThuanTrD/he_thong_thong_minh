@@ -1,0 +1,113 @@
+0: [MTDisplayEquation] TRƯỜNG ĐẠI HỌC THỦY LỢI
+4: [Normal] BÁO CÁO
+5: [Normal] MÔN HỌC: HỆ THỐNG THÔNG MINH
+7: [Normal] Đề tài: An Explainable Intelligent System for Plant Disease Severity Assessment using Fuzzy Inference
+9: [Normal]              	   Nhóm 14:   Trần Đình Thuận - C2251262648    
+10: [Normal]   Trần Khánh Trang - 248218749
+11: [Normal]    Hoàng Quốc Việt - 2582019033
+14: [Normal] Hà Nội, 5/2026
+17: [Heading 1] PHẦN MỞ ĐẦU
+18: [Normal (Web)] Lý do chọn đề tài
+19: [Normal (Web)] Trong bối cảnh nền nông nghiệp hiện đại đang chuyển mình mạnh mẽ theo xu hướng Nông nghiệp thông minh (Smart Agriculture) và Nông nghiệp 4.0, việc ứng dụng Khoa học máy tính để tối ưu hóa năng suất và bảo vệ cây trồng đã trở thành một nhu cầu cấp thiết. Dịch bệnh trên cây trồng là một trong những nguyên nhân hàng đầu gây sụt giảm nghiêm trọng đến sản lượng và chất lượng nông sản, từ đó ảnh hưởng trực tiếp đến an ninh lương thực và nền kinh tế toàn cầu. Việc phát hiện sớm và đặc biệt là đánh giá chính xác mức độ nghiêm trọng (Severity Assessment) của bệnh đóng vai trò quyết định trong việc đưa ra các biện pháp can thiệp kịp thời (như phun thuốc đúng liều lượng, khoanh vùng cách ly, hoặc tiêu hủy).
+20: [Normal (Web)] Trong những năm gần đây, sự bùng nổ của Trí tuệ nhân tạo (AI), đặc biệt là các mô hình Học sâu (Deep Learning) và Học máy (Machine Learning), đã mang lại những bước tiến vượt bậc trong việc nhận diện hình ảnh bệnh cây trồng. Tuy nhiên, các hệ thống này thường hoạt động như một "Hộp đen" (Black-box). Chúng tiếp nhận dữ liệu đầu vào và trả ra kết quả dự báo mà không đưa ra bất kỳ luận cứ hay quy trình suy luận logic nào để giải thích cho kết quả đó.
+21: [Normal (Web)] Sự thiếu minh bạch này dẫn đến hai hạn chế lớn trong thực tế sản xuất nông nghiệp:
+22: [Normal (Web)] Sự thiếu tin tưởng từ người dùng: Người nông dân hoặc các chuyên gia nông học rất khó để đặt trọn niềm tin vào một quyết định từ máy tính nếu họ không hiểu lý do tại sao hệ thống lại đánh giá mức độ bệnh là "Nặng" hay "Nguy kịch" trước khi quyết định chi một khoản ngân sách lớn cho thuốc bảo vệ thực vật.
+23: [Normal (Web)] Sự mơ hồ của ranh giới sinh học: Các trạng thái phát triển của bệnh cây trồng trong tự nhiên luôn có sự giao thoa, mờ nhạt và mang tính định tính. Các hệ thống thông tin truyền thống sử dụng logic nhị phân (Đúng/Sai) hoặc các ngưỡng cố định thường tỏ ra quá cứng nhắc, không phản ánh đúng bản chất liên tục và mơ hồ của các chỉ số sinh học.
+24: [Normal (Web)] Xuất phát từ những thách thức trên, đề tài "An Explainable Intelligent System for Plant Disease Severity Assessment using Fuzzy Inference" (Hệ thống thông minh có thể giải thích được ứng dụng suy diễn mờ trong đánh giá mức độ nghiêm trọng của bệnh cây trồng) được lựa chọn. Đề tài hướng tới việc xây dựng một Hệ thống thông tin thông minh dựa trên lý thuyết Logic mờ (Fuzzy Logic). Giải pháp này không chỉ xử lý hiệu quả tính bất định, mơ hồ của dữ liệu nông nghiệp mà còn cung cấp khả năng giải thích được (Explainable AI - XAI) thông qua các luật ngôn ngữ tự nhiên dạng IF... THEN..., giúp thu hẹp khoảng cách giữa công nghệ AI phức tạp và người dùng cuối trong thực tế sản xuất.
+25: [Normal (Web)] Mục tiêu của hệ thống
+26: [Normal] Mục tiêu chung của đề tài là nghiên cứu, thiết kế và xây dựng một hệ thống thông tin thông minh hỗ trợ ra quyết định, có khả năng đánh giá chính xác mức độ nghiêm trọng của bệnh trên cây trồng, đồng thời đảm bảo tính minh bạch và có thể giải thích được cấu trúc suy luận cho người sử dụng.
+27: [Normal] Để đạt được mục tiêu chung đó, hệ thống cần hoàn thành các mục tiêu cụ thể sau:
+28: [Normal] Về mặt Tri thức: Số hóa thành công tri thức của các chuyên gia nông nghiệp, chuyển đổi các khái niệm định tính mang tính mơ hồ (ví dụ: diện tích lá bị đốm "ít/nhiều", mật độ đốm "thưa/dày") thành các tập mờ và hàm tư cách (Membership Functions) toán học chính xác.
+29: [Normal] Về mặt Xử lý (Suy diễn): Xây dựng một Bộ suy diễn mờ (Fuzzy Inference Engine) hoạt động ổn định, có khả năng tiếp nhận các chỉ số biểu hiện bệnh thực tế và đưa ra kết quả đánh giá mức độ nghiêm trọng dưới dạng một chỉ số rõ ràng (Crisp value) hoặc phân lớp cụ thể (Nhẹ, Trung bình, Nặng).
+30: [Normal] Về mặt Giải thích (Explainability): Thiết kế cấu trúc xuất dữ liệu cho phép hệ thống "giải trình" các luật mờ nào đã được kích hoạt, với độ tin cậy bao nhiêu để dẫn đến kết quả chẩn đoán cuối cùng, tạo ra một báo cáo tường minh bằng ngôn ngữ tự nhiên cho người nông dân.
+31: [Normal] Về mặt Hệ thống: Thiết kế một cấu trúc hệ thống thông tin hoàn chỉnh, có giao diện người dùng trực quan, dễ thao tác và có tiềm năng mở rộng, tích hợp vào các thiết bị di động hoặc hệ thống IoT quản lý nông trại.
+33: [Normal (Web)] Phạm vi nghiên cứu
+34: [Normal] Để đảm bảo tính khả thi và độ sâu sắc của một báo cáo môn học Hệ thống thông tin, phạm vi nghiên cứu của đề tài được giới hạn cụ thể như sau:
+35: [Normal] Đối tượng cây trồng và dịch bệnh: Hệ thống sẽ tập trung nghiên cứu và áp dụng thử nghiệm trên một nhóm cây trồng chiến lược phổ 
+36: [Normal] Các biến đầu vào (Inputs) của hệ thống: Hệ thống thực hiện đánh giá dựa trên các tham số định lượng cụ thể thu thập được từ thực địa bao gồm:
+37: [Normal] Tỷ lệ diện tích bề mặt nhiễm bệnh trên lá (%).
+38: [Normal] Mật độ/Số lượng vết đốm bệnh trên một đơn vị diện tích lá.
+39: [Normal] (Tùy chọn bổ sung): Yếu tố môi trường thúc đẩy bệnh như Độ ẩm không khí (%) hoặc Nhiệt độ môi trường (°C).
+40: [Normal] Biến đầu ra (Output): Mức độ nghiêm trọng tổng thể của bệnh được chia làm các cấp độ ngôn ngữ mờ. Ví dụ: 
+41: [Normal] Giới hạn công nghệ: 
+43: [Heading 1] CHƯƠNG 1: CƠ SỞ LÝ THUYẾT
+44: [Heading 2] 2.1. Tổng quan về Hệ thống thông tin thông minh (Intelligent Information Systems - IIS)
+45: [Normal (Web)] Hệ thống thông tin thông minh (IIS) là sự tiến hóa của các hệ thống thông tin truyền thống nhờ tích hợp các kỹ thuật của Trí tuệ nhân tạo (AI).
+46: [Normal (Web)] Hệ thống thông tin truyền thống: Chỉ thuần túy thực hiện việc thu thập, lưu trữ, xử lý và truyền tải dữ liệu theo các quy trình cố định (Deterministic). Hệ thống chỉ trả về kết quả dựa trên các câu lệnh truy vấn tường minh.
+47: [Normal (Web)] Hệ thống thông tin thông minh (IIS): Có khả năng mô phỏng các khía cạnh trí tuệ của con người. IIS sở hữu năng lực suy diễn (reasoning), học hỏi (learning) và tự thích nghi (adapting) từ dữ liệu phi cấu trúc hoặc dữ liệu thiếu hụt.
+48: [Heading 2] 2.2. Trí tuệ nhân tạo có thể giải thích được (Explainable AI - XAI) trong Nông nghiệp
+49: [Normal (Web)] Trong những năm gần đây, các mô hình học sâu (Deep Learning) như mạng neural nhân tạo (ANN, CNN) đạt độ chính xác rất cao trong nhận diện hình ảnh dịch bệnh. Tuy nhiên, chúng hoạt động như một "Hộp đen" (Black-box) — cung cấp kết quả đầu ra nhưng không thể giải thích tại sao lại dẫn đến kết quả đó.
+50: [Normal (Web)] Sự thiếu minh bạch này tạo ra rào cản lớn khi áp dụng AI vào nông nghiệp thực tế vì những lý do sau:
+51: [Normal (Web)] Xây dựng niềm tin (Trustworthiness): Người nông dân và các chuyên gia nông học cần hiểu rõ căn cứ của quyết định trước khi chi tiền cho các biện pháp xử lý hóa chất độc hại hoặc tiêu hủy cây trồng hàng loạt. Một sai l bị AI chẩn đoán sai mà không có lý do rõ ràng sẽ gây thiệt hại kinh tế nghiêm trọng.
+52: [Normal (Web)] Hỗ trợ ra quyết định lâm sàng (Agronomic Decision Support): XAI cung cấp các luận cứ rõ ràng (ví dụ: mối tương quan giữa độ ẩm cao và diện tích đốm lá). Điều này giúp các nhà quản lý nông nghiệp kiểm chứng xem suy luận của AI có phù hợp với thực tiễn sinh học hay không.
+53: [Normal (Web)] Trách nhiệm giải trình (Accountability): Khi hệ thống đưa ra khuyến nghị sai, việc có khả năng giải thích cấu trúc suy luận giúp các kỹ sư HTTT dễ dàng truy vết, khoanh vùng lỗi (do tập luật mờ chưa chuẩn hay do dữ liệu đầu vào bị nhiễu) để tối ưu hóa hệ thống.
+54: [Heading 2] 2.3. Lý thuyết Tập mờ và Hệ suy diễn mờ (Fuzzy Inference System - FIS)
+55: [Heading 3] 2.3.1. Tập mờ và Hàm tư cách (Membership Functions)
+56: [Normal (Web)] Trong logic toán học truyền thống (Logic nhị phân), một phần tử chỉ có thể thuộc (1) hoặc không thuộc (0) vào một tập hợp. Tuy nhiên, các khái niệm trong nông nghiệp mang tính định tính và mơ hồ, ví dụ: thế nào là lá bị bệnh "nặng", thế nào là nhiệt độ "cao"? Không thể có một ranh giới tuyệt đối (chẳng hạn diện tích đốm lá 29.9% là "trung bình" nhưng 30% lập tức biến thành "nặng").
+57: [Normal (Web)] Lý thuyết tập mờ (Fuzzy Set) do Lotfi Zadeh đề xuất giải quyết vấn đề này bằng cách cho phép một phần tử thuộc vào một tập hợp với một độ thuộc/mức độ tư cách nằm trong đoạn [0, 1]$.
+58: [Normal (Web)] Hàm tư cách (Membership Function - MF), ký hiệu là : Là hàm số định nghĩa cách mỗi điểm trong không gian tham chiếu (Universe of Discourse) được ánh xạ thành một giá trị độ thuộc từ 0 đến 1.
+59: [Normal (Web)] Các dạng hàm tư cách phổ biến trong hệ thống này bao gồm:
+60: [Normal (Web)] Hàm tam giác (Triangular MF): Thường dùng cho các trạng thái có một giá trị đỉnh tối ưu duy nhất (ví dụ: Nhiệt độ "vừa phải").
+61: [Normal (Web)] Hàm hình thang (Trapezoidal MF): Thường dùng cho các trạng thái duy trì sự bão hòa trong một khoảng giá trị (ví dụ: Diện tích nhiễm bệnh ở mức "trung bình" từ 30% đến 50%).
+62: [Heading 3] 2.3.2. Các bước trong Hệ suy diễn mờ (FIS)
+63: [Normal (Web)] Hệ suy diễn mờ (FIS) là tiến trình chính của hệ thống, thực hiện ánh xạ từ các giá trị đầu vào rõ (Crisp Inputs) sang các giá trị đầu ra rõ (Crisp Outputs) thông qua 4 bước cốt lõi:
+64: [HTML Preformatted] [Crisp Inputs] ──> (1) Fuzzification ──> (2) Rule Evaluation ──> (3) Aggregation ──> (4) Defuzzification ──> [Crisp Output]
+65: [Normal (Web)] Mờ hóa (Fuzzification):
+66: [Normal (Web)] Tiếp nhận các giá trị thực tế, rõ ràng từ cảm biến hoặc người dùng nhập vào (ví dụ: Diện tích đốm lá = 35%).
+67: [Normal (Web)] Sử dụng các hàm tư cách để chuyển đổi các giá trị rõ này thành các giá trị mờ (độ thuộc ). Ví dụ: 35% diện tích đốm lá có thể thuộc tập "Trung bình" với độ thuộc 0.7 và tập "Nặng" với độ thuộc 0.2.
+68: [Normal (Web)] Đánh giá luật (Rule Evaluation):
+69: [Normal (Web)] Áp dụng các giá trị mờ vào tập các luật điều khiển dạng IF... AND/OR... THEN... trong cơ sở tri thức.
+70: [Normal (Web)] Sử dụng các toán tử mờ (Fuzzy Operators) để tính toán độ thỏa dụng của vế phải (THEN): Phép AND thường lấy giá trị nhỏ nhất (Minimum - min), phép OR lấy giá trị lớn nhất (Maximum - max).
+71: [Normal (Web)] Tích hợp kết quả (Aggregation):
+72: [Normal (Web)] Kết hợp các tập mờ đầu ra bị kích hoạt từ tất cả các luật lại thành một tập mờ phân phối đầu ra duy nhất. Quá trình này thường sử dụng hàm max để gộp các đồ thị mờ lại với nhau.
+73: [Normal (Web)] Giải mờ (Defuzzification):
+74: [Normal (Web)] Chuyển đổi tập mờ phân phối đầu ra thu được từ bước tích hợp thành một giá trị rõ (Crisp Value) duy nhất (ví dụ: Mức độ nghiêm trọng tổng thể bằng 72%).
+75: [Normal (Web)] Phương pháp phổ biến nhất là Phương pháp trọng tâm (Centroid Method), tính toán tọa độ x của trọng tâm vùng diện tích mờ đầu ra:
+77: [Heading 3] 2.3.3. Lựa chọn Mô hình Suy diễn mờ: Mamdani vs Sugeno
+78: [Normal (Web)] Có hai mô hình FIS phổ biến nhất là Mô hình Mamdani và Mô hình Sugeno (TSK). Dưới đây là bảng so sánh đặc tính:
+81: [Heading 1] CHƯƠNG 2: PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG
+82: [Heading 2] 3.1. Phân tích yêu cầu hệ thống:
+83: [Normal (Web)] Đầu vào (Inputs
+84: [Normal (Web)] Đầu ra (Output): 
+85: [Heading 2] 3.2. Sơ đồ kiến trúc tổng thể của hệ thống (System Architecture):
+86: [List Paragraph] Để tối ưu hóa hiệu năng nhận diện và đảm bảo tính giải thích (XAI), hệ thống được thiết kế theo mô hình Pipeline Hybrid tối giản (CNN + Fuzzy). Kiến trúc này giữ nguyên mô hình CNN đã được huấn luyện trước (Pre-trained) đóng vai trò trích xuất triệu chứng thị giác, sau đó tích hợp thêm tầng suy diễn mờ và tri thức chuyên gia ở phía sau mà không cần huấn luyện lại toàn bộ mạng Neural.
+89: [Heading 3] Quy trình luồng dữ liệu 5 bước (Pipeline Execution):
+90: [Normal (Web)] Bước 1: Tiếp nhận dữ liệu đầu vào (Input): Hệ thống tiếp nhận 1 ca kiểm nghiệm (1 record) gồm hai nguồn dữ liệu độc lập:
+91: [Normal (Web)] Dữ liệu hình ảnh: Ảnh chụp bề mặt lá cây bị bệnh (ví dụ: vết đốm hoại tử).
+92: [Normal (Web)] Thông tin môi trường thực địa: Độ ẩm (Humidity), Nhiệt độ (Temperature), Lượng mưa 24h (Rainfall), Mùa vụ (Season), Vị trí và Thời gian.
+93: [Normal (Web)] Bước 2: Dự đoán từ CNN (CNN Inference): Hình ảnh được đưa qua mô hình CNN (file .pt đã huấn luyện). Mô hình thực hiện trích xuất đặc trưng thị giác và trả về điểm số xác suất (Output từ CNN) của các loại bệnh hoặc triệu chứng (Ví dụ: Scab: 0.75, Rust: 0.65, Healthy: 0.05).
+94: [Normal (Web)] Bước 3: Tầng suy diễn mờ (Fuzzy Reasoning Layer): Đây là lõi tri thức chuyên gia của hệ thống. Tầng này tiếp nhận các điểm số từ CNN (triệu chứng thị giác) cùng các thông số môi trường để đưa vào Nền tri thức (Fuzzy Knowledge Base) bao gồm các biến ngôn ngữ, hàm thuộc (Membership Functions) và tập luật IF - THEN. Quá trình suy luận mờ sử dụng phép toán Max-Min và thực hiện giải mờ (Defuzzification).
+95: [Normal (Web)] Bước 4: Ra quyết định kết hợp (Hybrid Decision): Hệ thống thực hiện kết hợp trọng số giữa kết quả của mạng CNN và kết quả từ bộ suy diễn mờ theo công thức:
+97: [Normal (Web)] Từ đó đưa ra điểm số hiệu chỉnh cuối cùng (Ví dụ: Scab tăng lên 0.91, Rust giảm xuống 0.42).
+98: [Normal (Web)] Bước 5: Kết luận và Giải thích (Output + XAI): Hệ thống trả về kết luận bệnh kèm độ tin cậy. Đồng thời, module XAI hiển thị báo cáo giải thích bằng ngôn ngữ tự nhiên dựa trên các luật mờ được kích hoạt mạnh để người nông dân đối chiếu.
+100: [Heading 2] 3.3. Thiết kế Hệ suy diễn mờ (Fuzzy Core):
+101: [Normal (Web)] Dựa trên cấu trúc kiến trúc Hybrid, thành phần Nền tri thức mờ được thiết kế chi tiết bao gồm các thành phần sau:
+102: [Heading 3] 3.3.1. Các biến ngôn ngữ (Linguistic Variables)
+103: [Normal (Web)] Hệ thống phân tách các biến đầu vào thành hai nhóm rõ rệt:
+104: [Normal (Web)] Nhóm biến từ CNN (Triệu chứng thị giác): Đầu ra của mạng CNN được mờ hóa thành các mức độ biểu hiện trên bề mặt lá: BrownSpot (Đốm nâu), MoldTexture (Kết cấu nấm mốc), YellowEdge (Rìa lá vàng), LeafYellowing (Vàng lá), HoleDamage (Lá bị thủng).
+105: [Normal (Web)] Nhóm biến từ Môi trường: Các chỉ số vật lý đo đạc tại vườn: Humidity (Độ ẩm), Temperature (Nhiệt độ), Rainfall_24h (Lượng mưa trong 24 giờ), Season (Mùa vụ).
+106: [Heading 3] 3.3.2. Hàm thuộc / Hàm tư cách (Membership Functions)
+107: [Normal (Web)] Mỗi biến liên tục được ánh xạ vào các tập mờ thông qua các hàm thuộc dạng hình tam giác hoặc hình thang. Ví dụ đối với biến Môi trường Humidity (Độ ẩm), không gian ngữ cảnh [0, 100%]được chia làm 3 tập mờ: LOW (Thấp), MEDIUM (Trung bình), và HIGH (Cao) với các dải đồ thị giao thoa mềm mại nhằm phản ánh chính xác sự thay đổi của thời tiết tác động lên sự phát triển của nấm bệnh.
+108: [Heading 3] 3.3.3. Cơ sở luật mờ chuyên gia (Fuzzy Rule Base)
+109: [Normal (Web)] Tập luật IF - THEN đóng vai trò liên kết logic giữa triệu chứng hình ảnh (CNN) và điều kiện tự nhiên (Môi trường) để tạo ra kết luận có tính giải thích cao.
+110: [Normal (Web)] Một số luật cốt lõi được thiết lập trong hệ thống:
+111: [Normal (Web)] Luật R1 (Chẩn đoán bệnh Ghẻ sẹo - Apple Scab): IF BrownSpot is HIGH AND Humidity is HIGH AND Temperature is MEDIUM THEN Scab is HIGH.
+112: [Normal (Web)] Luật R2 (Chẩn đoán bệnh Gỉ sắt - Rust): IF MoldTexture is HIGH AND Humidity is HIGH THEN Rust is HIGH.
+113: [Normal (Web)] Luật R3 (Chẩn đoán cháy nắng - Sunburn): IF YellowEdge is HIGH AND Temperature is HIGH AND Humidity is LOW THEN Sunburn is HIGH.
+115: [Heading 1] CHƯƠNG 3: CÀI ĐẶT VÀ THỬ NGHIỆM (IMPLEMENTATION AND RESULTS)
+116: [Heading 2] 4.1. Công nghệ sử dụng
+117: [Heading 2] 4.2. Minh họa kịch bản chạy thử (Use Case / Simulation):
+118: [Normal (Web)] Đưa vào một ví dụ số liệu cụ thể (Ví dụ: Diện tích lá nhiễm bệnh = 35%, Nhiệt độ = 30°C).
+119: [Normal (Web)] Trực quan hóa quá trình kích hoạt các luật mờ và kết quả giải mờ cuối cùng.
+120: [Heading 2] 4.3. Thành phần giải thích (Explainable Component): 
+121: [Heading 2] 5.1. Đánh giá độ chính xác: 
+122: [Heading 2] 5.2. Đánh giá tính dễ hiểu (Explainability): 
+123: [Heading 2] 5.3. Ưu điểm và Nhược điểm:
+124: [Normal (Web)] Ưu điểm: 
+125: [Normal (Web)] Nhược điểm:
+127: [Heading 1] KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN
+128: [Normal (Web)] Tóm tắt lại những kết quả đã đạt được của hệ thống.
+129: [Normal (Web)] Đề xuất hướng phát triển : 
+131: [Heading 1] TÀI LIỆU THAM KHẢO
+132: [Normal (Web)] Bài giảng Hệ thống Thông minh
+133: [Normal (Web)] Các bài báo khoa học

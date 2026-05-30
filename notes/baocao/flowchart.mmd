@@ -1,0 +1,20 @@
+graph TD
+    A[Ảnh đầu vào] --> B(CNN: EfficientNet-B0)
+    B -->|Softmax Probabilities| C{OOD Detection}
+    C -->|KNOWN| D[Trích xuất Đặc trưng Bệnh]
+    C -->|UNCERTAIN| D
+    C -->|OOD| E[Dừng lại / Cảnh báo]
+
+    F[Nông dân / Chuyên gia] -->|Quan sát thực địa| G(Tín hiệu chuyên gia: Mật độ Ốc bươu vàng)
+
+    D --> H(Confidence Fusion Engine)
+    E -.-> H
+    G --> H
+
+    H -->|AI_CONFIDENT| I[Duy trì Quyết định CNN]
+    H -->|HYBRID_WARNING| J[Cảnh báo Lai - Cần kiểm tra bổ sung]
+    H -->|EXPERT_GUIDED_MODE| K[Ưu tiên Tín hiệu Thực địa]
+
+    I --> L(XAI Report & Khuyến nghị)
+    J --> L
+    K --> L

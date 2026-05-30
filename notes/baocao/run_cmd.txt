@@ -1,0 +1,29 @@
+# ==============================================================================
+# TRÌNH TỰ CÁC LỆNH CHẠY TOÀN TRÌNH HỆ THỐNG
+# (Intelligent Rice Diagnostic Control Centre - Nhóm 14)
+# ==============================================================================
+
+# 1. Tạo môi trường ảo (Virtual Environment)
+python -m venv venv
+
+# 2. Kích hoạt môi trường ảo (dành cho Windows)
+.\venv\Scripts\activate
+
+# 3. Cài đặt các thư viện cần thiết
+pip install -r rice/requirements.txt
+pip install streamlit
+
+# 4. Tải dữ liệu mẫu dùng cho quá trình thử nghiệm (Demo Assets)
+python download_samples.py
+
+# 5. Huấn luyện mô hình Deep Learning (CNN)
+# Lệnh này sẽ train mô hình EfficientNet-B0 và lưu trọng số vào rice_disease_cnn_outputs/best_model.pt
+python rice/train_cnn.py
+
+# 6. Chạy suy diễn thử nghiệm CNN độc lập (Inference test)
+# Để kiểm tra xem mô hình load trọng số và dự đoán ảnh có chính xác không
+python rice/inference_cnn.py
+
+# 7. Khởi chạy Ứng dụng Dashboard (Tích hợp CNN và Fuzzy XAI)
+# Đây là ứng dụng chính của hệ thống, kết hợp đầu ra mạng nơ-ron và luật mờ Sugeno
+streamlit run app_streamlit.py

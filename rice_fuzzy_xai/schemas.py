@@ -9,6 +9,7 @@ class FuzzyInput:
     top_confidence: float
     temperature: Optional[float] = None
     humidity: Optional[float] = None
+    snail_density: Optional[float] = 0.0
 
 
 @dataclass
@@ -20,5 +21,7 @@ class FuzzyOutput:
     uncertainty_level: str
     environmental_risk_level: str
     final_alert_level: str
+    inference_mode: str
+    fused_confidence: float
     explanation: str
     recommendation: str

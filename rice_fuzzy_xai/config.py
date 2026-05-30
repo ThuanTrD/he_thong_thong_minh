@@ -37,4 +37,5 @@ DISEASE_NAMES_VI = {
     "Blast": "Đạo ôn lá (Rice Blast)",
     "Brownspot": "Đốm nâu (Brown spot)",
     "Tungro": "Vàng lụi (Tungro)",
+    "Golden Apple Snail": "Ốc bươu vàng (Golden Apple Snail)",
 }
