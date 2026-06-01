@@ -69,7 +69,7 @@ BROWNSPOT3_127.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.9787,Brownspot
 BROWNSPOT3_128.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.9353,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
 BROWNSPOT3_129.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.8088,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
 BROWNSPOT3_131.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.9487,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
-BROWNSPOT3_135.jpg,Mild Brownspot,Brownspot,Mild,Severe Brownspot,0.4888,Brownspot,Moderate (Trung bình),Mild,Attention (Chú ý),High (Cao),25.0,True,True,AI_CONFIDENT
+BROWNSPOT3_135.jpg,Mild Brownspot,Brownspot,Mild,Severe Brownspot,0.4888,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),High (Cao),25.0,False,True,AI_CONFIDENT
 BROWNSPOT3_136.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.8156,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
 BROWNSPOT3_137.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.7289,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Medium (Trung bình),86.44,True,True,AI_CONFIDENT
 BROWNSPOT3_138.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.7227,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Medium (Trung bình),86.23,True,True,AI_CONFIDENT
@@ -108,7 +108,7 @@ BACTERIALBLIGHT2_203.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe 
 BACTERIALBLIGHT2_204.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.986,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
 BACTERIALBLIGHT2_206.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.8971,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
 BACTERIALBLIGHT2_213.jpg,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.9176,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
-BACTERIALBLIGHT2_214.jpg,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.5583,Bacterial blight,Moderate (Trung bình),Mild,Attention (Chú ý),High (Cao),25.0,False,True,AI_CONFIDENT
+BACTERIALBLIGHT2_214.jpg,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.5583,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),High (Cao),25.0,True,True,AI_CONFIDENT
 BACTERIALBLIGHT2_235 - Copy.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.941,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
 BACTERIALBLIGHT2_235.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.941,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
 BACTERIALBLIGHT2_236.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.8466,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
@@ -144,10 +144,10 @@ BROWNSPOT7_098.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9803,Bro
 BROWNSPOT7_099.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9661,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
 BROWNSPOT7_100.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9545,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
 BROWNSPOT7_101.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.8373,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
-BROWNSPOT7_102.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.5225,Brownspot,Moderate (Trung bình),Mild,Attention (Chú ý),High (Cao),41.51,False,True,AI_CONFIDENT
+BROWNSPOT7_102.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.5225,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),High (Cao),41.51,True,True,AI_CONFIDENT
 BROWNSPOT7_104.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.7229,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Medium (Trung bình),86.89,True,True,AI_CONFIDENT
 BROWNSPOT7_107.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9744,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
-BROWNSPOT7_108.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.5679,Brownspot,Moderate (Trung bình),Mild,Attention (Chú ý),Medium (Trung bình),67.29,False,True,AI_CONFIDENT
+BROWNSPOT7_108.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.5679,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Medium (Trung bình),67.29,True,True,AI_CONFIDENT
 BROWNSPOT7_109.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9495,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
 BROWNSPOT7_110.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.8614,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
 BROWNSPOT7_172.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.8218,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
@@ -158,7 +158,7 @@ BROWNSPOT7_196.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9861,Bro
 BROWNSPOT7_197.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9351,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
 BROWNSPOT7_198.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.966,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
 BROWNSPOT7_199.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.8136,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
-BROWNSPOT7_200.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.5466,Brownspot,Moderate (Trung bình),Mild,Attention (Chú ý),Medium (Trung bình),52.06,False,True,AI_CONFIDENT
+BROWNSPOT7_200.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.5466,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Medium (Trung bình),52.06,True,True,AI_CONFIDENT
 TUNGRO5_105.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.9851,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
 TUNGRO5_106.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.9716,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
 TUNGRO5_107.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.9195,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT

@@ -69,7 +69,8 @@ class FuzzyEngine:
         diagnostic_confidence = evaluate_diagnostic_confidence(top_conf_fuzzy, margin_fuzzy)
 
         # C. Mức độ nghiêm trọng trực quan (Visual Severity Index - VSI)
-        vsi, vsi_rules = evaluate_visual_severity(mild_fuzzy, severe_fuzzy, is_healthy)
+        is_explicit_severe = ("Severe" in inp.top_class)
+        vsi, vsi_rules = evaluate_visual_severity(mild_fuzzy, severe_fuzzy, is_healthy, is_explicit_severe, top_conf_fuzzy)
         
         if vsi < 10.0:
             visual_severity_level = "Healthy (Lành mạnh)"

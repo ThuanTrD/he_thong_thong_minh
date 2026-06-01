@@ -104,7 +104,7 @@ def evaluate_diagnostic_confidence(top_conf_fuzzy: dict, margin_fuzzy: dict) -> 
     return sum_w_z / sum_w if sum_w > 0 else 50.0
 
 
-def evaluate_visual_severity(mild_conf_fuzzy: dict, severe_conf_fuzzy: dict, is_healthy: bool) -> tuple:
+def evaluate_visual_severity(mild_conf_fuzzy: dict, severe_conf_fuzzy: dict, is_healthy: bool, is_explicit_severe: bool = False, top_conf_fuzzy: dict = None) -> tuple:
     """
     Tính toán Chỉ số mức độ bệnh trực quan (Visual Severity Index - VSI) bằng Sugeno FIS.
     """
@@ -113,6 +113,12 @@ def evaluate_visual_severity(mild_conf_fuzzy: dict, severe_conf_fuzzy: dict, is_
 
     rules = []
     
+    # Boost Rule: Nếu CNN phán đoán dứt khoát lớp bệnh là Severe VÀ Độ tự tin >= Medium
+    if is_explicit_severe and top_conf_fuzzy is not None:
+        w_boost = max(top_conf_fuzzy.get("High", 0), top_conf_fuzzy.get("Medium", 0)) * 1.5
+        if w_boost > 0:
+            rules.append((w_boost, SUGENO_SEVERITY["Severe"], "NẾU Mạng nhận diện trực tiếp bệnh là Nghiêm trọng (Severe) THÌ Mức độ bệnh Nghiêm trọng (Luật tăng cường)"))
+
     # Rule 1: Severe High -> Severe severity (90%)
     w1 = severe_conf_fuzzy["High"]
     if w1 > 0:

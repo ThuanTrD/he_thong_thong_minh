@@ -62,29 +62,38 @@ def generate_explanation(
     
     exp_parts.append(f"\n4. Các Luật Mờ được kích hoạt (Fuzzy Rules Fired):")
     rule_idx = 1
-    # Tính tổng trọng số cho từng nhóm luật để tính phần trăm đóng góp
-    total_w_vsi = sum(w for w, z, txt in vsi_rules)
-    total_w_eri = sum(w for w, z, txt in eri_rules)
-    total_w_alert = sum(w for w, z, txt in alert_rules)
+    # Tính tổng (w * z) cho từng nhóm luật để tính phần trăm đóng góp chính xác theo phương pháp Sugeno
+    total_wz_vsi = sum(w * z for w, z, txt in vsi_rules)
+    total_wz_eri = sum(w * z for w, z, txt in eri_rules)
+    total_wz_alert = sum(w * z for w, z, txt in alert_rules)
     
+    # Hàm phụ trợ tính đóng góp
+    def calc_contrib(w, z, total_wz, rule_list):
+        if total_wz > 0:
+            return ((w * z) / total_wz) * 100
+        else:
+            # Fallback nếu tất cả z = 0 (vd: Healthy severity = 0)
+            total_w = sum(rw for rw, rz, rtxt in rule_list)
+            return (w / total_w) * 100 if total_w > 0 else 0
+
     # Thêm các luật VSI
     for w, z, rule_txt in vsi_rules:
         if w > 0:
-            contrib = (w / total_w_vsi) * 100 if total_w_vsi > 0 else 0
+            contrib = calc_contrib(w, z, total_wz_vsi, vsi_rules)
             exp_parts.append(f"   {rule_idx}. [Luật Mức độ bệnh] {rule_txt} (Kích hoạt: {w:.2f}, Đóng góp: {contrib:.1f}%)")
             rule_idx += 1
             
     # Thêm các luật ERI
     for w, z, rule_txt in eri_rules:
         if w > 0:
-            contrib = (w / total_w_eri) * 100 if total_w_eri > 0 else 0
+            contrib = calc_contrib(w, z, total_wz_eri, eri_rules)
             exp_parts.append(f"   {rule_idx}. [Luật Thời tiết] {rule_txt} (Kích hoạt: {w:.2f}, Đóng góp: {contrib:.1f}%)")
             rule_idx += 1
             
     # Thêm các luật FAI
     for w, z, rule_txt in alert_rules:
         if w > 0:
-            contrib = (w / total_w_alert) * 100 if total_w_alert > 0 else 0
+            contrib = calc_contrib(w, z, total_wz_alert, alert_rules)
             exp_parts.append(f"   {rule_idx}. [Luật Cảnh báo] {rule_txt} (Kích hoạt: {w:.2f}, Đóng góp: {contrib:.1f}%)")
             rule_idx += 1
             
