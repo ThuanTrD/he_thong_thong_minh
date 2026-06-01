@@ -200,14 +200,14 @@ def fig_05_rule_activation():
     
     table_data = [
         ["Rule ID", "Fuzzy Condition", "Firing Strength (w)", "Contribution %"],
-        ["R1", "IF CNN Severe Medium THEN Moderate", "0.72", "48%"],
-        ["R2", "IF Humidity Wet THEN ERI High", "0.61", "32%"],
-        ["R3", "IF Mild High THEN Mild", "0.21", "20%"]
+        ["R1", "IF CNN Severe Medium\nTHEN Moderate", "0.72", "48%"],
+        ["R2", "IF Humidity Wet\nTHEN ERI High", "0.61", "32%"],
+        ["R3", "IF Mild High\nTHEN Mild", "0.21", "20%"]
     ]
     
-    table = ax.table(cellText=table_data, loc='center', cellLoc='left', bbox=[0.1, 0.35, 0.8, 0.45])
+    table = ax.table(cellText=table_data, colWidths=[0.12, 0.44, 0.22, 0.22], loc='center', cellLoc='center', bbox=[0.05, 0.30, 0.9, 0.50])
     table.auto_set_font_size(False)
-    table.set_fontsize(24)
+    table.set_fontsize(22)
     
     for (i, j), cell in table.get_celld().items():
         cell.PAD = 0.08
@@ -292,7 +292,7 @@ def fig_09_error_analysis():
     values = [2, 1, 0]
     colors = [WARNING_ORANGE, CYAN_GLOW, EMERALD]
     
-    ax_bar = fig.add_axes([0.2, 0.35, 0.6, 0.45])
+    ax_bar = fig.add_axes([0.2, 0.25, 0.6, 0.50])
     ax_bar.set_facecolor(BG_COLOR)
     bars = ax_bar.bar(labels, values, color=colors, width=0.4)
     ax_bar.set_ylabel("Number of Occurrences", color=TEXT_MAIN, fontsize=22)
@@ -313,16 +313,16 @@ def fig_10_system_contributions():
     
     table_data = [
         ["Component Layer", "Academic Contribution"],
-        ["CNN (EfficientNet-B0)", "Visual disease perception & deep feature extraction"],
-        ["Fuzzy Inference System", "Severity reasoning & continuous interpolation"],
-        ["Environmental Risk Index", "Contextual alert escalation under real conditions"],
-        ["OOD & Entropy Checks", "Uncertainty handling & anomaly rejection"],
-        ["Explainability (XAI)", "Rule traceability & interpretable reasoning"]
+        ["CNN (EfficientNet-B0)", "Visual disease perception &\ndeep feature extraction"],
+        ["Fuzzy Inference System", "Severity reasoning &\ncontinuous interpolation"],
+        ["Environmental Risk Index", "Contextual alert escalation\nunder real conditions"],
+        ["OOD & Entropy Checks", "Uncertainty handling &\nanomaly rejection"],
+        ["Explainability (XAI)", "Rule traceability &\ninterpretable reasoning"]
     ]
     
-    table = ax.table(cellText=table_data, loc='center', cellLoc='left', bbox=[0.1, 0.25, 0.8, 0.55])
+    table = ax.table(cellText=table_data, colWidths=[0.35, 0.65], loc='center', cellLoc='left', bbox=[0.1, 0.25, 0.8, 0.55])
     table.auto_set_font_size(False)
-    table.set_fontsize(24)
+    table.set_fontsize(22)
     
     for (i, j), cell in table.get_celld().items():
         cell.PAD = 0.08
