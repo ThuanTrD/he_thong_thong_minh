@@ -246,15 +246,15 @@ def fig_07_contextual_alert():
     
     draw_glass_box(ax, 0.5, 0.75, 0.45, 0.12, title="Visual Severity Index (VSI)", text="MILD (Score: 30)", border="#3b82f6")
     
-    draw_glow_arrow(ax, 0.5, 0.65, 0.25, 0.52)
-    draw_glow_arrow(ax, 0.5, 0.65, 0.75, 0.52)
+    draw_glow_arrow(ax, 0.5, 0.65, 0.25, 0.55)
+    draw_glow_arrow(ax, 0.5, 0.65, 0.75, 0.55)
     
     draw_glass_box(ax, 0.25, 0.42, 0.4, 0.18, title="CASE A: Low ERI", text="Humidity: 50% | Temp: 22°C", border="#10b981", title_color="#10b981")
-    draw_glow_arrow(ax, 0.25, 0.30, 0.25, 0.20)
+    draw_glow_arrow(ax, 0.25, 0.29, 0.25, 0.21)
     draw_glass_box(ax, 0.25, 0.10, 0.35, 0.14, title="ATTENTION", text="Regular Monitoring", border=WARNING_ORANGE, title_color=WARNING_ORANGE)
     
     draw_glass_box(ax, 0.75, 0.42, 0.4, 0.18, title="CASE B: High ERI", text="Humidity: 90% | Temp: 35°C", border=DANGER_RED, title_color=DANGER_RED)
-    draw_glow_arrow(ax, 0.75, 0.30, 0.75, 0.20)
+    draw_glow_arrow(ax, 0.75, 0.29, 0.75, 0.21)
     draw_glass_box(ax, 0.75, 0.10, 0.35, 0.14, title="DANGER", text="Immediate Action Required", border=DANGER_RED, title_color=DANGER_RED)
 
     plt.savefig(os.path.join(OUTPUT_DIR, "fig_07_contextual_alert.png"), bbox_inches='tight')
@@ -341,7 +341,7 @@ def fig_11_hybrid_ai_architecture():
     fig, ax = create_figure()
     draw_title(ax, "HYBRID INTELLIGENT ARCHITECTURE")
     
-    draw_glass_box(ax, 0.5, 0.5, 0.85, 0.7, border="#334155", bg=BG_COLOR)
+    draw_glass_box(ax, 0.5, 0.46, 0.85, 0.72, border="#334155", bg=BG_COLOR)
     
     stack = [
         ("Explainable Reasoning (XAI Traceability)", EMERALD),
@@ -350,8 +350,8 @@ def fig_11_hybrid_ai_architecture():
         ("Deep Learning (EfficientNet-B0 Perception)", "#0284c7")
     ]
     
-    y_start = 0.68
-    y_gap = 0.12
+    y_start = 0.66
+    y_gap = 0.13
     for i, (text, color) in enumerate(stack):
         draw_glass_box(ax, 0.5, y_start - i*y_gap, 0.75, 0.08, text=text, border=color, bg=BOX_BG, fontsize=26)
 
