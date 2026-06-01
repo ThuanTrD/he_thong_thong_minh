@@ -109,7 +109,7 @@ def fig_01_system_overview():
             next_y = steps[i+1][1]
             draw_glow_arrow(ax, 0.5, y - 0.065, 0.5, next_y + 0.065, color=color)
 
-    plt.savefig(os.path.join(OUTPUT_DIR, "fig_01_system_overview.png"), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "fig_01_system_overview.png"))
     plt.close()
 
 def fig_02_severity_pipeline():
@@ -131,7 +131,7 @@ def fig_02_severity_pipeline():
     draw_glow_arrow(ax, 0.47, 0.10, 0.65, 0.10, color=EMERALD)
     draw_glass_box(ax, 0.80, 0.10, 0.15, 0.14, title="Final Alert", text="DANGER", border=DANGER_RED, fontsize=36, title_color=DANGER_RED)
 
-    plt.savefig(os.path.join(OUTPUT_DIR, "fig_02_severity_pipeline.png"), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "fig_02_severity_pipeline.png"))
     plt.close()
 
 def fig_03_membership_functions():
@@ -191,7 +191,7 @@ def fig_04_vsi_transition():
     ax.text(0.5, 0.15, "Unlike discrete CNN classes, Moderate emerges as an intermediate reasoning state.", 
             ha='center', va='center', color=TEXT_MUTED, fontsize=26, style='italic')
 
-    plt.savefig(os.path.join(OUTPUT_DIR, "fig_04_vsi_transition.png"), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "fig_04_vsi_transition.png"))
     plt.close()
 
 def fig_05_rule_activation():
@@ -222,7 +222,7 @@ def fig_05_rule_activation():
     ax.text(0.5, 0.15, "Formula: Contribution % = (w * z) / Σ(w * z)", 
             ha='center', va='center', color=CYAN_GLOW, fontsize=28, weight='bold')
 
-    plt.savefig(os.path.join(OUTPUT_DIR, "fig_05_rule_activation.png"), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "fig_05_rule_activation.png"))
     plt.close()
 
 def fig_06_ood_uncertainty():
@@ -237,7 +237,7 @@ def fig_06_ood_uncertainty():
     draw_glow_arrow(ax, 0.75, 0.50, 0.75, 0.35)
     draw_glass_box(ax, 0.75, 0.20, 0.40, 0.22, title="OOD REJECTION", text="Halt automated reasoning.\nRequire Expert Input.", border=DANGER_RED)
 
-    plt.savefig(os.path.join(OUTPUT_DIR, "fig_06_ood_uncertainty.png"), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "fig_06_ood_uncertainty.png"))
     plt.close()
 
 def fig_07_contextual_alert():
@@ -257,7 +257,7 @@ def fig_07_contextual_alert():
     draw_glow_arrow(ax, 0.75, 0.29, 0.75, 0.21)
     draw_glass_box(ax, 0.75, 0.10, 0.35, 0.14, title="DANGER", text="Immediate Action Required", border=DANGER_RED, title_color=DANGER_RED)
 
-    plt.savefig(os.path.join(OUTPUT_DIR, "fig_07_contextual_alert.png"), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "fig_07_contextual_alert.png"))
     plt.close()
 
 def fig_08_xai_report():
@@ -281,7 +281,7 @@ def fig_08_xai_report():
     
     draw_glass_box(ax, 0.5, 0.45, 0.85, 0.65, text=report_text, border=CYAN_GLOW, fontsize=24)
 
-    plt.savefig(os.path.join(OUTPUT_DIR, "fig_08_xai_report.png"), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "fig_08_xai_report.png"))
     plt.close()
 
 def fig_09_error_analysis():
@@ -304,7 +304,7 @@ def fig_09_error_analysis():
     ax.text(0.5, 0.10, "Most errors are conservative downgrades in visually ambiguous cases.\nZero 'Severe -> Healthy' errors demonstrate safe decision-support behavior.", 
             ha='center', va='center', color=CYAN_GLOW, fontsize=26, style='italic', linespacing=1.6)
 
-    plt.savefig(os.path.join(OUTPUT_DIR, "fig_09_error_analysis.png"), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "fig_09_error_analysis.png"))
     plt.close()
 
 def fig_10_system_contributions():
@@ -334,7 +334,7 @@ def fig_10_system_contributions():
             cell.set_text_props(color=TEXT_MAIN)
         cell.set_edgecolor("#334155")
 
-    plt.savefig(os.path.join(OUTPUT_DIR, "fig_10_system_contributions.png"), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "fig_10_system_contributions.png"))
     plt.close()
 
 def fig_11_hybrid_ai_architecture():
@@ -355,7 +355,7 @@ def fig_11_hybrid_ai_architecture():
     for i, (text, color) in enumerate(stack):
         draw_glass_box(ax, 0.5, y_start - i*y_gap, 0.75, 0.08, text=text, border=color, bg=BOX_BG, fontsize=26)
 
-    plt.savefig(os.path.join(OUTPUT_DIR, "fig_11_hybrid_ai_architecture.png"), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "fig_11_hybrid_ai_architecture.png"))
     plt.close()
 
 def fig_12_deployment_pipeline():
@@ -383,7 +383,7 @@ def fig_12_deployment_pipeline():
     draw_glow_arrow(ax, 0.77, 0.30, 0.61, 0.30, lw_core=2, lw_glow=6, mutation_scale=30)
     draw_glow_arrow(ax, 0.39, 0.30, 0.23, 0.30, lw_core=2, lw_glow=6, mutation_scale=30)
 
-    plt.savefig(os.path.join(OUTPUT_DIR, "fig_12_deployment_pipeline.png"), bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "fig_12_deployment_pipeline.png"))
     plt.close()
 
 if __name__ == "__main__":
