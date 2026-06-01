@@ -292,7 +292,7 @@ def fig_09_error_analysis():
     values = [2, 1, 0]
     colors = [WARNING_ORANGE, CYAN_GLOW, EMERALD]
     
-    ax_bar = fig.add_axes([0.2, 0.25, 0.6, 0.50])
+    ax_bar = fig.add_axes([0.2, 0.32, 0.6, 0.48])
     ax_bar.set_facecolor(BG_COLOR)
     bars = ax_bar.bar(labels, values, color=colors, width=0.4)
     ax_bar.set_ylabel("Number of Occurrences", color=TEXT_MAIN, fontsize=22)
@@ -301,7 +301,7 @@ def fig_09_error_analysis():
         spine.set_color("#334155")
         spine.set_linewidth(2)
         
-    ax.text(0.5, 0.15, "Most errors are conservative downgrades in visually ambiguous cases.\nZero 'Severe -> Healthy' errors demonstrate safe decision-support behavior.", 
+    ax.text(0.5, 0.10, "Most errors are conservative downgrades in visually ambiguous cases.\nZero 'Severe -> Healthy' errors demonstrate safe decision-support behavior.", 
             ha='center', va='center', color=CYAN_GLOW, fontsize=26, style='italic', linespacing=1.6)
 
     plt.savefig(os.path.join(OUTPUT_DIR, "fig_09_error_analysis.png"), bbox_inches='tight')
