@@ -116,11 +116,11 @@ def fig_02_severity_pipeline():
     fig, ax = create_figure()
     draw_title(ax, "SEVERITY REASONING & CONTEXTUAL ESCALATION")
     
-    draw_glass_box(ax, 0.5, 0.76, 0.55, 0.18, title="1. CNN Softmax Distribution", border="#0284c7")
-    draw_bar(ax, 0.32, 0.74, 0.25, 0.02, 0.49, "#3b82f6", "Mild Confidence")
-    draw_bar(ax, 0.32, 0.67, 0.25, 0.02, 0.51, WARNING_ORANGE, "Severe Confidence")
+    draw_glass_box(ax, 0.5, 0.71, 0.55, 0.18, title="1. CNN Softmax Distribution", border="#0284c7")
+    draw_bar(ax, 0.32, 0.69, 0.25, 0.02, 0.49, "#3b82f6", "Mild Confidence")
+    draw_bar(ax, 0.32, 0.62, 0.25, 0.02, 0.51, WARNING_ORANGE, "Severe Confidence")
     
-    draw_glow_arrow(ax, 0.5, 0.61, 0.5, 0.51)
+    draw_glow_arrow(ax, 0.5, 0.57, 0.5, 0.51)
     
     draw_glass_box(ax, 0.5, 0.40, 0.65, 0.16, title="2. Fuzzy Reasoning Zone", 
                    text="Transition region detected.\nModerate intermediate state activated via fuzzy interpolation.", border=CYAN_GLOW, fontsize=24)
