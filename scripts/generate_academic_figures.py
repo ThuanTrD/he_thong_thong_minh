@@ -363,25 +363,25 @@ def fig_12_deployment_pipeline():
     draw_title(ax, "END-TO-END DEPLOYMENT PIPELINE")
     
     boxes = [
-        (0.15, 0.65, "User Upload", "#334155"),
-        (0.40, 0.65, "FastAPI Backend", "#0284c7"),
-        (0.65, 0.65, "CNN Model", CYAN_GLOW),
-        (0.85, 0.65, "Fuzzy Engine", EMERALD),
-        (0.85, 0.35, "XAI Logic", EMERALD),
-        (0.50, 0.35, "JSON Response", "#334155"),
-        (0.15, 0.35, "Streamlit UI", WARNING_ORANGE)
+        (0.125, 0.65, "User Upload", "#334155"),
+        (0.375, 0.65, "FastAPI Backend", "#0284c7"),
+        (0.625, 0.65, "CNN Model", CYAN_GLOW),
+        (0.875, 0.65, "Fuzzy Engine", EMERALD),
+        (0.875, 0.30, "XAI Logic", EMERALD),
+        (0.500, 0.30, "JSON Response", "#334155"),
+        (0.125, 0.30, "Streamlit UI", WARNING_ORANGE)
     ]
     
     for x, y, text, color in boxes:
-        draw_glass_box(ax, x, y, 0.22, 0.14, text=text, border=color, fontsize=24)
+        draw_glass_box(ax, x, y, 0.16, 0.14, text=text, border=color, fontsize=24)
         
-    draw_glow_arrow(ax, 0.27, 0.65, 0.28, 0.65)
-    draw_glow_arrow(ax, 0.52, 0.65, 0.53, 0.65)
-    draw_glow_arrow(ax, 0.77, 0.65, 0.73, 0.65)
+    draw_glow_arrow(ax, 0.24, 0.65, 0.26, 0.65)
+    draw_glow_arrow(ax, 0.49, 0.65, 0.51, 0.65)
+    draw_glow_arrow(ax, 0.74, 0.65, 0.76, 0.65)
     
-    draw_glow_arrow(ax, 0.85, 0.56, 0.85, 0.44)
-    draw_glow_arrow(ax, 0.73, 0.35, 0.62, 0.35)
-    draw_glow_arrow(ax, 0.38, 0.35, 0.27, 0.35)
+    draw_glow_arrow(ax, 0.875, 0.54, 0.875, 0.41)
+    draw_glow_arrow(ax, 0.76, 0.30, 0.62, 0.30)
+    draw_glow_arrow(ax, 0.38, 0.30, 0.25, 0.30)
 
     plt.savefig(os.path.join(OUTPUT_DIR, "fig_12_deployment_pipeline.png"), bbox_inches='tight')
     plt.close()
