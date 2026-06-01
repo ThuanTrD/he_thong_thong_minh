@@ -63,11 +63,11 @@ def draw_glass_box(ax, x, y, width, height, text="", title="", bg=BOX_BG, border
     
     if title:
         # Title size: 30-36px equivalent
-        ax.text(x, y + height/2 - 0.01, title, ha='center', va='top', color=title_color, 
+        ax.text(x, y + height/2 - 0.015, title, ha='center', va='top', color=title_color, 
                 fontsize=fontsize+8, weight='bold')
         if text:
             # Body size: 24-28px equivalent, generous line spacing
-            ax.text(x, y - 0.02, text, ha='center', va='center', color=TEXT_MAIN, 
+            ax.text(x, y - 0.04, text, ha='center', va='center', color=TEXT_MAIN, 
                     fontsize=fontsize, linespacing=1.8)
     elif text:
         ax.text(x, y, text, ha='center', va='center', color=TEXT_MAIN, 
@@ -122,14 +122,14 @@ def fig_02_severity_pipeline():
     
     draw_glow_arrow(ax, 0.5, 0.61, 0.5, 0.51)
     
-    draw_glass_box(ax, 0.5, 0.40, 0.65, 0.1, title="2. Fuzzy Reasoning Zone", 
+    draw_glass_box(ax, 0.5, 0.40, 0.65, 0.16, title="2. Fuzzy Reasoning Zone", 
                    text="Transition region detected.\nModerate intermediate state activated via fuzzy interpolation.", border=CYAN_GLOW, fontsize=24)
     
     draw_glow_arrow(ax, 0.5, 0.28, 0.5, 0.19)
     
-    draw_glass_box(ax, 0.25, 0.10, 0.35, 0.08, title="3. Environment", text="Humidity: 90%   |   Temp: 35°C", border=EMERALD, fontsize=24)
+    draw_glass_box(ax, 0.25, 0.10, 0.35, 0.14, title="3. Environment", text="Humidity: 90%   |   Temp: 35°C", border=EMERALD, fontsize=24)
     draw_glow_arrow(ax, 0.47, 0.10, 0.65, 0.10, color=EMERALD)
-    draw_glass_box(ax, 0.80, 0.10, 0.15, 0.08, title="Final Alert", text="DANGER", border=DANGER_RED, fontsize=36, title_color=DANGER_RED)
+    draw_glass_box(ax, 0.80, 0.10, 0.15, 0.14, title="Final Alert", text="DANGER", border=DANGER_RED, fontsize=36, title_color=DANGER_RED)
 
     plt.savefig(os.path.join(OUTPUT_DIR, "fig_02_severity_pipeline.png"), bbox_inches='tight')
     plt.close()
@@ -229,13 +229,13 @@ def fig_06_ood_uncertainty():
     fig, ax = create_figure()
     draw_title(ax, "UNCERTAINTY-AWARE REASONING & OOD DETECTION")
     
-    draw_glass_box(ax, 0.25, 0.65, 0.35, 0.18, title="High Entropy Output", text="Mild = 0.34\nSevere = 0.33\nBlast = 0.33", border=WARNING_ORANGE, title_color=WARNING_ORANGE)
-    draw_glow_arrow(ax, 0.25, 0.52, 0.25, 0.35)
-    draw_glass_box(ax, 0.25, 0.20, 0.40, 0.18, title="HYBRID_WARNING", text="Smooths borderline decisions.\nEscalates context alert.", border=CYAN_GLOW)
+    draw_glass_box(ax, 0.25, 0.65, 0.35, 0.22, title="High Entropy Output", text="Mild = 0.34\nSevere = 0.33\nBlast = 0.33", border=WARNING_ORANGE, title_color=WARNING_ORANGE)
+    draw_glow_arrow(ax, 0.25, 0.50, 0.25, 0.35)
+    draw_glass_box(ax, 0.25, 0.20, 0.40, 0.22, title="HYBRID_WARNING", text="Smooths borderline decisions.\nEscalates context alert.", border=CYAN_GLOW)
     
-    draw_glass_box(ax, 0.75, 0.65, 0.35, 0.18, title="Unrecognized Output", text="Max Confidence < 0.25", border=DANGER_RED, title_color=DANGER_RED)
-    draw_glow_arrow(ax, 0.75, 0.52, 0.75, 0.35)
-    draw_glass_box(ax, 0.75, 0.20, 0.40, 0.18, title="OOD REJECTION", text="Halt automated reasoning.\nRequire Expert Input.", border=DANGER_RED)
+    draw_glass_box(ax, 0.75, 0.65, 0.35, 0.22, title="Unrecognized Output", text="Max Confidence < 0.25", border=DANGER_RED, title_color=DANGER_RED)
+    draw_glow_arrow(ax, 0.75, 0.50, 0.75, 0.35)
+    draw_glass_box(ax, 0.75, 0.20, 0.40, 0.22, title="OOD REJECTION", text="Halt automated reasoning.\nRequire Expert Input.", border=DANGER_RED)
 
     plt.savefig(os.path.join(OUTPUT_DIR, "fig_06_ood_uncertainty.png"), bbox_inches='tight')
     plt.close()
@@ -249,13 +249,13 @@ def fig_07_contextual_alert():
     draw_glow_arrow(ax, 0.5, 0.65, 0.25, 0.52)
     draw_glow_arrow(ax, 0.5, 0.65, 0.75, 0.52)
     
-    draw_glass_box(ax, 0.25, 0.42, 0.4, 0.15, title="CASE A: Low ERI", text="Humidity: 50% | Temp: 22°C", border="#10b981", title_color="#10b981")
+    draw_glass_box(ax, 0.25, 0.42, 0.4, 0.18, title="CASE A: Low ERI", text="Humidity: 50% | Temp: 22°C", border="#10b981", title_color="#10b981")
     draw_glow_arrow(ax, 0.25, 0.30, 0.25, 0.20)
-    draw_glass_box(ax, 0.25, 0.10, 0.35, 0.1, title="ATTENTION", text="Regular Monitoring", border=WARNING_ORANGE, title_color=WARNING_ORANGE)
+    draw_glass_box(ax, 0.25, 0.10, 0.35, 0.14, title="ATTENTION", text="Regular Monitoring", border=WARNING_ORANGE, title_color=WARNING_ORANGE)
     
-    draw_glass_box(ax, 0.75, 0.42, 0.4, 0.15, title="CASE B: High ERI", text="Humidity: 90% | Temp: 35°C", border=DANGER_RED, title_color=DANGER_RED)
+    draw_glass_box(ax, 0.75, 0.42, 0.4, 0.18, title="CASE B: High ERI", text="Humidity: 90% | Temp: 35°C", border=DANGER_RED, title_color=DANGER_RED)
     draw_glow_arrow(ax, 0.75, 0.30, 0.75, 0.20)
-    draw_glass_box(ax, 0.75, 0.10, 0.35, 0.1, title="DANGER", text="Immediate Action Required", border=DANGER_RED, title_color=DANGER_RED)
+    draw_glass_box(ax, 0.75, 0.10, 0.35, 0.14, title="DANGER", text="Immediate Action Required", border=DANGER_RED, title_color=DANGER_RED)
 
     plt.savefig(os.path.join(OUTPUT_DIR, "fig_07_contextual_alert.png"), bbox_inches='tight')
     plt.close()
