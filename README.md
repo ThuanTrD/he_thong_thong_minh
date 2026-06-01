@@ -61,10 +61,16 @@ project/
 3. **Cài đặt thư viện:**
    ```bash
    pip install -r rice/requirements.txt
-   pip install streamlit
+   pip install streamlit fastapi uvicorn python-multipart
    ```
 
-4. **Chạy ứng dụng (Streamlit Dashboard):**
+4. **Khởi động Backend API (CNN OOD Detection):**
+   ```bash
+   uvicorn rice_api_backend.api:app --host 0.0.0.0 --port 8000
+   ```
+
+5. **Khởi động Dashboard (Streamlit Frontend):**
+   Mở một Terminal mới, kích hoạt venv và chạy:
    ```bash
    streamlit run app_streamlit.py
    ```
@@ -81,14 +87,31 @@ project/
 
 ---
 
-## ⚙️ Các thông số Mô hình (CNN)
+## ⚙️ Bảng Đóng góp Hệ thống (System Contribution Table)
 
-- **Backbone**: EfficientNet-B0
-- **Độ chính xác (Validation Acc)**: ~92.04%
-- **Độ phân giải đầu vào**: 224x224
-- **Kỹ thuật tối ưu**: Label Smoothing (0.1) được áp dụng giúp phân phối phổ điểm không bị cứng nhắc (ví dụ tránh ra kết quả như 0.99 / 0.01 tuyệt đối) để tối ưu luồng dữ liệu truyền cho Fuzzy Layer xử lý phía sau.
+The proposed architecture is designed as a hybrid intelligent decision-support system rather than a standalone image classifier.
 
-> **Lưu ý**: Dữ liệu train và test có thể tìm thấy tại [Severity-Based Rice Leaf Diseases (Kaggle)](https://www.kaggle.com/datasets/isaacritharson/severity-based-rice-leaf-diseases-dataset).
+| Component | Contribution |
+| :--- | :--- |
+| **CNN (EfficientNet-B0)** | Visual disease perception and feature extraction |
+| **Fuzzy Inference System** | Severity reasoning and continuous interpolation |
+| **Environmental Risk Index (ERI)** | Contextual alert escalation |
+| **OOD Detection & Entropy** | Uncertainty handling and anomaly detection |
+| **Explainability Layer (XAI)** | Rule traceability and interpretable reasoning |
+| **Expert Fusion** | Human-guided field adjustment |
+
+---
+
+## 📊 Official Evaluation Metrics
+
+All quantitative results reported in this work are based on the final evaluation protocol using 180 labeled validation images from the Severity-based Rice Leaf Diseases Dataset.
+
+*   **Fuzzy Severity Accuracy:** 98.33% (177/180)
+*   **Macro F1-score (Severity):** 98.75%
+*   **Disease-level Consistency:** 100.00%
+*   **CNN Backbone:** EfficientNet-B0 (Tối ưu hóa bằng Label Smoothing 0.1 để tránh cứng hóa phổ điểm Softmax, hỗ trợ tốt nhất cho tầng Fuzzy Inference).
+
+> **Lưu ý**: Dữ liệu train và validation có thể tìm thấy tại [Severity-Based Rice Leaf Diseases (Kaggle)](https://www.kaggle.com/datasets/isaacritharson/severity-based-rice-leaf-diseases-dataset).
 
 ---
 *Developed by Group 14 - Hệ thống Thông minh*

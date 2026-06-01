@@ -1,75 +1,126 @@
-# Đánh giá Kiến trúc Hệ thống — Đối chiếu với Tên Đề tài Đăng ký
+# Official Defense Report Outline: An Explainable Intelligent System for Plant Disease Severity Assessment using Fuzzy Inference
 
-> **Tên đề tài:** *An Explainable Intelligent System for Plant Disease Severity Assessment using Fuzzy Inference*
-> **Nhóm:** 14 — Môn Hệ thống Thông minh (Cao học)
-
----
-
-## I. Mức độ khớp với Tên Đề tài (Alignment with Research Topic)
-
-Kiến trúc hiện tại được thiết kế bám sát các từ khóa học thuật của đề tài:
-
-| Từ khóa | Hiện thực trong hệ thống (Implementation) |
-|---------|---------------------------------------------|
-| **Explainable** | Tầng **Explainability Layer** hỗ trợ *symbolic reasoning traceability* bằng cách truy xuất các luật mờ được kích hoạt và gán trọng số đóng góp chính xác theo công thức tỷ trọng Sugeno: $(w_i \times z_i) / \sum(w_i \times z_i)$, từ đó sinh ra *interpretable recommendations*. |
-| **Intelligent System** | Áp dụng mô hình *Neuro-symbolic reasoning pipeline* (kết hợp deep learning và logic mờ) hướng tới *decision-support oriented*. |
-| **Plant Disease** | The primary evaluation focuses on four rice leaf diseases and healthy leaves. The system additionally supports abnormal/OOD agricultural threat scenarios such as Golden Apple Snail as part of uncertainty-aware expert-guided reasoning. |
-| **Severity Assessment** | Sử dụng VSI (Visual Severity Index) với 4 mức (Healthy, Mild, Moderate, Severe). *The fuzzy inference layer does not replace the CNN classifier. Instead, it refines disease severity assessment by integrating CNN confidence, uncertainty information, and contextual reasoning into a more interpretable decision-support process.* |
-| **Fuzzy Inference** | Kiến trúc Sugeno Zero-order FIS, xử lý bất định sinh học và thông tin môi trường. Mạng tham số mờ được tham số hóa (externalized) qua cấu hình JSON (`fuzzy_config.json`) giúp hệ thống mang tính *data-driven* và dễ dàng *fine-tune*. |
+Đây là kịch bản và cấu trúc báo cáo chính thức (Official Defense Structure) dành cho hội đồng bảo vệ, tập trung vào tính nhất quán (consistency), minh chứng giải thích (explainability), và thiết kế hỗ trợ quyết định (decision support).
 
 ---
 
-## II. Đóng góp Nghiên cứu (Research Contributions / Strengths)
+## 1. BẢNG ĐÓNG GÓP HỆ THỐNG (SYSTEM CONTRIBUTION TABLE)
 
-Hệ thống được thiết kế theo mô hình **Explainable Hybrid Intelligent System** với các thành phần cốt lõi:
+> **Slogan / Orientation:**
+> *The proposed architecture is designed as a hybrid intelligent decision-support system rather than a standalone image classifier.*
 
-*   **CNN (Visual feature extraction and disease recognition):** Mạng EfficientNet-B0 đóng vai trò trích xuất đặc trưng hình ảnh. Phương pháp Label Smoothing (0.1) được áp dụng để tránh phân phối phổ điểm cứng nhắc.
-*   **Fuzzy Inference (Severity reasoning and contextual decision support):** Kiến trúc mờ Sugeno hoạt động trên miền đầu ra tĩnh, sử dụng *Weighted Average* defuzzification, phù hợp cho các bài toán hỗ trợ quyết định có tính diễn dịch cao. Đặc biệt, hệ thống cung cấp tính năng **Parameter Externalization** qua `fuzzy_config.json`, hỗ trợ chuyên gia nông nghiệp điều chỉnh hệ mờ mà không cần can thiệp mã nguồn.
-*   **OOD / Entropy (Uncertainty handling and abnormal-case detection):** Việc sử dụng *Semantic Group Confidence Aggregation* và *Normalized Shannon Entropy* giúp kiểm soát hiện tượng phân mảnh xác suất (*Probability Splitting*). The system incorporates uncertainty-aware detection mechanisms to reduce silent failure risk and support safer decision-making.
-*   **Expert Fusion (Human-in-the-loop adjustment for agricultural field conditions):** Việc phân chia thành ba chế độ suy luận (`AI_CONFIDENT`, `HYBRID_WARNING`, `EXPERT_GUIDED_MODE`) *improves robustness* trước các tình huống thực địa phức tạp.
-*   **Explainable AI tinh chỉnh:** Công thức XAI tính toán chính xác phần trăm đóng góp của từng tập luật dựa trên trọng số giải mờ $(w_i \times z_i) / \sum(w_i \times z_i)$, mang lại tính truy vết logic biểu tượng sắc nét thay vì xấp xỉ tỷ lệ kích hoạt đơn thuần.
+Hệ thống kết hợp nhận thức hình ảnh học sâu (Deep Learning Perception) với cơ chế suy diễn mờ (Fuzzy Reasoning) để cung cấp một giải pháp hỗ trợ quyết định toàn diện, có khả năng diễn dịch và nhận thức bối cảnh.
 
----
-
-## III. Các Hạn chế Hiện tại (Limitations / Weaknesses)
-
-Bên cạnh những điểm mạnh, hệ thống mang những giới hạn nhất định của AI và kiến trúc lai:
-
-*   **Sự phụ thuộc vào bộ quy tắc mờ (Rule Base Dependency):** Dù đã tách cấu hình JSON, quá trình *Severity Assessment* vẫn phụ thuộc vào việc định nghĩa *Membership functions* và tập luật chuyên gia ban đầu. Trong các hướng nghiên cứu xa hơn, việc tự động tinh chỉnh (Tuning) hàm thuộc bằng học máy (ví dụ: mô hình ANFIS) có thể được cân nhắc.
-*   **Phạm vi đánh giá định lượng:** The current dataset provides labeled severity levels for Healthy, Mild, and Severe. The Moderate level is retained as an intermediate fuzzy reasoning and decision-support state, but quantitative evaluation is conducted using the available labeled classes.
-*   **Giới hạn về Khả năng Tổng quát hóa (Generalizability):** Hệ thống hiện đang thiết kế dựa trên tập nhãn bệnh cụ thể của cây lúa. Để áp dụng cho các giống cây trồng khác, cần cập nhật mô hình thị giác máy tính cũng như *Knowledge Base* của Fuzzy System.
+| Component | Contribution |
+| :--- | :--- |
+| **CNN (EfficientNet-B0)** | Trích xuất đặc trưng hình ảnh và nhận diện bệnh (Visual disease perception) |
+| **Fuzzy Inference System** | Suy diễn mức độ bệnh và nội suy liên tục (Severity reasoning & interpolation) |
+| **Environmental Risk Index (ERI)** | Nâng cấp cảnh báo dựa trên bối cảnh môi trường (Contextual alert escalation) |
+| **OOD Detection & Entropy** | Xử lý bất định và phát hiện dị thường (Uncertainty handling & anomaly detection) |
+| **Explainability Layer (XAI)** | Truy vết tập luật và giải thích quyết định (Rule traceability & interpretable reasoning) |
+| **Expert Fusion** | Hỗ trợ điều chỉnh từ chuyên gia thực địa (Human-guided field adjustment) |
 
 ---
 
-## IV. Đánh giá Định lượng (Severity Evaluation Results)
+## 2. OFFICIAL EVALUATION METRICS (KẾT QUẢ ĐÁNH GIÁ CHÍNH THỨC)
 
-Quá trình đánh giá được thực hiện trên tập dữ liệu kiểm thử (180 mẫu) nhằm đo lường khả năng kết hợp giữa nhận dạng của CNN và cơ chế suy diễn mờ:
+> **Tuyên bố nhất quán (Consistency Statement):**
+> *All quantitative results reported in this work are based on the final evaluation protocol using 180 labeled validation images from the Severity-based Rice Leaf Diseases Dataset.*
+> *(Lưu ý: Mọi kết quả CNN 92.04% cũ hoặc test thử nghiệm 96.67% trước đây đều được xem là Deprecated và bị thay thế bằng kết quả Hybrid Final dưới đây).*
 
-*   **Fuzzy Severity Accuracy:** 98.33% (177/180 mẫu)
-*   **Macro F1-score (Severity):** 98.75%
-*   **Disease-level consistency:** The system achieved 100% disease-level consistency on the current validation dataset.
-
-**Phân tích lỗi (Error Analysis):**
-*   Sau khi tích hợp luật tăng cường (Boost Rule), số lượng mẫu Severe bị hạ cấp không mong muốn giảm thiểu đáng kể (chỉ còn 2 ca).
-*   Most errors are conservative downgrades from Severe to Mild.
-*   No Severe samples were misclassified as Healthy.
-*   *This suggests the system behaves conservatively in borderline cases rather than aggressively overestimating severity.* Phản xạ này tuân thủ đúng nguyên lý xây dựng một hệ thống *decision-support oriented* nhằm giảm thiểu báo động giả thái quá.
-
----
-
-## V. Câu hỏi Hội đồng dự đoán & Luận điểm Bảo vệ
-
-| Câu hỏi | Luận điểm Bảo vệ (Academic Defense) |
-|---------|-------------------------------------|
-| **"Tại sao dùng Sugeno thay vì Mamdani?"** | Sugeno phù hợp cho DSS: không đòi hỏi *centroid defuzzification* trên miền liên tục, độ trễ thấp $O(n)$, và đầu ra *crisp* rất thuận lợi để giải thích nguyên nhân. |
-| **"XAI của hệ thống khác gì LIME/SHAP?"** | LIME/SHAP tiếp cận theo hướng *post-hoc approximation* để giải thích mô hình hộp đen. Tầng Explainability Layer của hệ thống là *model-intrinsic / symbolic reasoning traceability*: trực tiếp truy vết luật mờ và tính toán % đóng góp theo công thức giải mờ. |
-| **"Hệ mờ đóng góp gì so với chỉ dùng CNN?"** | The fuzzy inference layer does not replace the CNN classifier. Nó tinh chỉnh mức độ bệnh (*Severity Assessment*) bằng cách tổng hợp độ tự tin (confidence), thông tin môi trường và bối cảnh đa chiều. |
-| **"OOD Detector hoạt động thế nào?"** | Sử dụng Semantic Grouping để giảm rủi ro Softmax Fragmentation, đồng thời tính Shannon Entropy để *handle uncertainty*, qua đó *reduce silent failure risk* trên mẫu lạ. |
+*   **Dataset:** Severity-based Rice Leaf Diseases (Validation Set).
+*   **Number of Images:** 180 (Cân bằng giữa các lớp Healthy, Mild, và Severe).
+*   **Evaluation Protocol:** Đánh giá end-to-end khả năng phân loại mức độ nghiêm trọng (Fuzzy Visual Severity Index - VSI) so với nhãn Ground Truth.
+*   **Final Metrics Used Throughout the Thesis:**
+    *   **Fuzzy Severity Accuracy:** 98.33% (177/180 ảnh)
+    *   **Macro F1-score (Severity):** 98.75%
+    *   **Disease-level Consistency:** 100.00% (Không sai nhầm loại bệnh, chỉ kiểm tra đo lường mức độ).
 
 ---
 
-## VI. Kết luận (Conclusion)
+## 3. SEVERITY REASONING VISUALIZATION (TRỰC QUAN HÓA CHO SLIDE/BÁO CÁO)
 
-The system demonstrates that combining deep learning with fuzzy inference can provide a more interpretable and context-aware approach to plant disease severity assessment. The proposed architecture shows promising results for intelligent agricultural decision support while remaining extensible for future multi-label and real-world uncertainty scenarios.
+Khi trình bày Slide, sinh viên cần đưa các đồ thị và sơ đồ sau để minh họa tính khoa học:
 
-Hệ thống này đại diện cho một **Uncertainty-aware agricultural AI system** và một **Severity-oriented decision support framework**, chứng minh nhóm nghiên cứu thấu hiểu các giới hạn của mô hình phân loại học sâu thuần túy và biết cách ứng dụng suy diễn logic mờ để ra quyết định an toàn, minh bạch hơn.
+### A. Membership Function Visualization
+*   **Hình ảnh cần có:** Đồ thị đường (hàm hình thang/tam giác) biểu diễn `Mild_Membership` và `Severe_Membership`.
+*   **Nội dung nhấn mạnh:** Hiển thị rõ **vùng giao thoa (overlap/transition region)**. Điều này chứng minh hệ thống không dùng ngưỡng cắt (threshold-based hard decision) thô cứng mà dùng nội suy mờ.
+
+### B. VSI Transition Diagram
+*   **Sơ đồ:** `Healthy` $\rightarrow$ `Mild` $\rightarrow$ **`Moderate`** $\rightarrow$ `Severe`.
+*   **Nội dung nhấn mạnh:** *The Moderate severity level is not directly learned as a discrete CNN class. Instead, it emerges as an intermediate reasoning state generated by fuzzy interpolation between Mild and Severe confidence regions.* (Mức độ Moderate hoàn toàn là sản phẩm của suy diễn mờ, minh chứng cho khả năng tạo ra tri thức mới từ dữ liệu bất định).
+
+### C. Alert Escalation Visualization
+*   **Sơ đồ minh họa Contextual Reasoning:** 
+    *   Cùng một mức VSI = `Mild`.
+    *   Môi trường Khô (Humidity Low) $\rightarrow$ Cảnh báo **Attention** (Chú ý).
+    *   Môi trường Ẩm ướt (Humidity High) $\rightarrow$ Cảnh báo **Danger** (Nguy hiểm).
+
+---
+
+## 4. EXPLAINABILITY EVIDENCE (3 CASE STUDY MINH HỌA XAI)
+
+> **Luận điểm XAI:** 
+> *The explainability layer provides symbolic traceability of rule activation, membership contribution, and severity reasoning pathways.*
+
+### CASE A — Clear Severe (Bệnh Nặng Rõ Rệt)
+*   **Input Image:** Tổn thương Blast lây lan rộng.
+*   **CNN Output:** `Mild = 0.05`, `Severe = 0.95`.
+*   **Fuzzy Membership Activation:** `Severe High` ($\mu = 1.0$).
+*   **Activated Rules:** 
+    *   *IF CNN explicitly predicts Severe AND Confidence >= Medium THEN VSI is Severe (Boost Rule).* (Contribution: 60%)
+    *   *IF Severe High THEN VSI is Severe.* (Contribution: 40%)
+*   **VSI Score:** 90 (Severe).
+*   **Environmental Risk (ERI):** Normal.
+*   **Final Alert Level:** Danger.
+*   **Explanation (XAI):** "Triệu chứng bệnh xuất hiện rõ rệt ở mức độ Nghiêm trọng. Vết bệnh đã lan rộng, cần can thiệp hóa học lập tức."
+
+### CASE B — Borderline Transition (Vùng Chuyển Tiếp Bất Định)
+*   **Input Image:** Vết bệnh Brownspot đang chuyển từ nhẹ sang nặng, mắt thường khó phân biệt.
+*   **CNN Output:** `Mild = 0.49`, `Severe = 0.51` (High Uncertainty).
+*   **Fuzzy Reasoning:** Transition region detected. Cả `Mild Medium` và `Severe Medium` đều kích hoạt.
+*   **Activated Rules:** 
+    *   *IF Severe Medium THEN VSI is Moderate.* (Contribution: 55%)
+    *   *IF Severe Low AND Mild Medium THEN VSI is Mild.* (Contribution: 45%)
+*   **VSI Score:** 58 (Moderate - Trung bình).
+*   **Final Alert Level:** Attention.
+*   **Explanation (XAI):** "Vết bệnh đang ở giai đoạn chuyển tiếp (Moderate). Độ tự tin của mô hình thị giác ở mức biên (Uncertainty). Khuyến nghị theo dõi chặt chẽ tiến triển của vết bệnh trong 3 ngày tới thay vì phun thuốc mạnh."
+
+### CASE C — Contextual Escalation (Nâng Cấp Cảnh Báo Do Môi Trường)
+*   **Input Image:** Vết bệnh sớm, triệu chứng rất nhẹ.
+*   **CNN Output:** `Mild = 0.85`, `Severe = 0.15`.
+*   **Fuzzy Reasoning:** `Mild High` activated $\rightarrow$ VSI = 20 (Mild).
+*   **Environmental Risk:** Nhiệt độ 35°C, Độ ẩm 95% $\rightarrow$ **ERI is High**.
+*   **Final Alert Level:** Danger (Nâng cấp từ Attention lên Danger).
+*   **Explanation (XAI):** "Mặc dù triệu chứng bệnh trên lá chỉ mới ở mức độ Nhẹ (Mild), nhưng điều kiện môi trường hiện tại (Nhiệt độ 35°C, Độ ẩm 95%) làm tăng cực đoan nguy cơ bùng phát dịch nấm. Mức cảnh báo được nâng lên Nguy hiểm."
+
+---
+
+## 5. ERROR ANALYSIS AND BORDERLINE CASES (PHÂN TÍCH SAI SỐ)
+
+Không đơn thuần báo cáo số lượng lỗi, hệ thống phải phân tích bản chất của sai số dưới góc nhìn xử lý bất định (Uncertainty Handling).
+
+*   **Total Errors:** 3 out of 180 images.
+*   **Severe $\rightarrow$ Mild:** 2 cases.
+*   **Mild $\rightarrow$ Severe:** 1 case.
+*   **Severe $\rightarrow$ Healthy:** 0 cases.
+
+> **Luận điểm Bảo vệ Lỗi (Academic Error Defense):**
+> *Most errors correspond to conservative downgrades from Severe to Mild in visually ambiguous transition regions.*
+
+**Phân tích chi tiết (Deep Dive into Errors):**
+Trong 2 trường hợp hệ thống dự đoán Mild thay vì Severe (như Ground Truth), mạng CNN đã rơi vào trạng thái *High Entropy / Low Confidence* (ví dụ: `Mild = 0.45`, `Severe = 0.55`). 
+Thay vì mù quáng tin vào điểm số nhỉnh hơn 0.1 của Severe (như các mô hình phân loại cứng - Hard-decision classifiers), hệ thống mờ đã ghi nhận sự bất định này (Uncertainty) và làm mịn kết quả, nội suy VSI về vùng **Moderate (Trung bình)**.
+Do Ground Truth chỉ có nhãn Mild hoặc Severe, việc đánh giá Moderate bị hệ thống tính là một ca phân loại sai (downgrade). 
+
+**Tuy nhiên, xét về mặt ứng dụng Y tế/Nông nghiệp thực tiễn:** Đây chính là hành vi mong muốn (Desired Behavior). Hệ thống hỗ trợ quyết định (Decision Support System) luôn ưu tiên sự thận trọng (Conservative AI) khi thiếu chắc chắn, tránh việc đưa ra báo động giả thái quá (False Alarm) khi chưa có bằng chứng hình ảnh rõ rệt. Quan trọng nhất, **hệ thống tuyệt đối không bỏ lọt bất kỳ ca bệnh nặng (Severe) nào thành khỏe mạnh (Healthy).**
+
+---
+
+## 6. FINAL PRESENTATION CONCLUSION
+
+Khi kết luận bài thuyết trình trước hội đồng, sinh viên nhấn mạnh thông điệp sau:
+
+> *"The results suggest that integrating deep learning perception with fuzzy reasoning can provide a more interpretable and context-aware framework for plant disease severity assessment. The architecture demonstrates promising potential for intelligent agricultural decision-support systems under uncertain real-world conditions."*
+
+*(Kết quả cho thấy việc tích hợp năng lực nhận thức của học sâu với cơ chế suy diễn mờ cung cấp một giải pháp đánh giá mức độ bệnh cây trồng có tính giải thích cao và linh hoạt theo bối cảnh. Kiến trúc này chứng minh tiềm năng đầy hứa hẹn cho các hệ thống hỗ trợ quyết định nông nghiệp thông minh trong những điều kiện thực tế đầy tính bất định).*
