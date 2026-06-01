@@ -53,11 +53,11 @@ def evaluate_uncertainty(margin_fuzzy: dict) -> tuple:
         
     fired_rules = []
     if w_low > 0:
-        fired_rules.append(("NẾU Khoảng cách phân biệt (Margin) Lớn THÌ Độ bất định Thấp", w_low, "Low"))
+        fired_rules.append((w_low, "Low", "NẾU Khoảng cách phân biệt (Margin) Lớn THÌ Độ bất định Thấp"))
     if w_med > 0:
-        fired_rules.append(("NẾU Khoảng cách phân biệt (Margin) Vừa THÌ Độ bất định Trung bình", w_med, "Medium"))
+        fired_rules.append((w_med, "Medium", "NẾU Khoảng cách phân biệt (Margin) Vừa THÌ Độ bất định Trung bình"))
     if w_high > 0:
-        fired_rules.append(("NẾU Khoảng cách phân biệt (Margin) Nhỏ THÌ Độ bất định Cao", w_high, "High"))
+        fired_rules.append((w_high, "High", "NẾU Khoảng cách phân biệt (Margin) Nhỏ THÌ Độ bất định Cao"))
         
     return level, fired_rules
 
@@ -109,7 +109,7 @@ def evaluate_visual_severity(mild_conf_fuzzy: dict, severe_conf_fuzzy: dict, is_
     Tính toán Chỉ số mức độ bệnh trực quan (Visual Severity Index - VSI) bằng Sugeno FIS.
     """
     if is_healthy:
-        return 0.0, [("NẾU Nhận dạng Lành mạnh THÌ Mức độ nghiêm trọng = 0%", 1.0, SUGENO_SEVERITY["Healthy"])]
+        return 0.0, [(1.0, SUGENO_SEVERITY["Healthy"], "NẾU Nhận dạng Lành mạnh THÌ Mức độ nghiêm trọng = 0%")]
 
     rules = []
     
@@ -139,7 +139,7 @@ def evaluate_visual_severity(mild_conf_fuzzy: dict, severe_conf_fuzzy: dict, is_
         rules.append((w5, SUGENO_SEVERITY["Mild"], "NẾU Độ tự tin Severe Thấp VÀ Mild Thấp THÌ Mức độ bệnh Nhẹ"))
 
     if not rules:
-        return 35.0, [("Mặc định THÌ Mức độ bệnh = Trung bình", 1.0, SUGENO_SEVERITY["Moderate"])]
+        return 35.0, [(1.0, SUGENO_SEVERITY["Moderate"], "Mặc định THÌ Mức độ bệnh = Trung bình")]
         
     sum_w_z = sum(w * z for w, z, _ in rules)
     sum_w = sum(w for w, _, _ in rules)
@@ -154,7 +154,7 @@ def evaluate_environmental_risk(temp_fuzzy: dict, humidity_fuzzy: dict, has_env:
     Nếu không cung cấp T và H, mặc định trả về ERI = 50.0 (Medium) và không kích hoạt luật.
     """
     if not has_env:
-        return 50.0, [("NẾU Không cung cấp thông số thời tiết THÌ Nguy cơ môi trường Trung bình (Mặc định)", 1.0, SUGENO_SEVERITY["Moderate"])]
+        return 50.0, [(1.0, SUGENO_SEVERITY["Moderate"], "NẾU Không cung cấp thông số thời tiết THÌ Nguy cơ môi trường Trung bình (Mặc định)")]
         
     rules = []
     
@@ -184,7 +184,7 @@ def evaluate_environmental_risk(temp_fuzzy: dict, humidity_fuzzy: dict, has_env:
         rules.append((w5, SUGENO_ENV_RISK["Medium"], "NẾU Nhiệt độ Ấm/Nóng VÀ Độ ẩm Trung bình THÌ Nguy cơ môi trường Trung bình"))
 
     if not rules:
-        return 50.0, [("Mặc định THÌ Nguy cơ môi trường = Trung bình", 1.0, SUGENO_ENV_RISK["Medium"])]
+        return 50.0, [(1.0, SUGENO_ENV_RISK["Medium"], "Mặc định THÌ Nguy cơ môi trường = Trung bình")]
         
     sum_w_z = sum(w * z for w, z, _ in rules)
     sum_w = sum(w for w, _, _ in rules)
@@ -250,7 +250,7 @@ def evaluate_final_alert(vsi: float, eri: float) -> tuple:
         rules.append((w7, SUGENO_ALERT["Danger"], "NẾU Mức độ bệnh Nghiêm trọng VÀ Nguy cơ môi trường Thấp/Trung bình THÌ Cảnh báo Nguy hiểm"))
 
     if not rules:
-        return 40.0, [("Mặc định THÌ Cảnh báo = Chú ý", 1.0, SUGENO_ALERT["Attention"])]
+        return 40.0, [(1.0, SUGENO_ALERT["Attention"], "Mặc định THÌ Cảnh báo = Chú ý")]
         
     sum_w_z = sum(w * z for w, z, _ in rules)
     sum_w = sum(w for w, _, _ in rules)

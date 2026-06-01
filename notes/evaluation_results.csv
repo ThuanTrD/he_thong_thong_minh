@@ -1,0 +1,181 @@
+﻿image,folder,gt_disease,gt_severity,cnn_pred_class,cnn_confidence,fuzzy_disease,fuzzy_vsi_raw,fuzzy_severity,fuzzy_alert,uncertainty,diag_confidence,correct_severity,correct_disease,inference_mode
+IMG_20190419_172952.jpg,Healthy,Healthy,Healthy,Healthy,0.7617,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190419_173344.jpg,Healthy,Healthy,Healthy,Healthy,0.9292,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190419_173904.jpg,Healthy,Healthy,Healthy,Healthy,0.943,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190419_174133.jpg,Healthy,Healthy,Healthy,Healthy,0.9332,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190419_174218.jpg,Healthy,Healthy,Healthy,Healthy,0.9519,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190419_174308.jpg,Healthy,Healthy,Healthy,Healthy,0.9434,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190420_193425.jpg,Healthy,Healthy,Healthy,Healthy,0.9241,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190420_194105.jpg,Healthy,Healthy,Healthy,Healthy,0.9334,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190420_194338.jpg,Healthy,Healthy,Healthy,Healthy,0.8849,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190420_200326.jpg,Healthy,Healthy,Healthy,Healthy,0.8121,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190420_200436.jpg,Healthy,Healthy,Healthy,Healthy,0.7863,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190420_200508.jpg,Healthy,Healthy,Healthy,Healthy,0.7433,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190421_195322.jpg,Healthy,Healthy,Healthy,Healthy,0.8682,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190424_125921.jpg,Healthy,Healthy,Healthy,Healthy,0.9443,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190424_130047.jpg,Healthy,Healthy,Healthy,Healthy,0.9054,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190424_130138.jpg,Healthy,Healthy,Healthy,Healthy,0.9368,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190424_130226.jpg,Healthy,Healthy,Healthy,Healthy,0.9071,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190424_130350.jpg,Healthy,Healthy,Healthy,Healthy,0.7393,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190424_130430.jpg,Healthy,Healthy,Healthy,Healthy,0.8455,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+IMG_20190424_130546.jpg,Healthy,Healthy,Healthy,Healthy,0.8495,Healthy,Healthy (Lành mạnh),Healthy,Normal (Bình thường),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_167.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.871,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_183.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.9759,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_187.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.7867,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_191.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.9806,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_192.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.7175,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Medium (Trung bình),89.9,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_195.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.9608,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_197.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.4416,Bacterial blight,Moderate (Trung bình),Mild,Attention (Chú ý),High (Cao),25.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_223.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.9126,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_226.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.8601,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_227.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.8747,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_232.JPG,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.5575,Bacterial blight,Moderate (Trung bình),Mild,Attention (Chú ý),High (Cao),25.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_245.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.9781,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_246.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.8397,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_254.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.9068,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_257.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.93,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_258.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.8219,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERAILBLIGHT4_259.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.3922,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),High (Cao),25.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_246.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.8747,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_257 - Copy.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.9724,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_258.jpg,Mild Bacterial blight,Bacterial blight,Mild,Mild Bacterial blight,0.9267,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_068.JPG,Mild Blast,Blast,Mild,Mild Blast,0.4187,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),High (Cao),25.0,True,True,AI_CONFIDENT
+BLAST9_081.jpg,Mild Blast,Blast,Mild,Mild Blast,0.9667,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_083.jpg,Mild Blast,Blast,Mild,Mild Blast,0.9644,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_085.jpg,Mild Blast,Blast,Mild,Mild Blast,0.9733,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_087.jpg,Mild Blast,Blast,Mild,Mild Blast,0.9747,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_089.jpg,Mild Blast,Blast,Mild,Mild Blast,0.9169,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_091.jpg,Mild Blast,Blast,Mild,Mild Blast,0.9691,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_093.jpg,Mild Blast,Blast,Mild,Mild Blast,0.9184,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_095.jpg,Mild Blast,Blast,Mild,Mild Blast,0.8142,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_097.jpg,Mild Blast,Blast,Mild,Mild Blast,0.9717,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_099.jpg,Mild Blast,Blast,Mild,Mild Blast,0.9453,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_107.jpg,Mild Blast,Blast,Mild,Mild Blast,0.6908,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),94.1,True,True,AI_CONFIDENT
+BLAST9_131.jpg,Mild Blast,Blast,Mild,Mild Blast,0.7549,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_134.jpg,Mild Blast,Blast,Mild,Mild Blast,0.5289,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),High (Cao),47.28,True,True,AI_CONFIDENT
+BLAST9_136.JPG,Mild Blast,Blast,Mild,Mild Blast,0.6451,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Medium (Trung bình),76.97,True,True,AI_CONFIDENT
+BLAST9_143.JPG,Mild Blast,Blast,Mild,Mild Blast,0.9222,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_144.JPG,Mild Blast,Blast,Mild,Mild Blast,0.9544,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST9_146.JPG,Mild Blast,Blast,Mild,Mild Blast,0.6997,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),94.97,True,True,AI_CONFIDENT
+BLAST9_147.JPG,Mild Blast,Blast,Mild,Mild Blast,0.6762,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Medium (Trung bình),84.59,True,True,AI_CONFIDENT
+BLAST9_160.jpg,Mild Blast,Blast,Mild,Mild Blast,0.9858,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_093.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.9532,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_094.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.7818,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),94.68,True,True,AI_CONFIDENT
+BROWNSPOT3_115.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.9216,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_118.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.8846,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_120.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.8544,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_124.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.9842,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_127.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.9787,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_128.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.9353,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_129.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.8088,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_131.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.9487,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_135.jpg,Mild Brownspot,Brownspot,Mild,Severe Brownspot,0.4888,Brownspot,Moderate (Trung bình),Mild,Attention (Chú ý),High (Cao),25.0,True,True,AI_CONFIDENT
+BROWNSPOT3_136.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.8156,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_137.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.7289,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Medium (Trung bình),86.44,True,True,AI_CONFIDENT
+BROWNSPOT3_138.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.7227,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Medium (Trung bình),86.23,True,True,AI_CONFIDENT
+BROWNSPOT3_140.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.9514,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_147.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.935,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_162.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.9563,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_163.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.5009,Brownspot,Moderate (Trung bình),Mild,Attention (Chú ý),High (Cao),25.0,True,True,AI_CONFIDENT
+BROWNSPOT3_164.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.9448,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT3_165.jpg,Mild Brownspot,Brownspot,Mild,Mild Brownspot,0.966,Brownspot,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_138.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.9502,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_148.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.9206,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_149.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.9259,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_150.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.8844,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_167.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.5673,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Medium (Trung bình),67.21,True,True,AI_CONFIDENT
+TUNGRO5_168.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.5259,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Medium (Trung bình),56.26,True,True,AI_CONFIDENT
+TUNGRO5_169.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.7323,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_170.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.8053,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_171.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.7711,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_172.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.7895,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_173.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.9519,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_174.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.9438,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_175.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.8202,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_176.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.7149,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),94.23,True,True,AI_CONFIDENT
+TUNGRO5_181.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.7947,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_182.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.8536,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_185.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.959,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_186.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.9504,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_187.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.9098,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_188.JPG,Mild Tungro,Tungro,Mild,Mild Tungro,0.9107,Tungro,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_189.jpg,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.9339,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_190.jpg,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.8972,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_194.jpg,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.7774,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_198.jpg,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.967,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_199.jpg,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.9559,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_203.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.9735,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_204.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.986,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_206.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.8971,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_213.jpg,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.9176,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_214.jpg,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.5583,Bacterial blight,Moderate (Trung bình),Mild,Attention (Chú ý),High (Cao),25.0,False,True,AI_CONFIDENT
+BACTERIALBLIGHT2_235 - Copy.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.941,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_235.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.941,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_236.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.8466,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_237.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.5993,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Medium (Trung bình),79.1,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_238.JPG,Severe Bacterial blight,Bacterial blight,Severe,Mild Bacterial blight,0.7431,Bacterial blight,Mild (Nhẹ),Mild,Attention (Chú ý),Low (Thấp),93.47,False,True,AI_CONFIDENT
+BACTERIALBLIGHT2_239.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.9003,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_242.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.9694,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_243.JPG,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.8473,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_244.jpg,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.9877,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BACTERIALBLIGHT2_248.jpg,Severe Bacterial blight,Bacterial blight,Severe,Severe Bacterial blight,0.6919,Bacterial blight,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Medium (Trung bình),83.75,True,True,AI_CONFIDENT
+BLAST1_008.jpg,Severe Blast,Blast,Severe,Severe Blast,0.835,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_010.jpg,Severe Blast,Blast,Severe,Mild Blast,0.6217,Blast,Mild (Nhẹ),Mild,Attention (Chú ý),Medium (Trung bình),73.86,False,True,AI_CONFIDENT
+BLAST1_012.jpg,Severe Blast,Blast,Severe,Severe Blast,0.8272,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_014.jpg,Severe Blast,Blast,Severe,Severe Blast,0.9278,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_016.jpg,Severe Blast,Blast,Severe,Severe Blast,0.8547,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_018.jpg,Severe Blast,Blast,Severe,Severe Blast,0.8146,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_020.jpg,Severe Blast,Blast,Severe,Severe Blast,0.8664,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_022.jpg,Severe Blast,Blast,Severe,Severe Blast,0.7107,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),94.48,True,True,AI_CONFIDENT
+BLAST1_024.jpg,Severe Blast,Blast,Severe,Severe Blast,0.9114,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_033.JPG,Severe Blast,Blast,Severe,Severe Blast,0.7469,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),92.41,True,True,AI_CONFIDENT
+BLAST1_034.jpg,Severe Blast,Blast,Severe,Severe Blast,0.9537,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_035.JPG,Severe Blast,Blast,Severe,Severe Blast,0.7391,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),91.67,True,True,AI_CONFIDENT
+BLAST1_036.jpg,Severe Blast,Blast,Severe,Severe Blast,0.9809,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_037.JPG,Severe Blast,Blast,Severe,Severe Blast,0.7398,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_038.jpg,Severe Blast,Blast,Severe,Severe Blast,0.8171,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_039.JPG,Severe Blast,Blast,Severe,Severe Blast,0.6279,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Medium (Trung bình),79.42,True,True,AI_CONFIDENT
+BLAST1_040.jpg,Severe Blast,Blast,Severe,Severe Blast,0.9732,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_041.JPG,Severe Blast,Blast,Severe,Severe Blast,0.7295,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_042.jpg,Severe Blast,Blast,Severe,Severe Blast,0.9929,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BLAST1_043.JPG,Severe Blast,Blast,Severe,Severe Blast,0.6615,Blast,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Medium (Trung bình),82.71,True,True,AI_CONFIDENT
+BROWNSPOT7_097.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9985,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_098.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9803,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_099.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9661,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_100.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9545,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_101.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.8373,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_102.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.5225,Brownspot,Moderate (Trung bình),Mild,Attention (Chú ý),High (Cao),41.51,False,True,AI_CONFIDENT
+BROWNSPOT7_104.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.7229,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Medium (Trung bình),86.89,True,True,AI_CONFIDENT
+BROWNSPOT7_107.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9744,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_108.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.5679,Brownspot,Moderate (Trung bình),Mild,Attention (Chú ý),Medium (Trung bình),67.29,False,True,AI_CONFIDENT
+BROWNSPOT7_109.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9495,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_110.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.8614,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_172.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.8218,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_190.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.6432,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Medium (Trung bình),76.72,True,True,AI_CONFIDENT
+BROWNSPOT7_194.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9361,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_195.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9213,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_196.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9861,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_197.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.9351,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_198.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.966,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_199.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.8136,Brownspot,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+BROWNSPOT7_200.jpg,Severe Brownspot,Brownspot,Severe,Severe Brownspot,0.5466,Brownspot,Moderate (Trung bình),Mild,Attention (Chú ý),Medium (Trung bình),52.06,False,True,AI_CONFIDENT
+TUNGRO5_105.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.9851,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_106.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.9716,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_107.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.9195,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_110.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.972,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_115.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.8633,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_116.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.883,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_156.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.926,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_157.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.9429,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_158.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.8978,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_161.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.8306,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_162.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.7961,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_164.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.8651,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_165.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.7259,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_166.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.7614,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_59.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.8637,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_60.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.8104,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_63.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.8463,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_64.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.7059,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_65.jpg,Severe Tungro,Tungro,Severe,Severe Tungro,0.8965,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Low (Thấp),95.0,True,True,AI_CONFIDENT
+TUNGRO5_78.JPG,Severe Tungro,Tungro,Severe,Severe Tungro,0.6126,Tungro,Severe (Nghiêm trọng),Severe,Danger (Nguy hiểm),Medium (Trung bình),67.04,True,True,AI_CONFIDENT

@@ -1,4 +1,7 @@
-# Intelligent Rice Diagnostic Control Centre (Hệ thống Thông minh Chẩn đoán Bệnh Lúa)
+
+Tên đề tài: An Explainable Intelligent System for Plant Disease Severity Assessment using Fuzzy Inference
+
+* Áp dụng trên Intelligent Rice Diagnostic Control Centre (Hệ thống Thông minh Chẩn đoán Bệnh Lúa)
 
 **Báo cáo Môn học Hệ thống Thông minh - Nhóm 14**
 

@@ -122,12 +122,9 @@ class FuzzyEngine:
                 # Fusion: tín hiệu thực địa đóng vai trò chủ đạo
                 fused_confidence = min(0.60 + expert_signal * 0.39, 0.99)
                 
-                if inp.snail_density > 3:
-                    final_alert_level = "Red Alert (Báo động đỏ)"
-                    visual_severity_level = "Severe (Nghiêm trọng)"
-                else:
-                    final_alert_level = "Attention (Chú ý)"
-                    visual_severity_level = "Moderate (Trung bình)"
+                # snail >= 5 (điều kiện vào EXPERT_GUIDED_MODE) luôn > 3 → Red Alert trực tiếp
+                final_alert_level = "Red Alert (Báo động đỏ)"
+                visual_severity_level = "Severe (Nghiêm trọng)"
             else:
                 # Trạng thái trung gian: Hybrid Warning (kết hợp cả 2 tín hiệu)
                 inference_mode = "HYBRID_WARNING"
