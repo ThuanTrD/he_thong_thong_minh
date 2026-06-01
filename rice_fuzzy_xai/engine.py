@@ -1,5 +1,6 @@
+import math
 import numpy as np
-from typing import Dict
+from typing import Dict, Tuple
 
 from .schemas import FuzzyInput, FuzzyOutput
 from .config import DISEASE_CLASSES_MAP, SEVERITY_CLASSES_MAP, DEFAULT_TEMP, DEFAULT_HUMIDITY
@@ -12,6 +13,48 @@ from .rules import (
     evaluate_final_alert
 )
 from .explanation import generate_explanation
+
+
+def apply_expert_guided_reasoning(
+    predicted_disease: str,
+    max_score: float,
+    uncertainty_level: str,
+    normalized_entropy: float,
+    margin: float,
+    snail_density: float,
+    final_alert_level: str,
+    visual_severity_level: str
+) -> Tuple[str, str, float, str, str]:
+    expert_signal = 0.0
+    if snail_density is not None and snail_density > 0:
+        expert_signal = min(snail_density / 10.0, 1.0)
+        
+    inference_mode = "AI_CONFIDENT"
+    fused_confidence = max_score
+    
+    if expert_signal > 0:
+        # Conditions for AI_CONFIDENT
+        is_ai_very_confident = (max_score >= 0.80 and margin >= 0.2 and normalized_entropy <= 0.4 and expert_signal < 0.8)
+        
+        # Conditions for EXPERT_GUIDED_MODE
+        is_uncertain = (max_score <= 0.65 or margin < 0.1 or normalized_entropy >= 0.6 or "High" in uncertainty_level)
+        
+        if is_ai_very_confident:
+            inference_mode = "AI_CONFIDENT"
+            fused_confidence = max_score
+        elif expert_signal >= 0.5 and is_uncertain:
+            inference_mode = "EXPERT_GUIDED_MODE"
+            predicted_disease = "Golden Apple Snail"
+            fused_confidence = min(0.60 + expert_signal * 0.39, 0.99)
+            final_alert_level = "Red Alert (Báo động đỏ)"
+            visual_severity_level = "Severe (Nghiêm trọng)"
+        else:
+            inference_mode = "HYBRID_WARNING"
+            fused_confidence = 0.7 * max_score + 0.3 * expert_signal
+            if "Normal" in final_alert_level:
+                final_alert_level = "Attention (Chú ý)"
+
+    return predicted_disease, inference_mode, fused_confidence, final_alert_level, visual_severity_level
 
 
 class FuzzyEngine:
@@ -31,15 +74,30 @@ class FuzzyEngine:
         second_score = sorted_scores[1][1] if len(sorted_scores) > 1 else 0.0
         margin = max_score - second_score
 
+        # Tính entropy / OOD signal
+        eps = 1e-9
+        entropy = -sum(score * math.log(score + eps) for score in inp.cnn_scores.values())
+        num_classes = len(inp.cnn_scores) if len(inp.cnn_scores) > 1 else 2
+        normalized_entropy = entropy / math.log(num_classes)
+
         # Phân loại nhóm bệnh chính từ nhãn lớp hàng đầu
         predicted_disease = DISEASE_CLASSES_MAP.get(inp.top_class, "Unknown")
-        is_healthy = (predicted_disease == "Healthy")
-
+        
         # Gom nhóm điểm số cho từng bệnh chính
         grouped_disease_scores: Dict[str, float] = {}
         for cls, score in inp.cnn_scores.items():
             disease = DISEASE_CLASSES_MAP.get(cls, "Unknown")
             grouped_disease_scores[disease] = grouped_disease_scores.get(disease, 0.0) + score
+
+        # Tìm best_group_disease và best_group_confidence
+        best_group_disease = max(grouped_disease_scores, key=grouped_disease_scores.get) if grouped_disease_scores else "Unknown"
+        best_group_confidence = grouped_disease_scores.get(best_group_disease, 0.0)
+
+        # Củng cố bệnh dựa trên grouped confidence
+        if max_score < 0.8 and best_group_confidence > 0.6 and best_group_disease != predicted_disease:
+            predicted_disease = best_group_disease
+            
+        is_healthy = (predicted_disease == "Healthy")
 
         # Lấy điểm số của dạng Mild và Severe tương ứng đối với bệnh được dự đoán
         mild_score = 0.0
@@ -48,9 +106,9 @@ class FuzzyEngine:
             for cls, score in inp.cnn_scores.items():
                 if predicted_disease in cls:
                     if "Mild" in cls:
-                        mild_score = score
+                        mild_score += score
                     elif "Severe" in cls:
-                        severe_score = score
+                        severe_score += score
 
         # 3. Mờ hóa (Fuzzification)
         top_conf_fuzzy = fuzzify_confidence(max_score)
@@ -64,6 +122,8 @@ class FuzzyEngine:
         
         # A. Độ bất định (Uncertainty Level)
         uncertainty_level, uncertainty_rules = evaluate_uncertainty(margin_fuzzy)
+        if normalized_entropy > 0.6 and "High" not in uncertainty_level:
+            uncertainty_level = "High Uncertainty (Dựa trên Entropy)"
 
         # B. Độ tin cậy chẩn đoán (Diagnostic Confidence)
         diagnostic_confidence = evaluate_diagnostic_confidence(top_conf_fuzzy, margin_fuzzy)
@@ -104,34 +164,16 @@ class FuzzyEngine:
             final_alert_level = "Red Alert (Báo động đỏ)"
 
         # [TÍN HIỆU CHUYÊN GIA] Expert-Assisted Confidence Fusion
-        expert_signal = 0.0
-        if inp.snail_density is not None and inp.snail_density > 0:
-            expert_signal = min(inp.snail_density / 10.0, 1.0)
-            
-        inference_mode = "AI_CONFIDENT"
-        fused_confidence = max_score
-        
-        if expert_signal > 0:
-            if max_score > 0.80 and "Low" in uncertainty_level and expert_signal < 0.8:
-                # CNN nhận diện rất rõ, tín hiệu thực địa chưa đủ mạnh để thay đổi hoàn toàn
-                inference_mode = "AI_CONFIDENT"
-                fused_confidence = max_score
-            elif expert_signal >= 0.5 and ("High" in uncertainty_level or max_score <= 0.65):
-                # OOD hoặc độ bất định cao, kết hợp tín hiệu thực địa mạnh -> Hỗ trợ chuyên gia
-                inference_mode = "EXPERT_GUIDED_MODE"
-                predicted_disease = "Golden Apple Snail"
-                # Fusion: tín hiệu thực địa đóng vai trò chủ đạo
-                fused_confidence = min(0.60 + expert_signal * 0.39, 0.99)
-                
-                # snail >= 5 (điều kiện vào EXPERT_GUIDED_MODE) luôn > 3 → Red Alert trực tiếp
-                final_alert_level = "Red Alert (Báo động đỏ)"
-                visual_severity_level = "Severe (Nghiêm trọng)"
-            else:
-                # Trạng thái trung gian: Hybrid Warning (kết hợp cả 2 tín hiệu)
-                inference_mode = "HYBRID_WARNING"
-                fused_confidence = 0.7 * max_score + 0.3 * expert_signal
-                if "Normal" in final_alert_level:
-                    final_alert_level = "Attention (Chú ý)"
+        predicted_disease, inference_mode, fused_confidence, final_alert_level, visual_severity_level = apply_expert_guided_reasoning(
+            predicted_disease=predicted_disease,
+            max_score=max_score,
+            uncertainty_level=uncertainty_level,
+            normalized_entropy=normalized_entropy,
+            margin=margin,
+            snail_density=inp.snail_density if inp.snail_density is not None else 0.0,
+            final_alert_level=final_alert_level,
+            visual_severity_level=visual_severity_level
+        )
 
         # 5. Sinh giải thích (XAI) và khuyến nghị nông nghiệp
         explanation, recommendation = generate_explanation(
@@ -152,7 +194,10 @@ class FuzzyEngine:
             alert_rules=alert_rules,
             snail_density=inp.snail_density if inp.snail_density is not None else 0.0,
             inference_mode=inference_mode,
-            fused_confidence=fused_confidence
+            fused_confidence=fused_confidence,
+            normalized_entropy=normalized_entropy,
+            best_group_disease=best_group_disease,
+            best_group_confidence=best_group_confidence
         )
 
         return FuzzyOutput(
@@ -163,7 +208,10 @@ class FuzzyEngine:
             environmental_risk_level=environmental_risk_level,
             final_alert_level=final_alert_level,
             inference_mode=inference_mode,
-            fused_confidence=fused_confidence,
+            fused_confidence=round(float(fused_confidence), 2),
             explanation=explanation,
-            recommendation=recommendation
+            recommendation=recommendation,
+            normalized_entropy=round(float(normalized_entropy), 4),
+            best_group_disease=best_group_disease,
+            best_group_confidence=round(float(best_group_confidence), 4)
         )

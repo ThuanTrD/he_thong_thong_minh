@@ -19,12 +19,16 @@ def generate_explanation(
     alert_rules: List[Tuple],
     snail_density: float = 0.0,
     inference_mode: str = "AI_CONFIDENT",
-    fused_confidence: float = 0.0
+    fused_confidence: float = 0.0,
+    normalized_entropy: float = 0.0,
+    best_group_disease: str = "",
+    best_group_confidence: float = 0.0
 ) -> Tuple[str, str]:
     """
     Sinh báo cáo giải thích ngôn ngữ tự nhiên (XAI) và các khuyến nghị nông nghiệp.
     """
     disease_vi = DISEASE_NAMES_VI.get(predicted_disease, predicted_disease)
+    best_group_disease_vi = DISEASE_NAMES_VI.get(best_group_disease, best_group_disease)
     
     # ── 1. PHẦN GIẢI THÍCH (EXPLANATION) ──
     exp_parts = []
@@ -34,18 +38,20 @@ def generate_explanation(
     if inference_mode == "AI_CONFIDENT":
         exp_parts.append(f"   - Mô hình CNN chẩn đoán lá lúa nhiễm bệnh: {disease_vi}")
         exp_parts.append(f"   - Phân loại chi tiết của CNN: {top_class} (Độ tự tin: {top_confidence*100:.2f}%)")
-        if snail_density > 0:
-            exp_parts.append(f"   - Nhận xét: Mô hình nhận diện khá rõ đặc trưng bệnh trên lá. Tín hiệu ngoại lệ từ thực địa ({snail_density} con/m2) chưa đủ mạnh để thay đổi kết luận chính.")
+        exp_parts.append(f"   - Nhóm bệnh tốt nhất: {best_group_disease_vi} (Độ tự tin: {best_group_confidence*100:.2f}%)")
+        exp_parts.append(f"   - Nhận xét: Mô hình nhận diện rõ đặc trưng bệnh trên lá. Hệ thống giữ vững AI_CONFIDENT.")
     elif inference_mode == "HYBRID_WARNING":
         exp_parts.append(f"   - Mô hình CNN chẩn đoán bệnh ưu tiên: {disease_vi} (Độ tự tin: {top_confidence*100:.2f}%)")
-        exp_parts.append(f"   - Nhận xét: Hệ thống ghi nhận đồng thời đặc trưng bệnh lá và tín hiệu ngoại lệ từ thực địa (Mật độ ốc: {snail_density} con/m2).")
+        exp_parts.append(f"   - Nhóm bệnh tốt nhất: {best_group_disease_vi} (Độ tự tin: {best_group_confidence*100:.2f}%)")
+        exp_parts.append(f"   - Nhận xét: Hệ thống chuyển sang HYBRID_WARNING do có ghi nhận đồng thời đặc trưng bệnh lá và tín hiệu ngoại lệ từ thực địa (Mật độ ốc: {snail_density} con/m2), hoặc CNN có độ bất định nhẹ.")
         exp_parts.append(f"   - Khuyến nghị: Kiểm tra bổ sung để phân biệt bệnh và tác nhân gây hại phối hợp.")
     elif inference_mode == "EXPERT_GUIDED_MODE":
         exp_parts.append(f"   - Trạng thái: Chế độ Suy luận Hỗ trợ Chuyên gia (Expert-Guided Mode)")
-        exp_parts.append(f"   - Nhận xét: Hệ thống chuyển sang chế độ suy luận có hỗ trợ tín hiệu thực địa do dữ liệu ảnh đầu vào có độ bất định cao và mật độ ốc bươu vàng ghi nhận ở mức cao ({snail_density} con/m2).")
-        exp_parts.append(f"   - Hệ thống tăng trọng số tín hiệu chuyên gia để giảm rủi ro suy luận sai trong trường hợp dữ liệu hình ảnh không chắc chắn.")
+        exp_parts.append(f"   - Nhận xét: Hệ thống chuyển sang chế độ suy luận chuyên gia do dữ liệu ảnh đầu vào có độ bất định cao (Entropy chuẩn hóa: {normalized_entropy:.4f}) và tín hiệu thực địa mạnh ({snail_density} con/m2).")
+        exp_parts.append(f"   - Hệ thống tăng trọng số tín hiệu chuyên gia để ưu tiên chẩn đoán ốc bươu vàng, tránh bỏ sót rủi ro.")
     
     exp_parts.append(f"   - Khoảng cách phân biệt (Margin) so với lớp thứ 2: {margin:.4f}")
+    exp_parts.append(f"   - Entropy chuẩn hóa (Normalized Entropy / OOD signal): {normalized_entropy:.4f}")
     exp_parts.append(f"   - Đánh giá độ bất định chẩn đoán hình ảnh: {uncertainty_level}")
     exp_parts.append(f"   - Độ tin cậy chẩn đoán tổng hợp sau kết hợp (Fused Confidence): {fused_confidence*100:.2f}%")
     

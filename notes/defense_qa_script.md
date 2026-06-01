@@ -17,6 +17,20 @@ Tài liệu này tổng hợp 12 câu hỏi phản biện (dạng "chặn họng
 Nếu dùng một mô hình Deep Learning End-to-End để gánh toàn bộ, chúng ta sẽ tạo ra một 'Hộp đen' (Black-box) khổng lồ. Khi mô hình dự đoán sai do nhiễu môi trường, người dùng hoàn toàn không biết tại sao.
 Việc chia tách thành hệ lai giúp phân nhiệm rõ ràng: CNN chỉ làm nhiệm vụ 'Nhận thức thị giác' (Perception), trong khi 'Suy luận mức độ nguy hiểm' được nhường lại cho Fuzzy Logic. Nhờ đó, chuyên gia nông nghiệp có thể can thiệp vào tập luật mờ của môi trường (Nhiệt độ, Độ ẩm) mà không cần phải thu thập lại hàng vạn bức ảnh để huấn luyện lại CNN."
 
+### 1b. "Cơ sở lý thuyết để xây dựng nên các quy luật Fuzzy (Fuzzy Rules) và các hàm liên thuộc (Membership Functions) áp dụng trong hệ thống này là từ đâu? Các bạn tự nghĩ ra (heuristic) hay dựa trên cơ sở nào?"
+
+**> Trả lời (Sắc bén & Khoa học):**
+"Thưa Hội đồng, cơ sở lý thuyết để xây dựng tập luật mờ trong hệ thống này không phải là tự phát cảm tính, mà được tổng hợp từ 3 nền tảng khoa học cốt lõi:
+
+**1. Nền tảng Dịch tễ học Thực vật (Plant Epidemiology):** 
+Theo lý thuyết 'Tam giác bệnh cây' (Plant Disease Triangle), bệnh hại bùng phát khi hội tụ 3 yếu tố: Ký chủ, Mầm bệnh, và **Môi trường thuận lợi**. Các luật mờ tính toán Chỉ số Rủi ro Môi trường (ERI) được chuyển ngữ hóa trực tiếp từ tri thức Nông học chuẩn. Ví dụ: bào tử nấm Đạo ôn (Blast) nảy mầm cực mạnh khi độ ẩm >85% và nhiệt độ 25-28°C. Do đó, tri thức này được ánh xạ thành luật mờ: `IF Temp is Warm AND Humidity is High THEN Risk is High`.
+
+**2. Lý thuyết Hiệu chuẩn Bất định trong Học máy (Uncertainty Calibration in ML):**
+Cơ sở để đưa `Margin` và `Normalized Entropy` vào bộ luật mờ xuất phát từ bài toán nhức nhối của Neural Networks là 'Overconfidence' (tự tin thái quá vào quyết định sai). Việc dùng Fuzzy Logic để hấp thụ các tín hiệu Entropy/Margin chính là kỹ thuật hiệu chuẩn sự bất định (Aleatoric & Epistemic Uncertainty), giúp bẻ gãy các quyết định ranh giới cứng (Hard boundaries) rủi ro của Softmax.
+
+**3. Cơ sở Khoa học Nhận thức (Cognitive Science) trong Hệ chuyên gia:**
+Việc chọn hàm liên thuộc hình thang (Trapezoidal) / tam giác (Triangular) cho các biến Mild/Severe mô phỏng hoàn hảo **Sự chồng lấn ngôn ngữ (Linguistic Overlap)**. Trong thực tế, chuyên gia nông nghiệp không bao giờ kết luận 'đúng 80% diện tích là tổn thương nặng, 79.9% là nhẹ', mà đó là một phổ chuyển tiếp liên tục. Hệ suy diễn mờ chính là công cụ toán học duy nhất mô phỏng đúng quy trình nhận thức (Cognitive Process) này của con người để đưa ra các quyết định linh hoạt vùng biên."
+
 ### 2. "Cái 'Fuzzy Logic' của các bạn có thực sự cần thiết không? Tại sao không dùng vài câu lệnh `IF-ELSE` đơn giản với ngưỡng cứng (Hard Threshold) cho nhanh?"
 
 **> Trả lời:**
@@ -34,7 +48,20 @@ Fuzzy Inference giải quyết triệt để sự bất định này bằng các
 "Đây chính là một trong những tính năng an toàn (Safety-critical) cốt lõi của hệ thống. Nhóm em ý thức rõ điểm yếu của CNN là mô hình có tính 'tự tin thái quá' (Overconfidence) kể cả với dữ liệu ngoài miền (Out-of-Distribution).
 Do đó, trước khi đưa kết quả CNN vào Fuzzy Logic, hệ thống thực hiện hai chốt chặn:
 1. **Kiểm tra Confidence (OOD Detection):** Nếu xác suất cao nhất (Max Confidence) < 0.25, hệ thống lập tức chối bỏ hình ảnh và yêu cầu sự can thiệp của chuyên gia.
-2. **Kiểm tra Entropy:** Nếu mô hình phân vân đều giữa các lớp (High Entropy, ví dụ: Mild=0.34, Severe=0.33), Fuzzy Logic sẽ hấp thụ sự bất định này và phát ra cảnh báo `HYBRID_WARNING`, buộc hệ thống phải đánh giá lại thay vì mù quáng tin vào chênh lệch 0.01% của CNN."
+2. **Kiểm tra Entropy:** Nếu mô hình phân vân đều giữa các lớp, hệ thống sử dụng **Normalized Entropy** (Entropy chuẩn hóa) làm chỉ báo OOD bổ sung. Khi Normalized Entropy cao, hệ thống sẽ hạ mức độ tự tin, phát ra cảnh báo `HYBRID_WARNING` hoặc thậm chí chuyển sang chế độ `EXPERT_GUIDED_MODE` nếu có tín hiệu thực địa bất thường. Điều này giúp ngăn chặn sai sót do tin tưởng mù quáng vào xác suất bị thổi phồng của mạng Neural."
+
+### 3b. "Nếu mô hình CNN bị phân vân giữa 'Mild' và 'Severe' của cùng một bệnh thì sao? Điểm số từng lớp sẽ bị pha loãng và rất thấp, hệ thống có báo sai loại bệnh không?"
+
+**> Trả lời:**
+"Dạ không thưa Hội đồng. Đây là một vấn đề kinh điển trong các mô hình học sâu khi các class có sự phân cấp (Hierarchical Classification). Để giải quyết triệt để, hệ thống sử dụng kỹ thuật **Gom nhóm Điểm số (Grouped Disease Confidence)**.
+Ngay cả khi mô hình bị 'pha loãng' xác suất do phân vân mức độ (ví dụ: Mild Brownspot = 40%, Severe Brownspot = 35%), Max Score của từng lớp đều rất thấp và có thể bị đánh giá là 'Bất định' (Uncertainty). Tuy nhiên, hệ thống tự động cộng gộp (Grouped Confidence = 75%) để giữ vững kết luận cốt lõi: 'Chắc chắn 75% đây là bệnh Brownspot'. Nhờ vậy, AI không bao giờ dự đoán sai loại bệnh cốt lõi, phần phân định Nhẹ/Nặng tiếp theo sẽ do Fuzzy Logic nội suy."
+
+### 3c. "Tại sao trong sơ đồ các bạn vẽ Entropy có hàm liên thuộc (Low/Medium/High) để mờ hóa, nhưng trong code thực tế lại dùng một ngưỡng cắt (Crisp Threshold) là `normalized_entropy > 0.6`?"
+
+**> Trả lời:**
+"Dạ thưa Hội đồng, đây là một sự điều chỉnh có chủ ý của nhóm nhằm tối ưu điểm rơi giữa 'Lý thuyết' và 'Hiệu năng'.
+Về mặt lý thuyết (Conceptual level), việc coi Entropy là một biến ngôn ngữ (Linguistic Variable) cần được mờ hóa là hoàn toàn chính xác. Do đó, trên sơ đồ kiến trúc, nhóm biểu diễn dạng hàm liên thuộc để đảm bảo sự đồng nhất và chuẩn mực của hệ suy diễn Fuzzy.
+Tuy nhiên, ở khâu cài đặt thực tế (Implementation), do `Normalized Entropy` đã tự động được chuẩn hóa về miền giá trị [0..1] (giống như một hàm thuộc tính sẵn có), việc nội suy lại lần nữa là dư thừa tài nguyên. Nhóm đã áp dụng phương pháp **Cắt Alpha (Alpha-cut)** trực tiếp tại ngưỡng $\alpha = 0.6$ để kích hoạt thẳng vào tập luật 'High Uncertainty'. Điều này giúp hệ thống phản ứng cực nhanh với tín hiệu OOD (Out-of-Distribution) mà không phát sinh thêm độ trễ tính toán (latency) trong môi trường triển khai thực tế."
 
 ---
 
@@ -52,6 +79,14 @@ Quan trọng nhất, bảng Confusion Matrix cho thấy: **Số lỗi 'Severe ->
 **> Trả lời (Tuyệt đối KHÔNG dùng từ "Override"):**
 "Dạ không thưa Hội đồng. Fuzzy Logic không hề 'sửa sai' hay phủ định kết quả của CNN.
 CNN là khối Nhận thức (Perception) và nó đã làm xuất sắc việc nội kết xuất các đặc trưng thị giác. Nhiệm vụ của Fuzzy Logic là tiếp nhận sự 'không chắc chắn' từ các phân bố Softmax đó (ví dụ CNN báo 60% Severe, 40% Mild), rồi dùng hàm liên thuộc để kết hợp với bối cảnh, từ đó **Nội suy (Interpolate)** ra mức độ cảnh báo cuối cùng. Nó làm mịn (smoothing) sự bất định chứ không can thiệp vào trọng số hay quyết định gốc của khối Deep Learning."
+
+### 5b. "Khi nào thì tín hiệu từ chuyên gia/thực địa sẽ được ưu tiên thay vì chỉ dựa vào AI (Cơ chế Expert-Guided Mode)?"
+
+**> Trả lời:**
+"Thưa Hội đồng, hệ thống có một hàm giám sát riêng gọi là **Expert-Guided Reasoning**. Cơ chế này chỉ kích hoạt khi có sự hội tụ của 2 yếu tố: 
+Thứ nhất, AI đang rơi vào trạng thái cực kỳ bất định (Biểu hiện qua **Normalized Entropy > 0.6**, hoặc Confidence < 0.65). 
+Thứ hai, có một tín hiệu ngoại lệ mạnh từ thực địa (Ví dụ: Cảm biến hoặc chuyên gia báo cáo Mật độ ốc bươu vàng rất dày đặc). 
+Khi đó, hệ thống sẽ tự động hạ quyền quyết định của thị giác (vì ảnh lúc này có thể là OOD hoặc nhiễu) và kích hoạt `EXPERT_GUIDED_MODE`, nâng cảnh báo lên 'Báo động đỏ' dựa trên bằng chứng thực địa. Đây là nguyên tắc cốt lõi của một hệ hỗ trợ ra quyết định an toàn."
 
 ---
 

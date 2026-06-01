@@ -1,0 +1,95 @@
+@startuml
+!theme plain
+skinparam roundCorner 15
+skinparam backgroundColor white
+skinparam componentStyle uml2
+skinparam DefaultFontName Arial
+skinparam packageTitleAlignment center
+
+title Kiến trúc Hệ thống Suy diễn Lai (Hybrid Fuzzy-CNN) & Cơ sở Lý thuyết
+
+' Định nghĩa màu sắc cho các khối
+skinparam package {
+    BackgroundColor<<Input>> #FFF3E0
+    BackgroundColor<<CNN>> #E8F5E9
+    BackgroundColor<<Theory1>> #E1F5FE
+    BackgroundColor<<Theory2_3>> #F3E5F5
+    BackgroundColor<<Theory4>> #FFEBEE
+    BackgroundColor<<Output>> #ECEFF1
+}
+
+package "Inputs (Dữ liệu đầu vào)" <<Input>> {
+    [📸 Ảnh bệnh trên lá] as Image
+    [🌤️ Thời tiết: Nhiệt độ, Độ ẩm] as Env
+    [🐌 Tín hiệu thực địa: Mật độ ốc] as Field
+}
+
+package "Visual Perception Layer" <<CNN>> {
+    [🧠 Mạng tích chập CNN\n(EfficientNet-B0)] as CNN
+}
+Image --> CNN
+
+package "Lý thuyết 1: Uncertainty in ML (Phát hiện OOD & Bất định)" <<Theory1>> {
+    [Max Confidence & Margin] as S1
+    [Normalized Entropy\n(OOD Signal)] as S2
+    [Grouped Confidence\n(Bệnh ưu tiên)] as S3
+}
+CNN --> S1
+CNN --> S2
+CNN --> S3
+
+package "Lý thuyết 2: Cognitive Science (Sự chồng lấn nhận thức)" <<Theory2_3>> {
+    [Mờ hóa: Điểm số Mild & Severe\n(Hàm liên thuộc Hình thang/Tam giác)] as F1
+}
+CNN --> F1
+
+package "Lý thuyết 3: Plant Epidemiology (Dịch tễ học Thực vật)" <<Theory2_3>> {
+    [Mờ hóa: Temperature & Humidity\n(Điều kiện mầm bệnh bùng phát)] as F2
+}
+Env --> F2
+
+package "Fuzzy Inference Engine (Mamdani/Sugeno)" <<Theory2_3>> {
+    [⚙️ Tập luật mờ (Fuzzy Rules)] as FuzzyEngine
+    
+    F1 --> FuzzyEngine
+    F2 --> FuzzyEngine
+    S1 --> FuzzyEngine
+    
+    [Mức độ tổn thương (VSI)] as O1
+    [Nguy cơ môi trường (ERI)] as O2
+    [Đánh giá độ tin cậy (Uncertainty)] as O3
+    
+    FuzzyEngine --> O1 : Suy diễn nội suy
+    FuzzyEngine --> O2 : Cảnh báo môi trường
+    FuzzyEngine --> O3
+}
+
+package "Lý thuyết 4: Decision Support System (Quản trị rủi ro & An toàn)" <<Theory4>> {
+    [⚖️ Bộ định tuyến Chế độ\n(Inference Mode Router)] as ModeRouter
+    
+    S2 --> ModeRouter : High Entropy > 0.6
+    Field --> ModeRouter : Tín hiệu ngoại lệ cực đoan
+    O3 --> ModeRouter
+    S1 --> ModeRouter
+    S3 --> ModeRouter
+    O1 --> ModeRouter
+    O2 --> ModeRouter
+
+    [AI_CONFIDENT\n(Tin tưởng thị giác)] as Mode1
+    [HYBRID_WARNING\n(Kết hợp cảnh báo)] as Mode2
+    [EXPERT_GUIDED_MODE\n(Phủ quyết AI, Ưu tiên thực địa)] as Mode3
+    
+    ModeRouter --> Mode1
+    ModeRouter --> Mode2
+    ModeRouter --> Mode3
+}
+
+package "Final Output" <<Output>> {
+    [📄 Báo cáo XAI - Explainable Report\n(Truy vết luật & Thông số)] as OutputNode
+}
+
+Mode1 --> OutputNode
+Mode2 --> OutputNode
+Mode3 --> OutputNode
+
+@enduml

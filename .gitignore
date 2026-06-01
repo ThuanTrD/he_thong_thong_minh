@@ -16,3 +16,4 @@ test_dummy.jpg
 hybrid_test_*.json
 cnn_scores_output.csv
 dataset/
+datatest/archive.zip

@@ -25,3 +25,6 @@ class FuzzyOutput:
     fused_confidence: float
     explanation: str
     recommendation: str
+    normalized_entropy: float = 0.0
+    best_group_disease: str = ""
+    best_group_confidence: float = 0.0
