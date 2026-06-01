@@ -49,7 +49,7 @@ def draw_title(ax, text):
     ax.text(0.5, 0.92, text, ha='center', va='top', fontsize=44, weight='bold', color=TEXT_MAIN, 
             bbox=dict(facecolor=BG_COLOR, edgecolor='none', pad=0, alpha=0.9))
 
-def draw_glass_box(ax, x, y, width, height, text="", title="", bg=BOX_BG, border=BOX_BORDER, alpha=0.9, fontsize=24, title_color=CYAN_GLOW):
+def draw_glass_box(ax, x, y, width, height, text="", title="", bg=BOX_BG, border=BOX_BORDER, alpha=0.9, fontsize=24, title_color=CYAN_GLOW, lw=3):
     # Generous padding inside box via pad=0.03 (approx 40-50px equivalent)
     shadow = patches.FancyBboxPatch((x - width/2 + 0.008, y - height/2 - 0.01), width, height, 
                                  boxstyle="round,pad=0.03,rounding_size=0.03", 
@@ -58,7 +58,7 @@ def draw_glass_box(ax, x, y, width, height, text="", title="", bg=BOX_BG, border
     
     box = patches.FancyBboxPatch((x - width/2, y - height/2), width, height, 
                                  boxstyle="round,pad=0.03,rounding_size=0.03", 
-                                 ec=border, fc=bg, lw=3, alpha=alpha)
+                                 ec=border, fc=bg, lw=lw, alpha=alpha)
     ax.add_patch(box)
     
     if title:
@@ -73,11 +73,11 @@ def draw_glass_box(ax, x, y, width, height, text="", title="", bg=BOX_BG, border
         ax.text(x, y, text, ha='center', va='center', color=TEXT_MAIN, 
                 fontsize=fontsize, linespacing=1.8, weight='bold')
 
-def draw_glow_arrow(ax, x1, y1, x2, y2, color=CYAN_GLOW):
+def draw_glow_arrow(ax, x1, y1, x2, y2, color=CYAN_GLOW, lw_core=3, lw_glow=10, mutation_scale=40):
     ax.annotate("", xy=(x2, y2), xytext=(x1, y1),
-                arrowprops=dict(arrowstyle="->", color=color, lw=10, alpha=0.15, mutation_scale=40))
+                arrowprops=dict(arrowstyle="->", color=color, lw=lw_glow, alpha=0.15, mutation_scale=mutation_scale))
     ax.annotate("", xy=(x2, y2), xytext=(x1, y1),
-                arrowprops=dict(arrowstyle="->", color=color, lw=3, mutation_scale=40))
+                arrowprops=dict(arrowstyle="->", color=color, lw=lw_core, mutation_scale=mutation_scale))
 
 def draw_bar(ax, x, y, width, height, value, color, label):
     ax.add_patch(patches.FancyBboxPatch((x, y), width, height, boxstyle="round,pad=0,rounding_size=0.01", fc="#1e293b", ec="none"))
@@ -373,15 +373,15 @@ def fig_12_deployment_pipeline():
     ]
     
     for x, y, text, color in boxes:
-        draw_glass_box(ax, x, y, 0.16, 0.14, text=text, border=color, fontsize=24)
+        draw_glass_box(ax, x, y, 0.12, 0.12, text=text, border=color, fontsize=22, lw=2)
         
-    draw_glow_arrow(ax, 0.24, 0.65, 0.26, 0.65)
-    draw_glow_arrow(ax, 0.49, 0.65, 0.51, 0.65)
-    draw_glow_arrow(ax, 0.74, 0.65, 0.76, 0.65)
+    draw_glow_arrow(ax, 0.22, 0.65, 0.28, 0.65, lw_core=2, lw_glow=6, mutation_scale=30)
+    draw_glow_arrow(ax, 0.47, 0.65, 0.53, 0.65, lw_core=2, lw_glow=6, mutation_scale=30)
+    draw_glow_arrow(ax, 0.72, 0.65, 0.78, 0.65, lw_core=2, lw_glow=6, mutation_scale=30)
     
-    draw_glow_arrow(ax, 0.875, 0.54, 0.875, 0.41)
-    draw_glow_arrow(ax, 0.76, 0.30, 0.62, 0.30)
-    draw_glow_arrow(ax, 0.38, 0.30, 0.25, 0.30)
+    draw_glow_arrow(ax, 0.875, 0.55, 0.875, 0.40, lw_core=2, lw_glow=6, mutation_scale=30)
+    draw_glow_arrow(ax, 0.77, 0.30, 0.61, 0.30, lw_core=2, lw_glow=6, mutation_scale=30)
+    draw_glow_arrow(ax, 0.39, 0.30, 0.23, 0.30, lw_core=2, lw_glow=6, mutation_scale=30)
 
     plt.savefig(os.path.join(OUTPUT_DIR, "fig_12_deployment_pipeline.png"), bbox_inches='tight')
     plt.close()
