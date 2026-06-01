@@ -292,16 +292,33 @@ def fig_09_error_analysis():
     values = [2, 1, 0]
     colors = [WARNING_ORANGE, CYAN_GLOW, EMERALD]
     
-    ax_bar = fig.add_axes([0.2, 0.32, 0.6, 0.48])
-    ax_bar.set_facecolor(BG_COLOR)
-    bars = ax_bar.bar(labels, values, color=colors, width=0.4)
-    ax_bar.set_ylabel("Number of Occurrences", color=TEXT_MAIN, fontsize=22)
+    import matplotlib.ticker as ticker
+    
+    ax_bar = fig.add_axes([0.25, 0.35, 0.5, 0.45])
+    ax_bar.set_facecolor('none')
+    bars = ax_bar.bar(labels, values, color=colors, width=0.4, zorder=3)
+    
+    ax_bar.set_ylabel("Number of Occurrences", color=TEXT_MAIN, fontsize=22, labelpad=20)
     ax_bar.tick_params(colors=TEXT_MAIN, labelsize=20)
-    for spine in ax_bar.spines.values():
-        spine.set_color("#334155")
-        spine.set_linewidth(2)
+    ax_bar.yaxis.set_major_locator(ticker.MaxNLocator(integer=True))
+    ax_bar.set_ylim(0, 2.5)
+    
+    ax_bar.set_axisbelow(True)
+    ax_bar.grid(axis='y', color="#ffffff", alpha=0.05, lw=2)
+    
+    ax_bar.spines['top'].set_visible(False)
+    ax_bar.spines['right'].set_visible(False)
+    ax_bar.spines['left'].set_color("#334155")
+    ax_bar.spines['left'].set_linewidth(2)
+    ax_bar.spines['bottom'].set_color("#334155")
+    ax_bar.spines['bottom'].set_linewidth(2)
+    
+    for bar in bars:
+        yval = bar.get_height()
+        ax_bar.text(bar.get_x() + bar.get_width()/2, yval + 0.05, str(int(yval)), 
+                    ha='center', va='bottom', color=TEXT_MAIN, fontsize=28, weight='bold')
         
-    ax.text(0.5, 0.10, "Most errors are conservative downgrades in visually ambiguous cases.\nZero 'Severe -> Healthy' errors demonstrate safe decision-support behavior.", 
+    ax.text(0.5, 0.12, "Most errors are conservative downgrades in visually ambiguous cases.\nZero 'Severe -> Healthy' errors demonstrate safe decision-support behavior.", 
             ha='center', va='center', color=CYAN_GLOW, fontsize=26, style='italic', linespacing=1.6)
 
     plt.savefig(os.path.join(OUTPUT_DIR, "fig_09_error_analysis.png"))
