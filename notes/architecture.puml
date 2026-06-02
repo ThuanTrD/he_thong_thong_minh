@@ -48,7 +48,7 @@ package "Lý thuyết 3: Plant Epidemiology (Dịch tễ học Thực vật)" <<
 }
 Env --> F2
 
-package "Fuzzy Inference Engine (Mamdani/Sugeno)" <<Theory2_3>> {
+package "Fuzzy Inference Engine (Zero-order Sugeno)" <<Theory2_3>> {
     [⚙️ Tập luật mờ (Fuzzy Rules)] as FuzzyEngine
     
     F1 --> FuzzyEngine

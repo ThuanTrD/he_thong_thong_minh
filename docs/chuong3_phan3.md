@@ -48,8 +48,8 @@ Hệ thống đảm bảo tính giải thích được (XAI) thông qua các cơ
 **1. Báo cáo bằng ngôn ngữ tự nhiên tiếng Việt:**
 Thay vì chỉ trả về con số, hệ thống sinh báo cáo chi tiết với các mệnh đề dạng: "Mô hình CNN chẩn đoán lá lúa nhiễm bệnh: Đạo ôn lá (Rice Blast)" kèm phân tích từng yếu tố.
 
-**2. Truy vết luật mờ (Rule Traceability):**
-Mỗi kết luận đều liệt kê rõ luật IF-THEN nào đã kích hoạt và với trọng số bao nhiêu. Ví dụ: "NẾU Nhiệt độ Ấm VÀ Độ ẩm Ẩm ướt THÌ Nguy cơ môi trường Cao (Trọng số: 0.86)". Người nông dân có thể đối chiếu trực tiếp với kinh nghiệm thực tế.
+**2. Truy vết luật mờ và Chế độ suy luận (Traceability):**
+Mỗi kết luận đều liệt kê rõ: Hệ thống đang chạy ở chế độ nào (`AI_CONFIDENT`, `HYBRID_WARNING` hay `EXPERT_GUIDED_MODE`), tại sao lại chọn chế độ đó (dựa trên Entropy, Margin, Grouped Confidence), và luật IF-THEN nào đã kích hoạt với trọng số bao nhiêu. Người nông dân có thể đối chiếu trực tiếp với kinh nghiệm thực tế.
 
 **3. Trực quan hóa trên Dashboard:**
 Giao diện Streamlit hiển thị:
@@ -66,10 +66,11 @@ Toàn bộ kết quả (CNN scores, thông số môi trường, chỉ số Fuzzy
 ### Ưu điểm:
 1. **Tính giải thích cao (XAI):** Khác với mô hình black-box, hệ thống trình bày rõ ràng từng bước suy luận thông qua luật mờ IF-THEN, cho phép người nông dân hiểu và tin tưởng kết quả.
 2. **Kiến trúc Hybrid hiệu quả:** Kết hợp sức mạnh nhận diện hình ảnh của CNN với tri thức chuyên gia nông nghiệp trong Fuzzy Logic, tận dụng ưu thế của cả hai.
-3. **Tích hợp yếu tố môi trường:** Hệ thống không chỉ dựa vào hình ảnh mà còn kết hợp nhiệt độ và độ ẩm để đánh giá nguy cơ bùng phát, sát với thực tế đồng ruộng.
-4. **Label Smoothing → Calibrated Softmax:** Kỹ thuật này giúp phân phối xác suất đầu ra CNN phản ánh đúng mức độ chắc chắn thực tế, phù hợp làm input cho Fuzzy.
-5. **Khuyến nghị cụ thể theo loại bệnh:** Mỗi loại bệnh có hướng dẫn thuốc đặc trị và biện pháp canh tác riêng, không phải khuyến nghị chung chung.
-6. **Giao diện trực quan:** Dashboard Streamlit dark theme hiện đại, dễ sử dụng cho cả người không chuyên IT.
+3. **Tích hợp yếu tố môi trường và thực địa:** Hệ thống không chỉ dựa vào hình ảnh mà còn kết hợp nhiệt độ, độ ẩm (đánh giá nguy cơ) và tín hiệu thực địa (như mật độ ốc bươu vàng) để ra quyết định toàn diện.
+4. **Xử lý An toàn (Safety-critical OOD Handling):** Kỹ thuật sử dụng *Normalized Entropy* và *Grouped Confidence* giúp phát hiện dữ liệu bất định, chống lại sự "tự tin thái quá" của CNN, tự động nhường quyền cho chế độ `EXPERT_GUIDED_MODE` khi cần thiết.
+5. **Label Smoothing → Calibrated Softmax:** Kỹ thuật này giúp phân phối xác suất đầu ra CNN phản ánh đúng mức độ chắc chắn thực tế, phù hợp làm input cho Fuzzy.
+6. **Khuyến nghị cụ thể theo loại bệnh:** Mỗi loại bệnh có hướng dẫn thuốc đặc trị và biện pháp canh tác riêng, kèm theo các cảnh báo an toàn hóa chất.
+7. **Giao diện trực quan:** Dashboard Streamlit dark theme hiện đại, dễ sử dụng cho cả người không chuyên IT.
 
 ### Nhược điểm:
 1. **Luật mờ thiết kế thủ công:** Cơ sở luật và hàm thuộc hiện được xác định bởi chuyên gia, chưa có cơ chế tự học (adaptive) từ dữ liệu thực tế.
@@ -88,7 +89,7 @@ Toàn bộ kết quả (CNN scores, thông số môi trường, chỉ số Fuzzy
 
 1. **Về mặt Tri thức:** Đã số hóa thành công tri thức chuyên gia nông nghiệp vào 20+ luật mờ IF-THEN, 4 nhóm hàm thuộc (Confidence, Margin, Temperature, Humidity), và bảng khuyến nghị đặc thù cho 4 loại bệnh lúa.
 
-2. **Về mặt Xử lý:** Bộ suy diễn mờ Sugeno bậc 0 hoạt động ổn định, tích hợp thông suốt với mô hình CNN EfficientNet-B0 (Accuracy 92.04%). Pipeline Hybrid 5 bước xử lý từ ảnh đầu vào đến kết luận + XAI report hoàn chỉnh.
+2. **Về mặt Xử lý:** Bộ suy diễn mờ Sugeno bậc 0 hoạt động ổn định, tích hợp thông suốt với mô hình CNN EfficientNet-B0 (Accuracy 92.04%). Đặc biệt, **Lớp Quyết định Hỗ trợ Chuyên gia (Expert-Guided Decision Layer)** giúp hệ thống xử lý hoàn hảo sự bất định của AI thông qua Entropy, đảm bảo an toàn tuyệt đối. Pipeline Hybrid xử lý trơn tru từ ảnh đầu vào đến kết luận + XAI report.
 
 3. **Về mặt Giải thích (XAI):** Hệ thống sinh báo cáo ngôn ngữ tự nhiên tiếng Việt, truy vết luật mờ kích hoạt với trọng số, cung cấp khuyến nghị nông nghiệp cụ thể — đáp ứng yêu cầu minh bạch cho người nông dân.
 

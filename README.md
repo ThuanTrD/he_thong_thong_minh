@@ -1,7 +1,11 @@
 
-Tên đề tài: An Explainable Intelligent System for Plant Disease Severity Assessment using Fuzzy Inference
+Project Title: An Explainable Intelligent System for Plant Disease Severity Assessment using Fuzzy Inference
 
-* Áp dụng trên Intelligent Rice Diagnostic Control Centre (Hệ thống Thông minh Chẩn đoán Bệnh Lúa)
+* Research Focus: An Explainable Intelligent System for Plant Disease Severity Assessment under Uncertainty using Fuzzy Inference
+
+* Platform Name: Áp dụng trên Intelligent Rice Diagnostic Control Centre (Hệ thống Thông minh Chẩn đoán Bệnh Lúa)
+
+“The original objective of the system is plant disease severity assessment. However, during implementation, the group recognized the potential risk of overconfident CNN predictions under uncertain conditions. Therefore, an additional expert-guided uncertainty handling layer was introduced as a safety-oriented enhancement"
 
 **Báo cáo Môn học Hệ thống Thông minh - Nhóm 14**
 

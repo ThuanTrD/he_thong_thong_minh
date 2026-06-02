@@ -66,28 +66,38 @@ Hệ thống kết luận: Bệnh **Đạo ôn lá (Rice Blast)** ở mức nh�
 
 ```
 ┌─────────────────┐    ┌──────────────────────┐    ┌─────────────────────────┐
-│  INPUT           │    │  CNN INFERENCE        │    │  FUZZY REASONING        │
-│                  │    │                       │    │                         │
-│ • Ảnh lá lúa    │───→│ • EfficientNet-B0     │───→│ • Mờ hóa 4 biến        │
-│ • Nhiệt độ °C   │    │ • Softmax 9 lớp       │    │ • 20+ luật IF-THEN     │
-│ • Độ ẩm %       │    │ • Top-1 + Confidence  │    │ • Sugeno Defuzzification│
-└─────────────────┘    └──────────────────────┘    └───────────┬─────────────┘
-                                                                │
-                       ┌──────────────────────┐    ┌───────────▼─────────────┐
-                       │  XAI REPORT           │    │  HYBRID DECISION        │
-                       │                       │    │                         │
-                       │ • Báo cáo ngôn ngữ TN│◄───│ • Diagnostic Confidence │
-                       │ • Luật mờ kích hoạt   │    │ • Visual Severity (VSI) │
-                       │ • Khuyến nghị NN      │    │ • Env Risk (ERI)        │
-                       │ • Export JSON          │    │ • Final Alert (FAI)     │
-                       └──────────────────────┘    └─────────────────────────┘
+│  INPUTS         │    │  CNN INFERENCE       │    │  FUZZY REASONING        │
+│                 │    │                      │    │                         │
+│ • Ảnh lá lúa    │───→│ • EfficientNet-B0    │───→│ • Mờ hóa 4 biến         │
+│ • Nhiệt độ °C   │    │ • Softmax 9 lớp      │    │ • 20+ luật IF-THEN      │
+│ • Độ ẩm %       │    │ • Top-1, Margin      │    │ • Sugeno Defuzzification│
+│ • Tín hiệu ốc   │    │ • Entropy, Grouped   │    └───────────┬─────────────┘
+└────────┬────────┘    └──────────┬───────────┘                │
+         │                        │                            │
+         │             ┌──────────▼───────────┐    ┌───────────▼─────────────┐
+         └────────────►│ EXPERT DECISION LAYER│◄───│  HYBRID DECISION        │
+                       │                      │    │                         │
+                       │ • Mode Router        │    │ • Diagnostic Confidence │
+                       │ • AI_CONFIDENT       │    │ • Visual Severity (VSI) │
+                       │ • HYBRID_WARNING     │    │ • Env Risk (ERI)        │
+                       │ • EXPERT_GUIDED_MODE │    │ • Final Alert (FAI)     │
+                       └──────────┬───────────┘    └───────────┬─────────────┘
+                                  │                            │
+                       ┌──────────▼────────────────────────────▼─────────────┐
+                       │  XAI REPORT (BÁO CÁO GIẢI THÍCH)                    │
+                       │                                                     │
+                       │ • Lý do chọn Inference Mode & Thông số CNN          │
+                       │ • Báo cáo ngôn ngữ TN & Luật mờ kích hoạt           │
+                       │ • Khuyến nghị NN hỗ trợ quyết định an toàn          │
+                       └─────────────────────────────────────────────────────┘
 ```
 
 ## 4.3. Thành phần giải thích (Explainable Component)
 
 Module XAI (explanation.py) sinh báo cáo giải thích tự động gồm 4 phần:
 
-**Phần 1 — Phân tích Hình ảnh (CNN):** Trình bày kết quả CNN gồm lớp bệnh dự đoán, độ tự tin, khoảng cách margin so với lớp thứ 2, và đánh giá độ bất định.
+**Phần 1 — Phân tích Hình ảnh và Suy luận Lai (Hybrid Inference):** 
+Trình bày kết quả CNN gồm lớp bệnh dự đoán, nhóm bệnh ưu tiên (Grouped Confidence), độ tự tin, khoảng cách margin so với lớp thứ 2, và Entropy chuẩn hóa. Đặc biệt, giải thích lý do hệ thống chọn chế độ suy luận (`AI_CONFIDENT`, `HYBRID_WARNING` hay `EXPERT_GUIDED_MODE`).
 
 **Phần 2 — Phân tích Tác động Môi trường:** Hiển thị thông số thời tiết (nhiệt độ, độ ẩm) và đánh giá nguy cơ bùng phát dịch bệnh do điều kiện tự nhiên.
 
@@ -101,4 +111,4 @@ Module XAI (explanation.py) sinh báo cáo giải thích tự động gồm 4 ph
 - **Attention**: Theo dõi 2-3 ngày, bón kali tăng sức đề kháng
 - **Normal**: Cắt tỉa lá bệnh đơn lẻ, chưa cần can thiệp hóa chất
 
-Mỗi loại bệnh còn có khuyến nghị đặc thù riêng (ví dụ: Đạo ôn → Tricyclazole; Bạc lá → thuốc sát khuẩn đồng; Đốm nâu → bón lân + kali; Tungro → diệt rầy xanh).
+Mỗi loại bệnh còn có khuyến nghị đặc thù riêng (ví dụ: Đạo ôn → Tricyclazole; Bạc lá → thuốc sát khuẩn đồng; Tungro → diệt rầy xanh; Ốc bươu vàng → bắt thủ công hoặc dùng Metaldehyde). Đặc biệt, hệ thống luôn chèn cảnh báo an toàn: *"Việc sử dụng thuốc/hoạt chất cần tuân thủ hướng dẫn của cán bộ BVTV địa phương"*.

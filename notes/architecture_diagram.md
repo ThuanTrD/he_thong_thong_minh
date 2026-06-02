@@ -38,7 +38,7 @@ graph TD
     end
     I2 --> F2
 
-    F3{⚙️ Fuzzy Inference Engine <br/> Mamdani / Sugeno} ::: fuzzy
+    F3{⚙️ Fuzzy Inference Engine <br/> Sugeno (Zero-order)} ::: fuzzy
     F1 --> F3
     F2 --> F3
     S1 --> F3

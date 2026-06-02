@@ -86,4 +86,14 @@ Bộ suy diễn mờ được thiết kế theo mô hình **Sugeno bậc 0** v�
 1. **Diagnostic Confidence** (Độ tin cậy chẩn đoán): 25% / 60% / 85% / 95%
 2. **Visual Severity Index - VSI** (Chỉ số nghiêm trọng): 0% / 20% / 55% / 90%
 3. **Environmental Risk Index - ERI** (Nguy cơ môi trường): 15% / 50% / 85%
-4. **Final Alert Index - FAI** (Cảnh báo cuối cùng): 10% / 40% / 70% / 95%
+8. **Final Alert Index - FAI** (Cảnh báo cuối cùng): 10% / 40% / 70% / 95%
+
+**Lớp Quyết định Hỗ trợ Chuyên gia (Decision Support Layer):**
+Bên cạnh bộ suy diễn mờ, module tích hợp thêm một **Bộ định tuyến Chế độ Suy luận (Inference Mode Router)** để quản trị rủi ro, sử dụng các chỉ số:
+- **Normalized Entropy**: Đo lường sự bất định (Out-of-Distribution). Nếu $Entropy > 0.6$, hệ thống đánh giá CNN đang phân vân.
+- **Grouped Disease Confidence**: Gom nhóm điểm số của các lớp cùng loại bệnh (vd: Mild Blast + Severe Blast) để chốt bệnh ưu tiên, chống lại hiện tượng pha loãng xác suất.
+- **Expert Signal (Tín hiệu thực địa)**: Ví dụ như mật độ ốc bươu vàng, đóng vai trò phủ quyết.
+Từ đó, định tuyến luồng ra 1 trong 3 chế độ:
+- `AI_CONFIDENT`: Tin tưởng hoàn toàn mô hình hình ảnh.
+- `HYBRID_WARNING`: Kết hợp CNN và cảnh báo rủi ro bổ sung.
+- `EXPERT_GUIDED_MODE`: Nhường quyền quyết định cho tín hiệu thực địa khi AI có độ bất định cao.

@@ -15,6 +15,11 @@ sys.path.append(os.path.join(project_root, "rice"))
 
 from inference_cnn import load_trained_model, get_inference_transform, predict_single
 from rice_fuzzy_xai import FuzzyEngine, FuzzyInput, FuzzyOutput
+from expert_system.knowledge_base import (
+    get_uncertainty_assessment,
+    get_expert_guided_assessment,
+    get_confidence_category
+)
 
 # Set Page Config
 st.set_page_config(
@@ -56,6 +61,93 @@ def parse_risk_level(level: str):
     else:
         return "info"
 
+@st.dialog("🔍 Confidence Analysis")
+def show_confidence_analysis(cnn_res, entropy, status, inference_mode, is_ood, class_map):
+    # 1. Raw CNN Confidence
+    top_class_name = class_map.get(cnn_res["pred_class"], cnn_res["pred_class"])
+    
+    st.markdown(f"""
+    <div style="background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 8px; border: 1px solid rgba(34, 211, 238, 0.2); margin-bottom: 15px;">
+        <h4 style="color: #34d399; margin-top: 0; margin-bottom: 5px;">Độ tin cậy gốc CNN (Raw CNN Confidence)</h4>
+        <div style="font-size: 1.2rem; font-weight: bold; color: #f1f5f9;">{top_class_name}: <span style="color: #22d3ee;">{cnn_res['pred_confidence']*100:.2f}%</span></div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # 2. Top-5 Distribution
+    st.markdown("<h4 style='color: #cbd5e1; margin-bottom: 10px; font-size: 1rem;'>Phân phối Softmax Top-5 (Top-5 Softmax Distribution)</h4>", unsafe_allow_html=True)
+    top_5_scores = sorted(cnn_res["scores"].items(), key=lambda x: x[1], reverse=True)[:5]
+    bars_html = ""
+    for idx, (cls_name, score) in enumerate(top_5_scores):
+        cls_vi = class_map.get(cls_name, cls_name)
+        percent = score * 100
+        if idx == 0:
+            bar_color = "linear-gradient(90deg, #10b981, #34d399)"
+            text_style = "color: #34d399; font-weight: 600;"
+        else:
+            bar_color = "linear-gradient(90deg, #22d3ee, #0d9488)"
+            text_style = "color: #cbd5e1;"
+            
+        bars_html += f'<div style="margin-bottom: 0.6rem;"><div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px;"><span style="{text_style}">{cls_vi}</span><span style="font-family: monospace; color: #94a3b8;">{percent:.2f}%</span></div><div style="background: rgba(255,255,255,0.05); height: 8px; border-radius: 4px; overflow: hidden;"><div style="background: {bar_color}; width: {percent}%; height: 100%; border-radius: 4px;"></div></div></div>'
+    st.markdown(bars_html, unsafe_allow_html=True)
+    
+    st.markdown("<hr style='border-color: rgba(255,255,255,0.1); margin: 20px 0;'>", unsafe_allow_html=True)
+    
+    # 3. Uncertainty Assessment
+    unc_info = get_uncertainty_assessment(entropy)
+    unc_text = unc_info["text"]
+    unc_color = unc_info["color"]
+    unc_bg = unc_info["bg"]
+        
+    st.markdown(f"""
+    <div style="background: {unc_bg}; border-left: 4px solid {unc_color}; padding: 10px 15px; border-radius: 4px; margin-bottom: 15px;">
+        <div style="font-weight: bold; color: {unc_color}; margin-bottom: 4px;">Đánh giá Độ bất định (Uncertainty Assessment) - Entropy: {entropy:.2f}</div>
+        <div style="color: #e2e8f0; font-size: 0.9rem;">{unc_text}</div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # 4. Expert-Guided Assessment
+    exp_info = get_expert_guided_assessment(inference_mode, is_ood)
+    exp_text = exp_info["text"]
+    exp_color = exp_info["color"]
+    exp_bg = exp_info["bg"]
+        
+    st.markdown(f"""
+    <div style="background: {exp_bg}; border-left: 4px solid {exp_color}; padding: 10px 15px; border-radius: 4px; margin-bottom: 15px;">
+        <div style="font-weight: bold; color: {exp_color}; margin-bottom: 4px;">Phân tích Hỗ trợ Chuyên gia (Expert-Guided Assessment)</div>
+        <div style="color: #e2e8f0; font-size: 0.9rem;">{exp_text}</div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # 5. Confidence Interpretation
+    conf_info = get_confidence_category(cnn_res['pred_confidence'])
+    conf_cat = conf_info["category"]
+    conf_desc = conf_info["description"]
+    conf_color = conf_info["color"]
+        
+    st.markdown(f"""
+    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(30, 41, 59, 0.6); padding: 12px 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px;">
+        <div>
+            <div style="color: #94a3b8; font-size: 0.8rem; text-transform: uppercase;">Cấp độ Tự tin (Confidence Category)</div>
+            <div style="color: {conf_color}; font-weight: bold; font-size: 1.1rem; line-height: 1.2;">{conf_cat}</div>
+        </div>
+        <div style="font-size: 1.2rem; font-weight: bold; color: #f1f5f9; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px;">
+            {conf_desc}
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Advanced Expandable
+    with st.expander("🔬 Chỉ số Tự tin Nâng cao (Advanced Confidence Metrics)"):
+        st.markdown(f"""
+        <ul style="color: #cbd5e1; font-size: 0.9rem; line-height: 1.6;">
+            <li><b>Điểm Shannon Entropy (Shannon Entropy Score):</b> {entropy:.4f}</li>
+            <li><b>Trạng thái nhận diện OOD (OOD Detection Status):</b> {'Có (Out-of-Distribution)' if is_ood else 'Không (In-Distribution)'}</li>
+            <li><b>Độ tự tin CNN gốc (Original CNN Confidence):</b> {cnn_res['pred_confidence']*100:.2f}%</li>
+            <li><b>Độ tự tin Hệ thống Tổng hợp (Fused System Confidence):</b> {cnn_res['pred_confidence']*100:.2f}% (Sau khi điều chỉnh)</li>
+            <li><b>Chế độ Suy luận (Inference Mode):</b> {inference_mode}</li>
+        </ul>
+        """, unsafe_allow_html=True)
+
 # Custom CSS for single page viewport layout & high-tech dark theme overrides
 st.markdown("""
 <style>
@@ -68,6 +160,19 @@ st.markdown("""
     /* 1. Global App View Background Override */
     [data-testid="stAppViewContainer"] {
         background: radial-gradient(circle at 50% 50%, #070b19 0%, #021a14 100%) !important;
+        color: #f1f5f9 !important;
+    }
+    
+    /* Dialog / Modal Overrides for Dark Mode */
+    div[data-testid="stDialog"] > div, div[role="dialog"] > div, div[role="dialog"] {
+        background: #0f172a !important;
+        background-color: #0f172a !important;
+        color: #f1f5f9 !important;
+    }
+    div[role="dialog"] h2, div[role="dialog"] p, div[role="dialog"] span {
+        color: #f1f5f9 !important;
+    }
+    div[role="dialog"] button[aria-label="Close"] {
         color: #f1f5f9 !important;
     }
     
@@ -186,6 +291,37 @@ st.markdown("""
         background: #10b981;
         box-shadow: 0 0 6px #10b981;
         margin-right: 8px;
+    }
+    
+    /* Button Styling Overrides for Dark Mode */
+    button[kind="secondary"], 
+    button[kind="primary"],
+    div[data-testid="stButton"] button, 
+    div[data-testid="stDownloadButton"] button,
+    [data-testid="baseButton-secondary"],
+    [data-testid="baseButton-primary"] {
+        background-color: rgba(30, 41, 59, 0.8) !important;
+        color: #f1f5f9 !important;
+        border: 1px solid rgba(34, 211, 238, 0.4) !important;
+        transition: all 0.3s ease !important;
+    }
+    button[kind="secondary"]:hover, 
+    button[kind="primary"]:hover,
+    div[data-testid="stButton"] button:hover, 
+    div[data-testid="stDownloadButton"] button:hover,
+    [data-testid="baseButton-secondary"]:hover,
+    [data-testid="baseButton-primary"]:hover {
+        background-color: rgba(34, 211, 238, 0.2) !important;
+        border-color: #34d399 !important;
+        color: #fff !important;
+        box-shadow: 0 0 10px rgba(34, 211, 238, 0.3) !important;
+    }
+    button p, 
+    div[data-testid="stButton"] button p, 
+    div[data-testid="stDownloadButton"] button p,
+    [data-testid="baseButton-secondary"] p,
+    [data-testid="baseButton-primary"] p {
+        color: inherit !important;
     }
     
     /* 5. Custom styled Tabs */
@@ -469,8 +605,21 @@ with col2:
             </div>
             """, unsafe_allow_html=True)
             
+            # Confidence Analysis Button
+            col_btn1, col_btn2 = st.columns([1, 1.5])
+            with col_btn1:
+                if st.button("📊 Analyze Confidence", use_container_width=True, help="Mở bảng phân tích XAI chi tiết"):
+                    show_confidence_analysis(
+                        cnn_res=cnn_result, 
+                        entropy=api_data.get("debug_info", {}).get("shannon_entropy", 0.0) if 'api_data' in locals() else 0.0,
+                        status=status if 'status' in locals() else 'KNOWN',
+                        inference_mode=out.inference_mode if 'out' in locals() else "NORMAL",
+                        is_ood=is_ood if 'is_ood' in locals() else False,
+                        class_map=class_mapping
+                    )
+            
             # Custom Top 5 HTML bar chart
-            st.markdown("<p style='font-size: 0.78rem; font-weight: 600; color: #cbd5e1; margin-bottom: 0.25rem;'>Top-5 Lớp tin cậy nhất (Softmax Distribution):</p>", unsafe_allow_html=True)
+            st.markdown("<p style='font-size: 0.78rem; font-weight: 600; color: #cbd5e1; margin-top: 0.25rem; margin-bottom: 0.25rem;'>Top-5 Lớp tin cậy nhất (Softmax Distribution):</p>", unsafe_allow_html=True)
             
             top_5_scores = sorted(cnn_result["scores"].items(), key=lambda x: x[1], reverse=True)[:5]
             bars_html = ""
@@ -715,7 +864,7 @@ if uploaded_file is not None and 'out' in locals():
             st.markdown(f"""
             <div style="background: rgba(30, 41, 59, 0.2); border: 1px solid rgba(255,255,255,0.03); border-radius: 6px; padding: 0.4rem 0.6rem; font-size: 0.72rem; color: #94a3b8; line-height: 1.4;">
             - <b>CNN Model:</b> EfficientNet-B0 (PyTorch)<br>
-            - <b>Fuzzy Engine:</b> Sugeno Mamdani Hybrid<br>
+            - <b>Fuzzy Engine:</b> Sugeno (Zero-order)<br>
             - <b>Inference Device:</b> {device_str.upper()}<br>
             - <b>API Version:</b> Streamlit 1.57.0
             </div>
