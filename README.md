@@ -40,11 +40,15 @@ project/
 │   ├── explanation.py             ← Trình tạo báo cáo giải thích (XAI)
 │   ├── membership.py              ← Các hàm thuộc (Membership functions)
 │   └── rules.py                   ← Cơ sở tri thức (Luật mờ chuyên gia)
+├── expert_system/                 ← Hệ chuyên gia (Expert System)
+│   └── knowledge_base.py          ← Cơ sở tri thức (Luật xử lý và khuyến nghị nông nghiệp)
 ├── rice_disease_cnn_outputs/      ← Kết quả từ quá trình huấn luyện AI
 │   └── best_model.pt              ← Trọng số mạng CNN tốt nhất
 ├── docs/                          ← Tài liệu báo cáo và hình ảnh
 │   ├── Pipeline.jpg               ← Sơ đồ luồng hoạt động
 │   └── HTTT-Nhóm 14 -REPORT.docx  ← Báo cáo chi tiết
+├── notes/                         ← Các tài liệu thiết kế, sơ đồ kiến trúc và ghi chú
+├── data_test/                     ← Dữ liệu hình ảnh và tài liệu mẫu dùng để kiểm thử
 └── demo_assets/                   ← Dữ liệu hình ảnh mẫu cho quá trình thử nghiệm
 ```
 
