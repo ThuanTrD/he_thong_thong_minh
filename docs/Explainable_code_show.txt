@@ -1,0 +1,33 @@
+
+
+1. Minh bạch hóa luồng suy luận (Reasoning Transparency)
+Hệ thống không chỉ in ra kết quả cuối cùng mà còn giải thích rõ nó đang ở trạng thái suy luận nào (Inference Mode). Ví dụ, nếu nó rơi vào trạng thái EXPERT_GUIDED_MODE (Chế độ chuyên gia can thiệp), báo cáo sẽ ghi rõ lý do:
+
+"CNN đưa ra dự đoán ban đầu là Đạo ôn (60%), tuy nhiên do Entropy cao (mức độ bất định lớn) kết hợp với tín hiệu thực địa rất mạnh (Ốc bươu vàng 5 con/m2), hệ thống quyết định ưu tiên trọng số tín hiệu chuyên gia để cảnh báo nguy cơ ốc bươu vàng, nhằm hỗ trợ quyết định quản trị rủi ro an toàn nhất."
+
+
+2. Truy xuất ngược Luật Mờ (Rule Traceability) - Điểm sáng giá nhất 🌟
+Trong mạng Nơ-ron (CNN), bạn không thể biết nơ-ron nào quyết định lá này bị bệnh Nặng. Nhưng với Fuzzy Logic, nhóm đã thiết kế để truy xuất ngược (Traceback) chính xác các luật nào đã được kích hoạt.
+
+Trong code explanation.py, nhóm đã viết một hàm để tính phần trăm đóng góp của từng luật:
+
+    # Hàm phụ trợ tính đóng góp của từng luật vào quyết định cuối
+    def calc_contrib(w, z, total_wz, rule_list):
+        if total_wz > 0:
+            return ((w * z) / total_wz) * 100
+        else:
+            total_w = sum(rw for rw, rz, rtxt in rule_list)
+            return (w / total_w) * 100 if total_w > 0 else 0
+
+Nhờ đó, Báo cáo XAI sẽ in ra màn hình cho nông dân (hoặc giám khảo) thấy rõ ràng các dòng như:
+
+[Luật Mức độ bệnh] NẾU Độ tự tin Severe Thấp VÀ Mild Cao THÌ Mức độ bệnh Nhẹ (Kích hoạt: 0.8, Đóng góp: 80%)
+[Luật Thời tiết] NẾU Nhiệt độ Ấm VÀ Độ ẩm Ẩm ướt THÌ Nguy cơ môi trường Cao (Kích hoạt: 0.9, Đóng góp: 90%)
+=> Thầy giáo hỏi: "Làm sao biết máy không đoán mò?" => Bạn trả lời: "Dạ hệ thống của bọn em là White-box ở tầng quyết định cuối cùng. Thầy có thể nhìn vào Báo cáo XAI, nó list ra đúng 2 luật logic IF-THEN đã cấu thành nên quyết định đó, kèm theo phần trăm tỷ trọng đóng góp của từng luật thưa thầy." 😎
+
+3. Giải thích bằng Ngôn ngữ Tự nhiên (Natural Language Generation)
+Thay vì bắt người dùng (nông dân) phải đọc các chỉ số toán học khô khan (VSI = 85.5, FAI = 92), file XAI đã dịch toàn bộ các số liệu này thành ngôn ngữ đời thường kèm theo Khuyến nghị hành động (Actionable Recommendations):
+
+Nếu là bệnh Bạc lá: "Khuyến cáo ngừng tưới tràn, sử dụng thuốc gốc Đồng."
+Nếu có Ốc bươu vàng: "Ưu tiên bắt thủ công, giữ mực nước 2-3cm..."
+Tổng kết lại: Cụm từ "Explainable" trong tên đề tài đã được nhóm chứng minh bằng hành động code thực tế chứ không chỉ là lý thuyết. Sự kết hợp giữa AI nhận diện (CNN) và một hệ thống biết giải thích bằng lời (Fuzzy XAI) chính là xu hướng cốt lõi của Trí tuệ nhân tạo Y tế và Nông nghiệp hiện đại!

@@ -1,0 +1,74 @@
+graph TD
+    %% 1. Inputs (từ hệ thống trước đó)
+    subgraph Input_Data["Dữ liệu Đầu vào từ Động cơ Mờ & CNN"]
+        In_CNN["Kết quả CNN<br/>(Top class, Margin, Entropy)"]
+        In_Fuzzy["Kết quả Fuzzy Logic<br/>(VSI, ERI, Final Alert)"]
+        In_Rules["Danh sách Luật Mờ<br/>(Đã được kích hoạt & Trọng số w)"]
+        In_Expert["Tín hiệu Thực địa<br/>(Mật độ ốc, Chế độ Inference)"]
+    end
+
+    %% 2. Giải thích Luồng suy luận
+    subgraph Mode_Explanation["1. Minh bạch hóa Luồng Suy Luận (Reasoning Transparency)"]
+        Check_Mode{"Xác định Chế độ<br/>(Inference Mode)"}
+        Mode_AI["AI_CONFIDENT<br/>(Tin tưởng hoàn toàn vào CNN)"]
+        Mode_Hybrid["HYBRID_WARNING<br/>(Cảnh báo lai - Có dấu hiệu bất định)"]
+        Mode_Expert["EXPERT_GUIDED_MODE<br/>(Chuyên gia phủ quyết do rủi ro cao)"]
+    end
+
+    In_CNN --> Check_Mode
+    In_Expert --> Check_Mode
+    Check_Mode --> Mode_AI
+    Check_Mode --> Mode_Hybrid
+    Check_Mode --> Mode_Expert
+
+    %% 3. Truy xuất ngược Luật Mờ
+    subgraph Rule_Traceability["2. Truy xuất ngược Luật Mờ (Rule Traceability)"]
+        Trace_VSI["Truy xuất Luật Mức độ bệnh (VSI)"]
+        Trace_ERI["Truy xuất Luật Thời tiết (ERI)"]
+        Trace_Alert["Truy xuất Luật Cảnh báo (Alert)"]
+        
+        Calc_Contrib["Toán tử: calc_contrib(w, z)<br/>Tính % đóng góp của từng luật"]
+    end
+
+    In_Rules --> Trace_VSI
+    In_Rules --> Trace_ERI
+    In_Rules --> Trace_Alert
+    
+    Trace_VSI --> Calc_Contrib
+    Trace_ERI --> Calc_Contrib
+    Trace_Alert --> Calc_Contrib
+
+    %% 4. Sinh ngôn ngữ & Khuyến nghị
+    subgraph NLG_Recommendation["3. Sinh Ngôn ngữ Tự nhiên & Khuyến nghị (NLG)"]
+        Gen_Text["Dịch thông số (VSI, FAI, Entropy)<br/>thành ngôn ngữ đời thường"]
+        Gen_Rec["Hệ thống Khuyến nghị (Actionable Advice):<br/>- Thuốc bảo vệ thực vật<br/>- Quản lý nước/phân bón<br/>- Bắt ốc thủ công"]
+    end
+
+    Calc_Contrib --> Gen_Text
+    Mode_AI --> Gen_Text
+    Mode_Hybrid --> Gen_Text
+    Mode_Expert --> Gen_Text
+    In_Fuzzy --> Gen_Text
+    
+    Gen_Text --> Gen_Rec
+
+    %% 5. Output
+    subgraph Output_Report["Báo Cáo Đầu Ra"]
+        Out_XAI["📋 BÁO CÁO XAI HOÀN CHỈNH<br/>(Hiển thị trên Web Dashboard)"]
+    end
+
+    Gen_Rec --> Out_XAI
+
+    %% Định nghĩa các Style
+    classDef inputNode fill:#e1f5fe,stroke:#0288d1,stroke-width:2px,color:#000;
+    classDef modeNode fill:#fff3e0,stroke:#f57c00,stroke-width:2px,color:#000;
+    classDef traceNode fill:#e8f5e9,stroke:#388e3c,stroke-width:2px,color:#000;
+    classDef nlgNode fill:#f3e5f5,stroke:#8e24aa,stroke-width:2px,color:#000;
+    classDef outputNode fill:#ffebee,stroke:#d32f2f,stroke-width:2px,color:#000;
+
+    %% Áp dụng Style
+    class In_CNN,In_Fuzzy,In_Rules,In_Expert inputNode;
+    class Check_Mode,Mode_AI,Mode_Hybrid,Mode_Expert modeNode;
+    class Trace_VSI,Trace_ERI,Trace_Alert,Calc_Contrib traceNode;
+    class Gen_Text,Gen_Rec nlgNode;
+    class Out_XAI outputNode;

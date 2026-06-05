@@ -1,0 +1,132 @@
+
+"Hệ thống cung cấp khả năng giải thích ở ba mức: minh bạch hóa suy luận (Reasoning Transparency), truy vết luật mờ (Rule Traceability) và giải thích bằng ngôn ngữ tự nhiên (Natural Language Explanation)."
+
+
+
+
+Bệnh trên lá lúa với các lớp: Healthy (Khỏe mạnh), Blast (Đạo ôn), Brownspot (Đốm nâu), Bacterial Blight (Bạc lá vi khuẩn) và Tungro (Bệnh vàng lùn Tungro).
+
+**Đối tượng nghiên cứu:**
+Bệnh trên lá lúa với các lớp Healthy, Blast, Brownspot, Bacterial Blight và Tungro.
+
+**Dữ liệu đầu vào:**
+Ảnh lá bệnh, độ tin cậy dự đoán từ CNN, nhiệt độ và độ ẩm môi trường.
+
+**Dữ liệu đầu ra:**
+Loại bệnh, mức độ nghiêm trọng (Severity Index), mức cảnh báo và báo cáo giải thích kết quả.
+
+**Giới hạn nghiên cứu:**
+Sử dụng CNN (EfficientNet-B0) kết hợp Fuzzy Logic Sugeno và giao diện Web Streamlit; chưa tích hợp cảm biến IoT và dữ liệu thời gian thực.
+
+
+
+
+Đối tượng nghiên cứu: Bệnh trên lá cây trồng nông nghiệp (thử nghiệm trên bộ dữ liệu bệnh lá lúa gồm Healthy, Blast, Brownspot, Bacterial Blight và Tungro).
+Dữ liệu đầu vào: Ảnh lá cây chứa triệu chứng bệnh.
+Độ tin cậy dự đoán từ mô hình CNN.
+Nhiệt độ môi trường (°C).
+Độ ẩm không khí (%).
+Dữ liệu đầu ra: Loại bệnh và mức độ nghiêm trọng.
+Chỉ số đánh giá bệnh (Severity Index).
+Mức cảnh báo: Normal, Attention, Danger, Red Alert.
+Báo cáo giải thích kết quả (XAI).
+Giới hạn công nghệ: Sử dụng CNN (EfficientNet-B0) để nhận dạng bệnh.
+Sử dụng Fuzzy Logic Sugeno để suy luận mức độXây dựng giao diện Web bằng Streamlit.
+Chưa tích hợp cảm biến IoT và dữ liệu thời gian thực.
+ 
+ 
+ 
+
+**Mục tiêu chung:**
+Xây dựng hệ thống thông minh có khả năng giải thích để đánh giá mức độ nghiêm trọng của bệnh cây, kết hợp nhận dạng bằng AI và suy luận mờ (Fuzzy Inference).
+
+**Mục tiêu cụ thể:**
+• Số hóa tri thức chuyên gia dưới dạng tập mờ và luật suy luận.
+• Xây dựng bộ suy diễn mờ đánh giá mức độ bệnh từ dữ liệu đầu vào.
+• Giải thích kết quả thông qua các luật được kích hoạt và ngôn ngữ tự nhiên.
+• Phát triển giao diện trực quan, dễ sử dụng và có khả năng mở rộng.
+
+
+
+
+Mục tiêu chung: Xây dựng một hệ thống thông minh hỗ trợ đánh giá mức độ nghiêm trọng của bệnh trên cây trồng bằng cách kết hợp trí tuệ nhân tạo và suy luận mờ, đồng thời đảm bảo khả năng giải thích rõ ràng quá trình ra quyết định cho người sử dụng.
+Mục tiêu cụ thể:
++Về tri thức: Số hóa tri thức chuyên gia nông nghiệp thành các tập mờ, hàm thuộc và luật suy luận. 
++Về xử lý: Xây dựng bộ suy diễn mờ có khả năng đánh giá và phân loại mức độ bệnh từ dữ liệu đầu vào. 
+-Về giải thích: Cung cấp cơ chế giải thích kết quả thông qua các luật mờ được kích hoạt và báo cáo bằng ngôn ngữ tự nhiên. 
+-Về hệ thống: Phát triển giao diện trực quan, dễ sử dụng và có khả năng mở rộng, tích hợp với các nền tảng di động hoặc IoT trong tương lai.
+
+
+
+
+Dịch bệnh cây trồng gây ảnh hưởng lớn đến năng suất nông nghiệp. Các mô hình AI truyền thống thiếu khả năng giải thích, trong khi mức độ bệnh thường có ranh giới mờ và khó biểu diễn bằng logic nhị phân. Vì vậy, đề tài lựa chọn hướng tiếp cận kết hợp AI và Fuzzy Inference để xây dựng hệ thống đánh giá bệnh cây có khả năng giải thích.
+
+
+Trong bối cảnh nền nông nghiệp hiện đại đang chuyển mình mạnh mẽ theo xu hướng Nông nghiệp thông minh (Smart Agriculture) và Nông nghiệp 4.0, việc ứng dụng Khoa học máy tính để tối ưu hóa năng suất và bảo vệ cây trồng đã trở thành một nhu cầu cấp thiết. 
+Dịch bệnh cây trồng gây sụt giảm năng suất nghiêm trọng. AI dạng hộp đen (Black-box) thiếu tính minh bạch, người nông dân khó tin tưởng. Ranh giới sinh học mang tính mờ — logic nhị phân không phù hợp.
+
+
+
+
+Nhóm học viên xin chân thành cảm ơn TS. Trần Mạnh Tuấn đã tận tình giảng dạy, hướng dẫn và truyền đạt những kiến thức quý báu trong suốt quá trình học tập và thực hiện bài tập lớn.
+
+Những kiến thức và sự định hướng của Thầy là nền tảng quan trọng giúp nhóm học viên hiểu rõ hơn về các phương pháp xây dựng hệ thống thông minh và hoàn thành đề tài “An Explainable Intelligent System for Plant Disease Severity Assessment using Fuzzy Inference”.
+
+Mặc dù đã nỗ lực nghiên cứu và thực hiện, báo cáo khó tránh khỏi những hạn chế nhất định. Nhóm học viên rất mong nhận được những ý kiến chỉ dẫn và góp ý từ Thầy để tiếp tục hoàn thiện đề tài, đồng thời nâng cao kiến thức và năng lực nghiên cứu của mình.
+
+
+
+
+
+Nhóm học viên xin chân thành cảm ơn TS. Trần Mạnh Tuấn đã tận tình giảng dạy, hướng dẫn và truyền đạt những kiến thức quý báu trong môn học Hệ thống Thông minh.
+
+Những kiến thức và sự định hướng của Thầy đã giúp nhóm học viên hiểu rõ hơn về các phương pháp xây dựng hệ thống thông minh, đồng thời là cơ sở quan trọng để nhóm hoàn thành đề tài “An Explainable Intelligent System for Plant Disease Severity Assessment using Fuzzy Inference”.
+
+Nhóm học viên rất mong nhận được những ý kiến góp ý và chỉ dẫn từ Thầy để tiếp tục hoàn thiện sản phẩm cũng như nâng cao kiến thức và năng lực nghiên cứu của mình.
+
+Nhóm học viên xin trân trọng cảm ơn!
+
+
+
+
+Nhóm học viên xin chân thành cảm ơn TS. Trần Mạnh Tuấn đã tận tình giảng dạy, hướng dẫn và truyền đạt những kiến thức chuyên môn quý báu trong suốt quá trình học tập và thực hiện bài tập lớn.
+
+Những kiến thức, kinh nghiệm và sự hướng dẫn của Thầy là nền tảng quan trọng giúp nhóm học viên hiểu rõ hơn về các phương pháp xây dựng hệ thống thông minh và hoàn thành đề tài này.
+
+Mặc dù đã nỗ lực nghiên cứu và thực hiện, báo cáo khó tránh khỏi những hạn chế nhất định. Nhóm học viên rất mong nhận được những ý kiến chỉ dẫn và góp ý từ Thầy để tiếp tục hoàn thiện đề tài, đồng thời nâng cao kiến thức và năng lực nghiên cứu của mình.
+
+Nhóm học viên xin trân trọng cảm ơn!
+
+
+
+
+Chúng em xin chân thành cảm ơn TS. Trần Mạnh Tuấn đã tận tình giảng dạy, hướng dẫn và truyền đạt những kiến thức chuyên môn quý báu trong suốt quá trình học tập và thực hiện bài tập lớn.
+
+Kiến thức và truyền thụ của Thầy là nền tảng quan trọng giúp nhóm học viên hiểu rõ hơn về các phương pháp xây dựng hệ thống thông minh và hoàn thành đề tài này.
+
+Mặc dù đã nỗ lực nghiên cứu và cố gắng trong thực hiện, báo cáo khó tránh khỏi những hạn chế. Nhóm học viên rất mong nhận được những ý kiến chỉ dẫn từ Thầy để hoàn thiện đề tài cũng như nâng cao kiến thức và năng lực nghiên cứu của mình.
+
+
+
+
+
+Nhóm em xin chân thành cảm ơn TS. Trần Mạnh Tuấn, giảng viên môn Hệ thống Thông minh, Trường Đại học Thủy Lợi, đã tận tình giảng dạy, hướng dẫn và cung cấp những kiến thức chuyên môn quý báu trong suốt quá trình học tập và thực hiện bài tập lớn này.Những kiến thức và góp ý của thầy đã giúp nhóm em hiểu rõ hơn về các phương pháp xây dựng hệ thống thông minh, đồng thời là nền tảng quan trọng để hoàn thành đề tài.
+Do thời gian thực hiện và kiến thức còn hạn chế, bài báo cáo khó tránh khỏi những thiếu sót. Nhóm em rất mong nhận được những ý kiến đóng góp từ thầy để tiếp tục hoàn thiện và nâng cao kiến thức của mình.Nhóm em xin chân thành cảm ơn!
+
+
+Nhóm học viên xin chân thành cảm ơn TS. Trần Mạnh Tuấn, giảng viên môn Hệ thống Thông minh, Trường Đại học Thủy Lợi, đã tận tình giảng dạy, hướng dẫn và truyền đạt những kiến thức chuyên môn quý báu trong suốt quá trình học tập và thực hiện bài tập lớn.
+
+Những kiến thức, kinh nghiệm và góp ý của thầy là nền tảng quan trọng giúp nhóm học viên hiểu rõ hơn về các phương pháp xây dựng hệ thống thông minh và hoàn thành đề tài này.
+
+Do thời gian thực hiện và kiến thức còn hạn chế, báo cáo không tránh khỏi những thiếu sót. Nhóm học viên rất mong nhận được những ý kiến đóng góp từ thầy để tiếp tục hoàn thiện đề tài cũng như nâng cao kiến thức chuyên môn của mình.
+
+Nhóm học viên xin trân trọng cảm ơn!
+
+
+Nhóm học viên xin chân thành cảm ơn TS. Trần Mạnh Tuấn, giảng viên môn Hệ thống Thông minh, Trường Đại học Thủy Lợi, đã tận tình giảng dạy, hướng dẫn và truyền đạt những kiến thức chuyên môn quý báu trong suốt quá trình học tập và thực hiện bài tập lớn.
+
+Những kiến thức, kinh nghiệm và góp ý của thầy là nền tảng quan trọng giúp nhóm học viên hiểu rõ hơn về các phương pháp xây dựng hệ thống thông minh và hoàn thành đề tài này.
+
+Mặc dù đã nỗ lực nghiên cứu và thực hiện, báo cáo khó tránh khỏi những hạn chế nhất định. Nhóm học viên rất mong nhận được những ý kiến đóng góp từ thầy để tiếp tục hoàn thiện đề tài cũng như nâng cao kiến thức và năng lực nghiên cứu của mình.
+
+Nhóm học viên xin trân trọng cảm ơn!

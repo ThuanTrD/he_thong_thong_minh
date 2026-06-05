@@ -1,0 +1,77 @@
+Nhóm sử dụng chỉ số VSI (Visual Severity Index) để lượng hóa mức độ biểu hiện triệu chứng trên lá dựa trên kết quả nhận dạng của CNN và suy luận mờ
+
+1. Trích xuất Softmax Scores của CNN (trong file rice_fuzzy_xai/engine.py)
+Sau bước này, mild_score và severe_score sẽ được đưa qua hàm mờ hóa (Fuzzification) để chuyển thành các tập mờ (Low, Medium, High)
+
+        # Lấy điểm số của dạng Mild và Severe tương ứng đối với bệnh được dự đoán
+        mild_score = 0.0
+        severe_score = 0.0
+        
+        # Nếu không phải là lá Khỏe mạnh (Healthy)
+        if not is_healthy:
+            for cls, score in inp.cnn_scores.items():
+                if predicted_disease in cls:
+                    if "Mild" in cls:
+                        mild_score += score
+                    elif "Severe" in cls:
+                        severe_score += score
+
+
+
+2.rice_fuzzy_xai/rules.py
+Hàm evaluate_visual_severity nằm trong file cấu hình các luật mờ có tên là rules.py, thuộc module rice_fuzzy_xai.
+
+def evaluate_visual_severity(mild_conf_fuzzy: dict, severe_conf_fuzzy: dict, is_healthy: bool, is_explicit_severe: bool = False, top_conf_fuzzy: dict = None) -> tuple:
+    """
+    Tính toán Chỉ số mức độ bệnh trực quan (Visual Severity Index - VSI) bằng Sugeno FIS.
+    """
+    if is_healthy:
+        return 0.0, [(1.0, SUGENO_SEVERITY["Healthy"], "NẾU Nhận dạng Lành mạnh THÌ Mức độ nghiêm trọng = 0%")]
+
+    rules = []
+    
+    # Rule 1: Nếu AI rất chắc chắn bệnh Nặng -> Severity = Nặng (90%)
+    w1 = severe_conf_fuzzy["High"]
+    if w1 > 0:
+        rules.append((w1, SUGENO_SEVERITY["Severe"], "NẾU Độ tự tin Severe Cao THÌ Mức độ bệnh Nghiêm trọng"))
+        
+    # Rule 2: Nếu AI hơi nghi ngờ bệnh Nặng -> Severity = Trung bình (55%)
+    w2 = severe_conf_fuzzy["Medium"]
+    if w2 > 0:
+        rules.append((w2, SUGENO_SEVERITY["Moderate"], "NẾU Độ tự tin Severe Vừa THÌ Mức độ bệnh Trung bình"))
+        
+    # Rule 3: Nếu khả năng Nặng RẤT THẤP và khả năng Nhẹ CAO -> Severity = Nhẹ (20%)
+    w3 = min(severe_conf_fuzzy["Low"], mild_conf_fuzzy["High"])
+    if w3 > 0:
+        rules.append((w3, SUGENO_SEVERITY["Mild"], "NẾU Độ tự tin Severe Thấp VÀ Mild Cao THÌ Mức độ bệnh Nhẹ"))
+        
+    # ... (Có các luật Rule 4 và Rule 5 tương tự)
+        
+    # [GIẢI MỜ - Defuzzification theo phương pháp Sugeno]
+    # Tổng của (Trọng lượng kích hoạt * Giá trị hằng số)
+    sum_w_z = sum(w * z for w, z, _ in rules)
+    # Tổng của (Trọng lượng kích hoạt)
+    sum_w = sum(w for w, _, _ in rules)
+    
+    # Tính VSI trung bình có trọng số (Weighted Average)
+    vsi = sum_w_z / sum_w if sum_w > 0 else 35.0
+    
+    return vsi, rules
+
+
+
+3. Mẹo trả lời thầy giáo: Nếu thầy hỏi "Tại sao lại dùng min() và tính vsi bằng phép chia sum_w_z / sum_w?", bạn hãy mạnh dạn trả lời:
+"Dạ thưa thầy, hàm min() là toán tử AND (T-norm) trong logic mờ để kết hợp 2 điều kiện. Còn phép chia sum_w_z / sum_w chính là công thức Giải mờ (Defuzzification) theo phương pháp Trung bình Trọng số của mô hình Sugeno ạ."
+Đảm bảo thầy sẽ rất ấn tượng với việc nhóm nắm vững kiến trúc thuật toán chứ không chỉ copy code chạy Deep Learning có sẵn! 😎
+
+Nếu thầy hỏi: "Tại sao dùng Sugeno thay vì Mamdani?"
+Thì nên chuẩn bị sẵn câu trả lời: "Sugeno phù hợp với bài toán đánh giá chỉ số định lượng như VSI vì đầu ra là các giá trị số hằng. Việc giải mờ bằng trung bình trọng số giúp tính toán đơn giản, nhanh và thuận tiện cho triển khai thời gian thực hơn Mamdani."
+
+
+Kết luận:
+Cụm từ "Disease Severity Assessment" (Đánh giá mức độ nghiêm trọng của bệnh) không chỉ được đảm bảo mà còn được thực hiện một cách rất bài bản và có chiều sâu kỹ thuật. Nó vượt ra khỏi mức đánh giá thông thường (chỉ dùng CNN) để nâng cấp thành một hệ thống đánh giá thông minh đa góc nhìn:
+
+Đánh giá trên lá (Visual Severity Index - VSI): Dựa vào hình ảnh để biết vết bệnh đang ở mức độ nào (Nhẹ/Trung bình/Nặng).
+Đánh giá rủi ro (Environmental Risk Index - ERI): Kết hợp thêm nhiệt độ, độ ẩm để dự báo khả năng bùng phát bệnh.
+Cảnh báo tổng thể (Final Alert Level): Xuất ra khuyến cáo hành động (Bình thường / Chú ý / Nguy hiểm / Báo động đỏ).
+Nên khi lên bảo vệ đồ án, nếu có bất kỳ giám khảo nào thắc mắc về cụm "Severity Assessment", nhóm bạn hoàn toàn có thể tự hào show ra các bằng chứng trong code (Softmax Scores của CNN + Hàm evaluate_visual_severity của Fuzzy Logic) để chứng minh rằng hệ thống đã "đánh giá" một cách cực kỳ chi tiết và mang tính ứng dụng thực tiễn rất cao.
