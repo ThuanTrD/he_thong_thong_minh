@@ -1,4 +1,15 @@
 
+
+Hệ thống không chỉ dự đoán bệnh mà còn giải thích được quá trình ra quyết định, giúp tăng tính minh bạch, độ tin cậy và khả năng hỗ trợ ra quyết định trong nông nghiệp thông minh.
+
+
+Perception Layer: CNN (EfficientNet-B0) nhận dạng bệnh.
+Reasoning Layer: Fuzzy Inference đánh giá mức độ nghiêm trọng.
+Uncertainty Handling: Entropy/Margin + Expert-Guided Mode.
+Explainability Layer: Truy xuất luật mờ và sinh báo cáo XAI.
+
+"Khi Entropy hoặc Margin cho thấy CNN thiếu chắc chắn, hệ thống chuyển sang Expert-Guided Mode để tăng mức cảnh báo hoặc yêu cầu kiểm tra thực địa
+
 "Hệ thống cung cấp khả năng giải thích ở ba mức: minh bạch hóa suy luận (Reasoning Transparency), truy vết luật mờ (Rule Traceability) và giải thích bằng ngôn ngữ tự nhiên (Natural Language Explanation)."
 
 
