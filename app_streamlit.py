@@ -148,6 +148,31 @@ def show_confidence_analysis(cnn_res, entropy, status, inference_mode, is_ood, c
         </ul>
         """, unsafe_allow_html=True)
 
+@st.dialog("📊 Chi tiết Logic Suy giải & Luật Mờ (Reasoning Breakdown)", width="large")
+def show_reasoning_dialog(formatted_explanation, rules_fired):
+    st.markdown(f"""
+    <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(34, 211, 238, 0.15); border-radius: 8px; padding: 1.2rem; color: #e2e8f0; font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem;">
+        {formatted_explanation}
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("<p style='font-size: 1.05rem; font-weight: 600; color: #f59e0b; margin-bottom: 0.6rem;'>⚡ Các Luật mờ được kích hoạt (Triggered Rules):</p>", unsafe_allow_html=True)
+    
+    rules_html = '<div style="padding-right: 0.2rem;">'
+    for r in rules_fired:
+        rules_html += (
+            '<div style="background: rgba(245, 158, 11, 0.06); border: 1px solid rgba(245, 158, 11, 0.22); '
+            'border-radius: 6px; padding: 0.6rem 1rem; font-size: 0.95rem; color: #fef08a; display: flex; '
+            'align-items: center; gap: 0.6rem; margin-bottom: 0.6rem;">'
+            '<span style="background: #f59e0b; color: #020617; border-radius: 50%; width: 20px; height: 20px; '
+            'display: inline-flex; justify-content: center; align-items: center; font-weight: bold; '
+            'font-size: 0.8rem;">⚡</span>'
+            f'<span>{r}</span>'
+            '</div>'
+        )
+    rules_html += '</div>'
+    st.markdown(rules_html, unsafe_allow_html=True)
+
 # Custom CSS for single page viewport layout & high-tech dark theme overrides
 st.markdown("""
 <style>
@@ -740,10 +765,23 @@ if uploaded_file is not None and 'out' in locals():
         xai_col_l, xai_col_r = st.columns([1.1, 0.9])
         
         with xai_col_l:
-            st.markdown("<p style='font-size: 0.85rem; font-weight: 600; color: #22d3ee; margin-bottom: 0.4rem;'>📊 Logic suy giải (Reasoning Breakdown):</p>", unsafe_allow_html=True)
             # Parse only the analysis text (not the rule list)
             explanation_parts = out.explanation.split("4. Các Luật Mờ được kích hoạt")[0]
             formatted_explanation = explanation_parts.replace('\n', '<br>').replace('  ', '&nbsp;&nbsp;')
+            
+            # Parse rules from explanation
+            rules_fired = []
+            for line in out.explanation.split('\n'):
+                if line.strip().startswith(('1.', '2.', '3.', '4.', '5.')) and 'Luật' in line:
+                    rules_fired.append(line.strip())
+                    
+            col_lbl, col_btn = st.columns([1.5, 1])
+            with col_lbl:
+                st.markdown("<p style='font-size: 0.85rem; font-weight: 600; color: #22d3ee; margin-bottom: 0.4rem; padding-top: 0.3rem;'>📊 Logic suy giải (Reasoning Breakdown):</p>", unsafe_allow_html=True)
+            with col_btn:
+                if st.button("🔍 Đọc Full Màn Hình", key="btn_full_xai", use_container_width=True):
+                    show_reasoning_dialog(formatted_explanation, rules_fired)
+                    
             st.markdown(f"""
             <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid rgba(34, 211, 238, 0.15); border-radius: 8px; padding: 0.8rem; color: #e2e8f0; font-size: 0.82rem; line-height: 1.5; max-height: 140px; overflow-y: auto;">
                 {formatted_explanation}
@@ -752,12 +790,6 @@ if uploaded_file is not None and 'out' in locals():
             
         with xai_col_r:
             st.markdown("<p style='font-size: 0.85rem; font-weight: 600; color: #f59e0b; margin-bottom: 0.4rem;'>⚡ Luật mờ được kích hoạt (Triggered Rules):</p>", unsafe_allow_html=True)
-            
-            # Parse rules from explanation
-            rules_fired = []
-            for line in out.explanation.split('\n'):
-                if line.strip().startswith(('1.', '2.', '3.', '4.', '5.')) and 'Luật' in line:
-                    rules_fired.append(line.strip())
             
             rules_html = '<div style="max-height: 140px; overflow-y: auto; padding-right: 0.2rem;">'
             for r in rules_fired:
